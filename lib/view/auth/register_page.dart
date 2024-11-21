@@ -168,13 +168,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 GestureDetector(
                   onTap: (){
                     if(nameController.text.isEmpty){
-                      Utils.show("Please enter First Name",context);
+                      Utils.showErrorMessage(context,"Please enter First Name",);
                     }else if(lastnameController.text.isEmpty){
-                      Utils.show("Please enter Last Name",context);
+                      Utils.showErrorMessage(context,"Please enter Last Name",);
                     }else if(emailController.text.isEmpty){
-                      Utils.show("Please enter Email Address",context);
+                      Utils.showErrorMessage(context,"Please enter Email Address",);
                     } else if (selectedRadioValue == null) {
-                      Utils.show("Please select an option",context);
+                      Utils.showErrorMessage(context,"Please select an option",);
                     }
                     else{
                       registerViewModel.registerApi(

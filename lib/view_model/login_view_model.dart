@@ -5,7 +5,6 @@ import 'package:porter/view/auth/otp_page.dart';
 import 'package:porter/view/auth/register_page.dart';
 import 'package:porter/view/bottom_nav_bar.dart';
 import 'package:porter/view_model/user_view_model.dart';
-
 class AuthViewModel with ChangeNotifier {
   final _loginRepo = AuthRepository();
   bool _loading = false;
@@ -23,9 +22,9 @@ class AuthViewModel with ChangeNotifier {
     };
     _loginRepo.loginApi(data).then((value) {
       if (value['status'] == 200) {
-        UserViewModel userViewModel = UserViewModel();
-        userViewModel.saveUser(value["data"]["id"].toString());
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpPage(mobileNumber: mobile, userId: '',)));
+        // UserViewModel userViewModel = UserViewModel();
+        // userViewModel.saveUser(value["data"]["id"].toString());
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpPage(mobileNumber: mobile, userId: value["data"]["id"].toString(),)));
       } else {
         Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage(mobileNumber: mobile)));
         setLoading(false);
@@ -70,5 +69,4 @@ class AuthViewModel with ChangeNotifier {
       }
     });
   }
-
 }

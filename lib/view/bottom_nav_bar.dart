@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/view/account/account.dart';
 import 'package:porter/view/coins/coins.dart';

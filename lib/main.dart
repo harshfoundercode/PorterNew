@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:porter/view/splash_screen.dart';
 import 'package:porter/view_model/login_view_model.dart';
+import 'package:porter/view_model/profile_update_view_model.dart';
 import 'package:porter/view_model/profile_view_model.dart';
 import 'package:porter/view_model/register_view_model.dart';
 import 'package:provider/provider.dart';
-
-
 void main() {
   runApp(const MyApp());
 }
@@ -15,7 +14,6 @@ double screenWidth = 0.0;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -25,10 +23,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> RegisterViewModel()),
         ChangeNotifierProvider(create: (context)=> ProfileViewModel()),
         ChangeNotifierProvider(create: (context)=> AuthViewModel()),
+        ChangeNotifierProvider(create: (context)=> ProfileUpdateViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Porter Project',
+        title: 'Porter',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

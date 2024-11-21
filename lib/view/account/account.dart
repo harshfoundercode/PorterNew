@@ -18,10 +18,10 @@ class _AccountPageState extends State<AccountPage> {
 
     return Scaffold(
       backgroundColor: PortColor.greyLight.withOpacity(0.7),
-      body: Column(
+      body: const Column(
         children: [
           ConstantAppbar(),
-          const AccountDetail(),
+          AccountDetail(),
         ],
       ),
     );

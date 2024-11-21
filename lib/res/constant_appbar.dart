@@ -56,7 +56,6 @@ class _ConstantAppbarState extends State<ConstantAppbar> {
             color: PortColor.gray,
           ),
           SizedBox(height: screenHeight*0.001),
-
           elementsSmall(text: "Verify Email ID", color: PortColor.blue),
           SizedBox(height: screenHeight*0.02,),
           InkWell(

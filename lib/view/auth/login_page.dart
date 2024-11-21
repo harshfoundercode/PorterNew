@@ -4,6 +4,7 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
+import 'package:porter/utils/utils.dart';
 import 'package:porter/view_model/login_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -147,7 +148,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
   Widget loginButton() {
     return Column(
       children: [
@@ -159,12 +159,7 @@ class _LoginPageState extends State<LoginPage> {
               final loginViewModel = Provider.of<AuthViewModel>(context, listen: false);
               loginViewModel.loginApi(_controller.text,context);
             } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text("Please enter a valid 10-digit mobile number."),
-                  backgroundColor: PortColor.blue,
-                ),
-              );
+            Utils.showErrorMessage(context, "please enter a valid 10 digit number");
             }
           },
           child: Container(
@@ -211,4 +206,5 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
 

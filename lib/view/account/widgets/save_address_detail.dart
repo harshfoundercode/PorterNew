@@ -3,14 +3,11 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
-
 class SaveAddressDetail extends StatefulWidget {
   const SaveAddressDetail({super.key});
-
   @override
   State<SaveAddressDetail> createState() => _SaveAddressDetailState();
 }
-
 class _SaveAddressDetailState extends State<SaveAddressDetail> {
   @override
   Widget build(BuildContext context) {
@@ -29,7 +26,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
                     blurRadius: 2,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -114,7 +111,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
                       color: Colors.grey.withOpacity(0.2),
                       blurRadius: 4,
                       spreadRadius: 1,
-                      offset: Offset(1, 2),
+                      offset: const Offset(1, 2),
                     ),
                   ],
                 ),
@@ -125,7 +122,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
                     Row(
                       children: [
                         Image(
-                          image: AssetImage(Assets.assetsShop),
+                          image: const AssetImage(Assets.assetsShop),
                           height: screenHeight * 0.038,
                         ),
                         SizedBox(width: screenWidth*0.02,),

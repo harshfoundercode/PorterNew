@@ -66,7 +66,7 @@ class _OtpPageState extends State<OtpPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Please enter a valid 6-digit OTP."),
+          content: Text("Please enter a valid 4-digit OTP."),
           backgroundColor: PortColor.blue,
         ),
       );

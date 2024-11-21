@@ -3,13 +3,12 @@ import 'package:porter/helper/helper/network/base_api_services.dart';
 import 'package:porter/helper/helper/network/network_api_services.dart';
 import 'package:porter/model/profile_model.dart';
 import 'package:porter/res/api_url.dart';
-class ProfileRepo {
+class ProfileUpdateRepository {
   final BaseApiServices _apiServices = NetworkApiServices();
-
-  Future<ProfileModel> profileApi(dynamic data) async {
+  Future<ProfileModel> profileUpdateApi(dynamic data) async {
     try {
       dynamic response =
-      await _apiServices.getGetApiResponse(ApiUrl.profileUrl+ data);
+      await _apiServices.getPostApiResponse(ApiUrl.profileUpdateUrl, data);
       return ProfileModel.fromJson(response);
     } catch (e) {
       if (kDebugMode) {
