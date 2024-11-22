@@ -10,9 +10,8 @@ import 'package:porter/view_model/register_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RegisterPage extends StatefulWidget {
-  final String mobileNumber;
 
-  const RegisterPage({super.key, required this.mobileNumber});
+  const RegisterPage({super.key,});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -45,6 +44,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    Map arguments =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final registerViewModel =  Provider.of<RegisterViewModel>(context);
     return SafeArea(
       child: Scaffold(
@@ -83,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         image: const AssetImage(Assets.assetsIndiaflagsquare),
                         height: screenHeight * 0.023),
                     SizedBox(width: screenWidth*0.02,),
-                    titleSmall(text:widget.mobileNumber,color: PortColor.black),
+                    titleSmall(text:arguments["mobileNumber"],color: PortColor.black),
                     SizedBox(width: screenWidth * 0.03),
                     GestureDetector(
                       onTap: () {
@@ -181,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         nameController.text,
                         lastnameController.text,
                         emailController.text,
-                        widget.mobileNumber,
+                        arguments["mobileNumber"],
                         selectedRadioValue,
                         context,
                       );

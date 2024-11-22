@@ -4,18 +4,15 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/utils/utils.dart';
 import 'package:porter/view/auth/login_page.dart';
 import 'package:porter/view_model/login_view_model.dart';
 import 'package:provider/provider.dart';
 
 class OtpPage extends StatefulWidget {
-  final String mobileNumber;
-  final String userId;
 
   const OtpPage({
     super.key,
-    required this.mobileNumber,
-    required this.userId,
   });
 
   @override
@@ -23,6 +20,7 @@ class OtpPage extends StatefulWidget {
 }
 
 class _OtpPageState extends State<OtpPage> {
+  bool _isButtonActive = false;
   late Timer _timer;
   int _remainingTime = 60;
   final TextEditingController _otpController = TextEditingController();
@@ -30,10 +28,11 @@ class _OtpPageState extends State<OtpPage> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      Map arguments =
+      ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       Provider.of<AuthViewModel>(context, listen: false)
-          .sendOtpApi(widget.mobileNumber, context);
+          .sendOtpApi(arguments["mobileNumber"], context);
     });
 
     _startTimer();
@@ -59,22 +58,22 @@ class _OtpPageState extends State<OtpPage> {
   }
 
   void _verifyOtp() {
+    Map arguments =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final enteredOtp = _otpController.text.trim();
     if (enteredOtp.length == 4 && int.tryParse(enteredOtp) != null) {
       final loginViewModel = Provider.of<AuthViewModel>(context, listen: false);
-      loginViewModel.verifyOtpApi(widget.mobileNumber,enteredOtp,widget.userId ,context);
+      loginViewModel.verifyOtpApi(arguments["mobileNumber"],enteredOtp,arguments["userId"] ,context);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Please enter a valid 4-digit OTP."),
-          backgroundColor: PortColor.blue,
-        ),
-      );
+      Utils.showErrorMessage(context, "Please enter a valid 4-digit OTP.");
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Map arguments =
+    ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return SafeArea(
       child: Scaffold(
         backgroundColor: PortColor.white,
@@ -112,7 +111,7 @@ class _OtpPageState extends State<OtpPage> {
                         height: screenHeight * 0.023),
                     SizedBox(width: screenWidth * 0.02),
                     titleSmall(
-                        text: widget.mobileNumber, color: PortColor.black),
+                        text: arguments["mobileNumber"], color: PortColor.black),
                     SizedBox(width: screenWidth * 0.03),
                     GestureDetector(
                         onTap: () {
@@ -136,6 +135,7 @@ class _OtpPageState extends State<OtpPage> {
                   controller: _otpController,
                   decoration: InputDecoration(
                     hintText: "Enter OTP Manually",
+                    counterText: '',
                     hintStyle: TextStyle(color: Colors.black.withOpacity(0.3)),
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -147,23 +147,36 @@ class _OtpPageState extends State<OtpPage> {
                   ),
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
+                  maxLength: 4,
                   style: const TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
+                  onChanged: (value) {
+                    setState(() {
+                      _isButtonActive = value.length == 4;
+                    });
+                  },
                 ),
                 SizedBox(height: screenHeight * 0.02),
                 InkWell(
-                  onTap: _verifyOtp,
+                  onTap: _isButtonActive ? _verifyOtp : null,
                   child: Container(
                     height: screenHeight * 0.06,
                     decoration: BoxDecoration(
-                      color: PortColor.gray.withOpacity(0.7),
+                      color: _isButtonActive
+                          ? PortColor.buttonBlue
+                          : PortColor.gray.withOpacity(0.7),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     alignment: Alignment.center,
-                    child:
-                        headingMedium(text: "Verify", color: PortColor.black),
+                    child: headingMedium(
+                      text: "Verify",
+                      color: _isButtonActive
+                          ? Colors.white
+                          : Colors.black,
+                    ),
                   ),
                 ),
+
                 SizedBox(height: screenHeight * 0.02),
                 _remainingTime > 0
                     ? Text(

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/login_repo.dart';
+import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/view/auth/otp_page.dart';
-import 'package:porter/view/auth/register_page.dart';
 import 'package:porter/view/bottom_nav_bar.dart';
 import 'package:porter/view_model/user_view_model.dart';
 class AuthViewModel with ChangeNotifier {
@@ -22,11 +22,9 @@ class AuthViewModel with ChangeNotifier {
     };
     _loginRepo.loginApi(data).then((value) {
       if (value['status'] == 200) {
-        // UserViewModel userViewModel = UserViewModel();
-        // userViewModel.saveUser(value["data"]["id"].toString());
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpPage(mobileNumber: mobile, userId: value["data"]["id"].toString(),)));
+        Navigator.pushNamed(context, RoutesName.otp,arguments: {"mobileNumber": mobile,"userId":value["data"]["id"].toString(),});
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage(mobileNumber: mobile)));
+        Navigator.pushNamed(context, RoutesName.register,arguments: {'mobileNumber': mobile});
         setLoading(false);
       }
 
@@ -59,7 +57,7 @@ class AuthViewModel with ChangeNotifier {
       if (value['error'].toString() == "200") {
         UserViewModel userViewModel = UserViewModel();
         userViewModel.saveUser(userId);
-         Navigator.push(context, MaterialPageRoute(builder: (context)=>BottomNavigationPage()));
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationPage()), (context)=>false);
       }
 
     }).onError((error, stackTrace) {

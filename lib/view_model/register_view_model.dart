@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/register_repo.dart';
+import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/utils/utils.dart';
-import 'package:porter/view/auth/otp_page.dart';
 
 class RegisterViewModel with ChangeNotifier {
   final _registerRepo = RegisterRepository();
@@ -23,23 +23,15 @@ class RegisterViewModel with ChangeNotifier {
       "type": value,
       "phone": mobileNumber,
     };
-    // UserViewModel userViewModel = UserViewModel();
-    // userViewModel.saveUser(value["data"]["id"].toString());
     print(data);
     _registerRepo.registerApi(data).then((value) async {
       setLoading(false);
       if (value['status'] == 200) {
         print(value);
         Utils.showSuccessMessage(context, value["message"]);
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>  OtpPage(mobileNumber: mobileNumber, userId:value["data"]["id"].toString())));
+        Navigator.pushNamed(context, RoutesName.otp,arguments: {"mobileNumber": mobileNumber,"userId":value["data"]["id"].toString(),});
       } else {
         Utils.showErrorMessage(context, value["message"]);
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(content: Text(value['message'] ?? 'Registration failed')),
-        // );
       }
     }).onError((error, stackTrace) {
       setLoading(false);

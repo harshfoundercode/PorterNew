@@ -3,9 +3,12 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/view/account/widgets/help_support.dart';
 import 'package:porter/view/account/widgets/save_address_detail.dart';
 import 'package:porter/view/account/widgets/terms_condition.dart';
+import 'package:porter/view/splash_screen.dart';
+import 'package:porter/view_model/user_view_model.dart';
 
 class AccountDetail extends StatelessWidget {
   const AccountDetail({super.key});
@@ -181,57 +184,7 @@ class AccountDetail extends StatelessWidget {
                         BorderRadius.vertical(top: Radius.circular(10)),
                   ),
                   builder: (BuildContext context) {
-                    return Padding(
-                      padding: EdgeInsets.all(screenHeight * 0.02),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          titleSmall(
-                              text: "Are you sure you want to log out?",
-                              color: PortColor.black),
-                          SizedBox(height: screenHeight * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: screenHeight * 0.058,
-                                width: screenWidth * 0.4,
-                                decoration: BoxDecoration(
-                                  color: PortColor.white,
-                                  border: Border.all(
-                                      color: PortColor.blue.withOpacity(0.75),
-                                      width: 2),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                ),
-                                child: Center(
-                                  child: titleMedium(
-                                      text: "No",
-                                      color: PortColor.blue.withOpacity(0.75)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: screenWidth * 0.02,
-                              ),
-                              Container(
-                                height: screenHeight * 0.058,
-                                width: screenWidth * 0.4,
-                                decoration: BoxDecoration(
-                                  color: PortColor.blue.withOpacity(0.75),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(20)),
-                                ),
-                                child: Center(
-                                  child: titleMedium(
-                                      text: "Yes", color: PortColor.white),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    );
+                    return logoutBottomSheet(context);
                   },
                 );
               },
@@ -243,6 +196,74 @@ class AccountDetail extends StatelessWidget {
                 headingMedium(text: "App version 6.0.0", color: PortColor.gray),
           ),
           SizedBox(height: screenHeight * 0.04),
+        ],
+      ),
+    );
+  }
+
+  Widget logoutBottomSheet(context){
+    return Padding(
+      padding: EdgeInsets.all(screenHeight * 0.02),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          titleSmall(
+              text: "Are you sure you want to log out?",
+              color: PortColor.black),
+          SizedBox(height: screenHeight * 0.03),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: (){
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: screenHeight * 0.058,
+                  width: screenWidth * 0.4,
+                  decoration: BoxDecoration(
+                    color: PortColor.white,
+                    border: Border.all(
+                        color: PortColor.blue.withOpacity(0.75),
+                        width: 2),
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(20)),
+                  ),
+                  child: Center(
+                    child: titleMedium(
+                        text: "No",
+                        color: PortColor.blue.withOpacity(0.75)),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: screenWidth * 0.02,
+              ),
+              InkWell(
+                onTap: (){
+                  UserViewModel().remove();
+                  // Navigator.pushReplacementNamed(context, RoutesName.splash);
+                  // Navigator.pushNamedAndRemoveUntil(context, RoutesName.splash, (context)=>true);
+                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SplashScreen()), (context)=>false);
+                //  Navigator.pushAndRemoveUntil(context, RoutesName.splash, (context)=>false);
+                },
+                child: Container(
+                  height: screenHeight * 0.058,
+                  width: screenWidth * 0.4,
+                  decoration: BoxDecoration(
+                    color: PortColor.blue.withOpacity(0.75),
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(20)),
+                  ),
+                  child: Center(
+                    child: titleMedium(
+                        text: "Yes", color: PortColor.white),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

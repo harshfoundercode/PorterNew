@@ -7,18 +7,19 @@ import 'package:provider/provider.dart';
 import 'constant_color.dart';
 class ConstantAppbar extends StatefulWidget {
   const ConstantAppbar({super.key,});
-
   @override
   State<ConstantAppbar> createState() => _ConstantAppbarState();
 }
-
 class _ConstantAppbarState extends State<ConstantAppbar> {
   @override
   @override
   void initState() {
     super.initState();
-    final profileViewModel = Provider.of<ProfileViewModel>(context, listen: false);
-    profileViewModel.profileApi();
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      final profileViewModel = Provider.of<ProfileViewModel>(context, listen: false);
+      profileViewModel.profileApi();
+    });
+
   }
   @override
   Widget build(BuildContext context) {
