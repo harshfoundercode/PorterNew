@@ -24,5 +24,7 @@ class PortColor{
   static const  greyLight = Color(0xFFe6e6e6);
   static const  button = Color(0xFF011367);
   static const  red = Color(0xFFE53935);
+  static const  lightGreen = Color(0xFFe4edea);
+  static const  lightGreen2 = Color(0xFFebf1ef);
 
 }

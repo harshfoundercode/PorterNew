@@ -213,7 +213,6 @@ class _OrderPageState extends State<OrderPage> {
                             ],
                           )),
                     ),
-                    // SizedBox(height: screenHeight*,),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: screenWidth * 0.02,
@@ -224,8 +223,8 @@ class _OrderPageState extends State<OrderPage> {
                             width: screenWidth * 0.02,
                           ),
                           const Image(
-                              image: AssetImage(Assets.assetsRedcross)),
-                          titleSmall(
+                              image: AssetImage(Assets.assetsRedcross,)),
+                          headingMedium(
                               text: "Cancelled", color: PortColor.red),
                           const Spacer(),
                           Container(

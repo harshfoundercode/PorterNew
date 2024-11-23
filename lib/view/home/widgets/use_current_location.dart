@@ -256,4 +256,6 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
       ),
     );
   }
+
+
 }

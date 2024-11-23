@@ -3,6 +3,7 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view/home/widgets/pick_up_location.dart';
 class SaveAddressDetail extends StatefulWidget {
   const SaveAddressDetail({super.key});
   @override
@@ -59,35 +60,40 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
               padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05,
                   vertical: screenHeight * 0.02),
-              child: Material(
-                elevation: 3.0,
-                borderRadius: BorderRadius.circular(10.0),
-                shadowColor: PortColor.grey.withOpacity(0.5),
-                child: ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
-                  tileColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  leading: Container(
-                    padding: const EdgeInsets.all(6.0),
-                    decoration: BoxDecoration(
-                      color: PortColor.blue.withOpacity(0.1),
-                      shape: BoxShape.circle,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>PickUpLocation()));
+                },
+                child: Material(
+                  elevation: 3.0,
+                  borderRadius: BorderRadius.circular(10.0),
+                  shadowColor: PortColor.grey.withOpacity(0.5),
+                  child: ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+                    tileColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                    child: Icon(
-                      Icons.add,
-                      color: PortColor.blue,
-                      size: screenHeight * 0.025,
+                    leading: Container(
+                      padding: const EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                        color: PortColor.blue.withOpacity(0.1),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.add,
+                        color: PortColor.blue,
+                        size: screenHeight * 0.025,
+                      ),
                     ),
-                  ),
-                  title: titleMedium(
-                      text: "Add New Address", color: PortColor.blue),
-                  trailing: Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: PortColor.black,
-                    size: screenHeight * 0.02,
+                    title: titleMedium(
+                        text: "Add New Address", color: PortColor.blue),
+                    trailing: Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: PortColor.black,
+                      size: screenHeight * 0.02,
+                    ),
                   ),
                 ),
               ),

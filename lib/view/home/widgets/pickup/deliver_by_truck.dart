@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view/order/widgets/enter_contact_detail.dart';
 
 class DeliverByTruck extends StatefulWidget {
   const DeliverByTruck({super.key});
@@ -15,6 +16,8 @@ class DeliverByTruck extends StatefulWidget {
 class _DeliverByTruckState extends State<DeliverByTruck> {
   List<dynamic> searchResults = [];
   Map<String, String> placeDetailsCache = {};
+  String? selectedLocation;
+
 
   @override
   Widget build(BuildContext context) {
@@ -171,10 +174,8 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
             SizedBox(height: screenHeight * 0.035),
             if (searchResults.isNotEmpty)
               SizedBox(
-                height: screenHeight * 0.5,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
+                height: screenHeight * 0.22,
+                child:ListView.builder(
                   itemCount: searchResults.length,
                   itemBuilder: (context, index) {
                     final place = searchResults[index];
@@ -188,22 +189,30 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                             text: place['description'],
                             color: PortColor.black.withOpacity(0.5),
                           ),
-                          onTap: () {
-                            print("Selected place: ${place['description']}");
-                          },
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      EnterContactDetail(
+                                          selectedLocation: place['description']),
+                                ),
+                              );
+                            }
                         ),
                         if (index < searchResults.length - 1)
                           Padding(
-                            padding:  EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
                             child: Divider(
                               color: PortColor.gray,
-                              thickness: screenWidth*0.002,
+                              thickness: screenWidth * 0.002,
                             ),
                           ),
                       ],
                     );
                   },
-                ),
+                )
+
               ),
 
 

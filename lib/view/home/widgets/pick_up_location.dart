@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/home/widgets/use_current_location.dart';
+import 'package:http/http.dart'as http;
 
 class PickUpLocation extends StatefulWidget {
   const PickUpLocation({super.key});
@@ -12,6 +15,9 @@ class PickUpLocation extends StatefulWidget {
 }
 
 class _PickUpLocationState extends State<PickUpLocation> {
+  List<dynamic> searchResults = [];
+  Map<String, String> placeDetailsCache = {};
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,6 +72,9 @@ class _PickUpLocationState extends State<PickUpLocation> {
                       SizedBox(width: screenWidth * 0.047),
                       Expanded(
                         child: TextField(
+                          onChanged: (value) {
+                            placeSearchApi(value);
+                          },
                           decoration: InputDecoration(
                             constraints: BoxConstraints(maxHeight: screenHeight * 0.055),
                             hintText: "Where is your pickup?",
@@ -96,6 +105,41 @@ class _PickUpLocationState extends State<PickUpLocation> {
             SizedBox(
               height: screenHeight * 0.02,
             ),
+            if (searchResults.isNotEmpty)
+              SizedBox(
+                height: screenHeight * 0.22,
+                child: ListView.builder(
+                  itemCount: searchResults.length,
+                  itemBuilder: (context, index) {
+                    final place = searchResults[index];
+                    return Column(
+                      children: [
+                        ListTile(
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.04,
+                          ),
+                          title: titleMedium(
+                            text: place['description'],
+                            color: PortColor.black.withOpacity(0.5),
+                          ),
+                          onTap: () {
+                            print("Selected place: ${place['description']}");
+                          },
+                        ),
+                        if (index < searchResults.length - 1)
+                          Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                            child: Divider(
+                              color: PortColor.gray,
+                              thickness: screenWidth*0.002,
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            if (searchResults.isEmpty)
             Container(
               padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.04,
@@ -199,5 +243,24 @@ class _PickUpLocationState extends State<PickUpLocation> {
 
           ])),
     );
+  }
+  Future<void> placeSearchApi(String searchCon) async {
+    Uri uri = Uri.https("maps.googleapis.com", 'maps/api/place/autocomplete/json', {
+      "input": searchCon,
+      "key": "AIzaSyCOqfJTgg1Blp1GIeh7o8W8PC1w5dDyhWI",
+      "components": "country:in",
+    });
+    var response = await http.get(uri);
+    print(response.body);
+    if (response.statusCode == 200) {
+      final resData = jsonDecode(response.body)['predictions'];
+      if (resData != null) {
+        setState(() {
+          searchResults = resData;
+        });
+      }
+    } else {
+      print('Error fetching suggestions: ${response.body}');
+    }
   }
 }
