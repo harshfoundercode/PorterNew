@@ -3,6 +3,7 @@ import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/utils/routes/routes_name.dart';
 import 'package:porter/view/splash_screen.dart';
 import 'package:porter/view_model/login_view_model.dart';
+import 'package:porter/view_model/order_view_model.dart';
 import 'package:porter/view_model/profile_update_view_model.dart';
 import 'package:porter/view_model/profile_view_model.dart';
 import 'package:porter/view_model/register_view_model.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> ProfileViewModel()),
         ChangeNotifierProvider(create: (context)=> AuthViewModel()),
         ChangeNotifierProvider(create: (context)=> ProfileUpdateViewModel()),
+        ChangeNotifierProvider(create: (context)=> OrderViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

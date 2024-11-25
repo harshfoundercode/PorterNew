@@ -5,7 +5,7 @@ import 'package:porter/utils/utils.dart';
 import 'package:porter/view_model/profile_view_model.dart';
 import 'package:provider/provider.dart';
 class ProfileUpdateViewModel with ChangeNotifier {
-  final _profileUpdateRepo = ProfileUpdateRepository();
+  final _profileUpdateRepo = OrderRepository();
   bool _loading = false;
   bool get loading => _loading;
   void setLoading(bool value) {

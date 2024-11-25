@@ -4,7 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view/home/widgets/pick_up_location.dart';
 import 'package:porter/view/order/widgets/enter_contact_detail.dart';
+import 'package:porter/view_model/order_view_model.dart';
+import 'package:provider/provider.dart';
 
 class DeliverByTruck extends StatefulWidget {
   const DeliverByTruck({super.key});
@@ -21,6 +24,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
 
   @override
   Widget build(BuildContext context) {
+    final orderViewModel = Provider.of<OrderViewModel>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: PortColor.grey,
@@ -40,7 +44,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                     color: PortColor.black.withOpacity(0.1),
                     blurRadius: 4,
                     spreadRadius: 1,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -90,31 +94,37 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                           width: screenWidth / 1.3,
                           child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.02,
-                                  vertical: screenHeight * 0.015,
-                                ),
-                                height: screenHeight * 0.068,
-                                width: screenWidth * 0.78,
-                                decoration: BoxDecoration(
-                                  color: PortColor.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: Border.all(color: PortColor.gray, width: screenWidth * 0.002),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        elementsMedium(text: "Founder code technology pvtltd.", color: PortColor.black),
-                                        elementsSmall(text: "7235947667", color: PortColor.gray),
-                                        Spacer(),
-                                        Icon(Icons.arrow_forward_ios_rounded, size: screenHeight * 0.017),
-                                      ],
-                                    ),
-                                    elementsSmall(text: "SectorH, jankipuram, lucknow, uttar pradesh..", color: PortColor.black),
-                                  ],
+                              InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PickUpLocation()));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth * 0.02,
+                                    vertical: screenHeight * 0.015,
+
+                                  ),
+                                  height: screenHeight * 0.068,
+                                  width: screenWidth * 0.78,
+                                  decoration: BoxDecoration(
+                                    color: PortColor.white,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(color: PortColor.gray, width: screenWidth * 0.002),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          elementsMedium(text: "Founder code technology pvtltd.", color: PortColor.black),
+                                          elementsSmall(text: "7235947667", color: PortColor.gray),
+                                          const Spacer(),
+                                          Icon(Icons.arrow_forward_ios_rounded, size: screenHeight * 0.017),
+                                        ],
+                                      ),
+                                      elementsSmall(text: "SectorH, jankipuram, lucknow, uttar pradesh..", color: PortColor.black),
+                                    ],
+                                  ),
                                 ),
                               ),
                               SizedBox(height: screenHeight * 0.018),
@@ -154,7 +164,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: PortColor.blue,
                           shape: BoxShape.circle,
                         ),
@@ -253,7 +263,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           children: [
                             Icon(
@@ -272,7 +282,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                   ],
                 ),
               ),
-            Spacer(),
+            const Spacer(),
             Container(
               height: screenHeight * 0.08,
               color: PortColor.white,
@@ -280,7 +290,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.location_on, color: PortColor.blue),
+                  const Icon(Icons.location_on, color: PortColor.blue),
                   headingMedium(text: " Locate on the map", color: PortColor.black),
                 ],
               ),

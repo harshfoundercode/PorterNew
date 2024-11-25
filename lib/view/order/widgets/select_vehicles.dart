@@ -419,16 +419,12 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                       height: screenHeight * 0.03,
                       width: screenWidth,
                       decoration: BoxDecoration(
-                        color: isContactDetailsSelected
-                            ? PortColor.blue
-                            : PortColor.grey,
+                        color: PortColor.buttonBlue,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: headingMedium(
-                        text: "Enter Contact Details",
-                        color: isContactDetailsSelected
-                            ? Colors.white
-                            : PortColor.gray,
+                        text: "Proceed with Tata Ace ",
+                        color: PortColor.white,
                       ),
                     ),
                   ),

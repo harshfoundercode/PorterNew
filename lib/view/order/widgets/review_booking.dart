@@ -62,7 +62,15 @@ class _ReviewBookingState extends State<ReviewBooking> {
               height: screenHeight * 0.17,
               decoration: BoxDecoration(
                   color: PortColor.white,
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(10),
+                boxShadow: [BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 0.5,
+                  blurRadius: 3,
+                  offset: const Offset(0, 1),
+                ),
+              ],),
+
               child: Column(
                 children: [
                   Row(
@@ -145,6 +153,14 @@ class _ReviewBookingState extends State<ReviewBooking> {
               decoration: BoxDecoration(
                 color: PortColor.white,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0.5,
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
@@ -184,6 +200,14 @@ class _ReviewBookingState extends State<ReviewBooking> {
               decoration: BoxDecoration(
                 color: PortColor.white,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0.5,
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
               ),
               child: Column(
                 children: [
@@ -263,6 +287,14 @@ class _ReviewBookingState extends State<ReviewBooking> {
               decoration: BoxDecoration(
                 color: PortColor.white,
                 borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0.5,
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -296,10 +328,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 0.5,
+                    blurRadius: 3,
+                    offset: const Offset(0, 1),
                   ),
                 ],
               ),

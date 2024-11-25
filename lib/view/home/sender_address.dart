@@ -6,19 +6,17 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
-import 'package:porter/view/order/widgets/select_vehicles.dart';
 
-class EnterContactDetail extends StatefulWidget {
+class SenderAddress extends StatefulWidget {
   final String selectedLocation;
 
-  const EnterContactDetail({super.key, required this.selectedLocation});
+  const SenderAddress({super.key, required this.selectedLocation});
 
   @override
-  State<EnterContactDetail> createState() => _EnterContactDetailState();
+  State<SenderAddress> createState() => _SenderAddressState();
 }
 
-class _EnterContactDetailState extends State<EnterContactDetail> {
-
+class _SenderAddressState extends State<SenderAddress> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   late String selectedLocation;
@@ -60,7 +58,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   title: "Selected Location",
                   snippet: selectedLocation,
                 ),
-                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
               ),
             },
             onMapCreated: (controller) {
@@ -133,7 +131,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   controller: nameController,
                   height: screenHeight * 0.055,
                   cursorHeight: screenHeight * 0.023,
-                  labelText: "Receiver's Name",
+                  labelText: "Sender's Name",
                   suffixIcon: Icon(Icons.perm_contact_cal_outlined, color: PortColor.blue),
                 ),
                 SizedBox(height: screenHeight * 0.03),
@@ -141,7 +139,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   controller: mobileController,
                   height: screenHeight * 0.055,
                   cursorHeight: screenHeight * 0.023,
-                  labelText: "Receiver's Mobile Number",
+                  labelText: "Sender's Mobile Number",
                   keyboardType: TextInputType.number,
                   maxLength: 10,
                 ),
@@ -201,7 +199,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
     return Row(
       children: [
         Image(
-          image: const AssetImage(Assets.assetsRedlocation),
+          image: const AssetImage(Assets.assetsLocation),
           height: screenHeight * 0.035,
         ),
         SizedBox(width: screenWidth * 0.009),
@@ -257,39 +255,34 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
   }
 
   Widget buildProceedButton(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SelectVehicles()));
-      },
-      child:     Container(
-        height: screenHeight * 0.09,
-        decoration: BoxDecoration(
-          color: PortColor.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 5,
-              offset: const Offset(0, -3),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.017,
+    return Container(
+      height: screenHeight * 0.09,
+      decoration: BoxDecoration(
+        color: PortColor.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            offset: const Offset(0, -3),
           ),
-          child: Container(
-            alignment: Alignment.center,
-            height: screenHeight * 0.03,
-            width: screenWidth,
-            decoration: BoxDecoration(
-              color: isContactDetailsSelected ? PortColor.blue : PortColor.grey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: headingMedium(
-              text: "Enter Contact Details",
-              color: isContactDetailsSelected ? Colors.white : PortColor.gray,
-            ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.04,
+          vertical: screenHeight * 0.017,
+        ),
+        child: Container(
+          alignment: Alignment.center,
+          height: screenHeight * 0.03,
+          width: screenWidth,
+          decoration: BoxDecoration(
+            color: isContactDetailsSelected ? PortColor.blue : PortColor.grey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: headingMedium(
+            text: "Enter Contact Details",
+            color: isContactDetailsSelected ? Colors.white : PortColor.gray,
           ),
         ),
       ),

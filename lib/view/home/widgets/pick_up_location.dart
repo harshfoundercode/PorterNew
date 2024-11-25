@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view/home/sender_address.dart';
 import 'package:porter/view/home/widgets/use_current_location.dart';
 import 'package:http/http.dart'as http;
 
@@ -123,8 +124,16 @@ class _PickUpLocationState extends State<PickUpLocation> {
                             color: PortColor.black.withOpacity(0.5),
                           ),
                           onTap: () {
-                            print("Selected place: ${place['description']}");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SenderAddress(
+                                  selectedLocation: place['description'], // Pass the location description
+                                ),
+                              ),
+                            );
                           },
+
                         ),
                         if (index < searchResults.length - 1)
                           Padding(
