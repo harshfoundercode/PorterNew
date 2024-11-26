@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
@@ -199,16 +200,21 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                             text: place['description'],
                             color: PortColor.black.withOpacity(0.5),
                           ),
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      EnterContactDetail(
-                                          selectedLocation: place['description']),
+                          onTap: () async {
+                            String placeId = place['place_id'];
+                            LatLng latLng = await fetchLatLng(placeId);
+                            print(latLng);
+                            print("hel");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EnterContactDetail(
+                                  selectedLocation: place['description'],
+                                  selectedLatLng: latLng,
                                 ),
-                              );
-                            }
+                              ),
+                            );
+                          },
                         ),
                         if (index < searchResults.length - 1)
                           Padding(
@@ -318,6 +324,22 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
       }
     } else {
       print('Error fetching suggestions: ${response.body}');
+    }
+  }
+  Future<LatLng> fetchLatLng(String placeId) async {
+    Uri uri = Uri.https("maps.googleapis.com", 'maps/api/place/details/json', {
+      "place_id": placeId,
+      "key": "AIzaSyCOqfJTgg1Blp1GIeh7o8W8PC1w5dDyhWI",
+    });
+
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      final location = result['result']['geometry']['location'];
+      return LatLng(location['lat'], location['lng']);
+    } else {
+      print('Error fetching location details: ${response.body}');
+      return const LatLng(0.0, 0.0); // Default fallback
     }
   }
 }

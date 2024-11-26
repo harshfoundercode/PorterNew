@@ -10,21 +10,25 @@ import 'package:porter/view/order/widgets/select_vehicles.dart';
 
 class EnterContactDetail extends StatefulWidget {
   final String selectedLocation;
+  final LatLng selectedLatLng;
 
-  const EnterContactDetail({super.key, required this.selectedLocation});
+  const EnterContactDetail(
+      {super.key,
+        required this.selectedLocation,
+        required this.selectedLatLng});
 
   @override
   State<EnterContactDetail> createState() => _EnterContactDetailState();
 }
 
 class _EnterContactDetailState extends State<EnterContactDetail> {
-
   final TextEditingController nameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   late String selectedLocation;
   late GoogleMapController mapController;
   final Completer<GoogleMapController> _controller = Completer();
   bool isContactDetailsSelected = false;
+  bool isFullscreenMode = false;
 
   static const LatLng defaultPosition = LatLng(26.8467, 80.9462);
   LatLng selectedLatLng = defaultPosition;
@@ -32,13 +36,13 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
   @override
   void initState() {
     super.initState();
-    selectedLocation = widget.selectedLocation;
     fetchLatLngForLocation();
   }
 
   void fetchLatLngForLocation() {
     setState(() {
-      selectedLatLng = LatLng(26.9124, 75.7873);
+      selectedLocation = widget.selectedLocation;
+      selectedLatLng = widget.selectedLatLng;
     });
   }
 
@@ -60,7 +64,8 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   title: "Selected Location",
                   snippet: selectedLocation,
                 ),
-                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+                icon: BitmapDescriptor.defaultMarkerWithHue(
+                    BitmapDescriptor.hueRed),
               ),
             },
             onMapCreated: (controller) {
@@ -68,6 +73,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
               mapController = controller;
             },
           ),
+          // Back Button
           Positioned(
             top: screenHeight * 0.05,
             left: screenWidth * 0.04,
@@ -95,12 +101,51 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
               ),
             ),
           ),
+          // Fullscreen Button
           Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: buildBottomSheet(context),
+            top: screenHeight * 0.05,
+            right: screenWidth * 0.04,
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  isFullscreenMode = !isFullscreenMode;
+                });
+              },
+              child: Container(
+                width: screenHeight * 0.05,
+                height: screenHeight * 0.05,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: PortColor.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: PortColor.gray.withOpacity(0.9),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  isFullscreenMode ? Icons.fullscreen_exit : Icons.fullscreen,
+                  size: screenHeight * 0.03,
+                ),
+              ),
+            ),
           ),
+          if (!isFullscreenMode)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: buildBottomSheet(context),
+            ),
+          if (isFullscreenMode)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: buildLocationDetailsSmall(),
+            ),
         ],
       ),
     );
@@ -134,7 +179,8 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   height: screenHeight * 0.055,
                   cursorHeight: screenHeight * 0.023,
                   labelText: "Receiver's Name",
-                  suffixIcon: Icon(Icons.perm_contact_cal_outlined, color: PortColor.blue),
+                  suffixIcon: Icon(Icons.perm_contact_cal_outlined,
+                      color: PortColor.blue),
                 ),
                 SizedBox(height: screenHeight * 0.03),
                 CustomTextField(
@@ -158,12 +204,17 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                         height: screenHeight * 0.025,
                         width: screenWidth * 0.056,
                         decoration: BoxDecoration(
-                          border: Border.all(color: PortColor.blue, width: screenWidth * 0.004),
+                          border: Border.all(
+                              color: PortColor.blue,
+                              width: screenWidth * 0.004),
                           borderRadius: BorderRadius.circular(4),
-                          color: isContactDetailsSelected ? PortColor.blue : Colors.transparent,
+                          color: isContactDetailsSelected
+                              ? PortColor.blue
+                              : Colors.transparent,
                         ),
                         child: isContactDetailsSelected
-                            ? Icon(Icons.check, color: Colors.white, size: screenHeight * 0.02)
+                            ? Icon(Icons.check,
+                            color: Colors.white, size: screenHeight * 0.02)
                             : null,
                       ),
                       SizedBox(width: screenWidth * 0.028),
@@ -197,6 +248,85 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
     );
   }
 
+  Widget buildLocationDetailsSmall() {
+    return Container(
+      height: screenHeight * 0.2,
+      width: screenWidth,
+      decoration: BoxDecoration(
+        color: PortColor.white,
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(height: screenHeight * 0.015),
+          Row(
+            children: [
+              Image(
+                image: const AssetImage(Assets.assetsRedlocation),
+                height: screenHeight * 0.035,
+              ),
+              SizedBox(width: screenWidth * 0.02),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: screenWidth * 0.7,
+                    child: headingMedium(
+                        text: selectedLocation, color: PortColor.black),
+                  ),
+                  SizedBox(height: screenHeight * 0.007),
+                  Container(
+                    width: screenWidth * 0.8,
+                    child: titleMedium(
+                        text: selectedLocation, color: PortColor.black),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: screenHeight * 0.02),
+          Container(
+            height: screenHeight * 0.086,
+            decoration: BoxDecoration(
+              color: PortColor.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 5,
+                  offset: const Offset(0, -3),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.04,
+                vertical: screenHeight * 0.017,
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                height: screenHeight * 0.02,
+                width: screenWidth,
+                decoration: BoxDecoration(
+                  color: PortColor.blue ,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: headingMedium(
+                  text: "Confirm Drop Location",
+                  color:Colors.white ,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+
   Widget buildLocationDetails() {
     return Row(
       children: [
@@ -209,12 +339,14 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                width: screenWidth*0.5,
-                child: titleMedium(text: selectedLocation, color: PortColor.black)),
+                width: screenWidth * 0.5,
+                child: titleMedium(
+                    text: selectedLocation, color: PortColor.black)),
             SizedBox(height: screenHeight * 0.007),
             Container(
-                width: screenWidth*0.5,
-                child: elementsMedium(text: selectedLocation, color: PortColor.black)),
+                width: screenWidth * 0.5,
+                child: elementsMedium(
+                    text: selectedLocation, color: PortColor.black)),
           ],
         ),
         const Spacer(),
@@ -257,27 +389,27 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
   }
 
   Widget buildProceedButton(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => SelectVehicles()));
-      },
-      child:     Container(
-        height: screenHeight * 0.09,
-        decoration: BoxDecoration(
-          color: PortColor.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 5,
-              offset: const Offset(0, -3),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.017,
+    return Container(
+      height: screenHeight * 0.09,
+      decoration: BoxDecoration(
+        color: PortColor.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 5,
+            offset: const Offset(0, -3),
           ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.04,
+          vertical: screenHeight * 0.017,
+        ),
+        child: GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectVehicles()));
+          },
           child: Container(
             alignment: Alignment.center,
             height: screenHeight * 0.03,

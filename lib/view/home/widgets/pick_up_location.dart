@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
@@ -123,12 +124,17 @@ class _PickUpLocationState extends State<PickUpLocation> {
                             text: place['description'],
                             color: PortColor.black.withOpacity(0.5),
                           ),
-                          onTap: () {
+                          onTap: () async {
+                            String placeId = place['place_id'];
+                            LatLng latLng = await fetchLatLng(placeId);
+                            print(latLng);
+                            print("hel");
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => SenderAddress(
-                                  selectedLocation: place['description'], // Pass the location description
+                                  selectedLocation: place['description'],
+                                  selectedLatLng: latLng,
                                 ),
                               ),
                             );
@@ -248,8 +254,6 @@ class _PickUpLocationState extends State<PickUpLocation> {
                 ],
               ),
             )
-
-
           ])),
     );
   }
@@ -261,6 +265,7 @@ class _PickUpLocationState extends State<PickUpLocation> {
     });
     var response = await http.get(uri);
     print(response.body);
+    print("hello");
     if (response.statusCode == 200) {
       final resData = jsonDecode(response.body)['predictions'];
       if (resData != null) {
@@ -270,6 +275,22 @@ class _PickUpLocationState extends State<PickUpLocation> {
       }
     } else {
       print('Error fetching suggestions: ${response.body}');
+    }
+  }
+  Future<LatLng> fetchLatLng(String placeId) async {
+    Uri uri = Uri.https("maps.googleapis.com", 'maps/api/place/details/json', {
+      "place_id": placeId,
+      "key": "AIzaSyCOqfJTgg1Blp1GIeh7o8W8PC1w5dDyhWI",
+    });
+
+    var response = await http.get(uri);
+    if (response.statusCode == 200) {
+      final result = jsonDecode(response.body);
+      final location = result['result']['geometry']['location'];
+      return LatLng(location['lat'], location['lng']);
+    } else {
+      print('Error fetching location details: ${response.body}');
+      return const LatLng(0.0, 0.0); // Default fallback
     }
   }
 }
