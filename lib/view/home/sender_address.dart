@@ -6,7 +6,8 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
-import 'package:porter/view/home/new_page.dart';
+import 'package:porter/view_model/order_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SenderAddress extends StatefulWidget {
   final String selectedLocation;
@@ -14,8 +15,8 @@ class SenderAddress extends StatefulWidget {
 
   const SenderAddress(
       {super.key,
-        required this.selectedLocation,
-        required this.selectedLatLng});
+      required this.selectedLocation,
+      required this.selectedLatLng});
 
   @override
   State<SenderAddress> createState() => _SenderAddressState();
@@ -45,8 +46,10 @@ class _SenderAddressState extends State<SenderAddress> {
       selectedLatLng = widget.selectedLatLng;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    final orderViewModel = Provider.of<OrderViewModel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -100,7 +103,6 @@ class _SenderAddressState extends State<SenderAddress> {
               ),
             ),
           ),
-          // Fullscreen Button
           Positioned(
             top: screenHeight * 0.05,
             right: screenWidth * 0.04,
@@ -213,12 +215,12 @@ class _SenderAddressState extends State<SenderAddress> {
                         ),
                         child: isContactDetailsSelected
                             ? Icon(Icons.check,
-                            color: Colors.white, size: screenHeight * 0.02)
+                                color: Colors.white, size: screenHeight * 0.02)
                             : null,
                       ),
                       SizedBox(width: screenWidth * 0.028),
                       titleMedium(
-                        text: "Use My Mobile Number: 7234567667",
+                        text: "Use My Mobile Number: 7235947667",
                         color: PortColor.black,
                       ),
                     ],
@@ -288,43 +290,42 @@ class _SenderAddressState extends State<SenderAddress> {
             ],
           ),
           SizedBox(height: screenHeight * 0.02),
-      Container(
-        height: screenHeight * 0.086,
-        decoration: BoxDecoration(
-          color: PortColor.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 5,
-              offset: const Offset(0, -3),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.04,
-            vertical: screenHeight * 0.017,
-          ),
-          child: Container(
-            alignment: Alignment.center,
-            height: screenHeight * 0.02,
-            width: screenWidth,
+          Container(
+            height: screenHeight * 0.086,
             decoration: BoxDecoration(
-              color: PortColor.blue ,
-              borderRadius: BorderRadius.circular(10),
+              color: PortColor.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 5,
+                  offset: const Offset(0, -3),
+                ),
+              ],
             ),
-            child: headingMedium(
-              text: "Confirm Pickup Location",
-              color:Colors.white ,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenWidth * 0.04,
+                vertical: screenHeight * 0.017,
+              ),
+              child: Container(
+                alignment: Alignment.center,
+                height: screenHeight * 0.02,
+                width: screenWidth,
+                decoration: BoxDecoration(
+                  color: PortColor.blue,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: headingMedium(
+                  text: "Confirm Pickup Location",
+                  color: Colors.white,
+                ),
+              ),
             ),
-          ),
-        ),
-      )
+          )
         ],
       ),
     );
   }
-
 
   Widget buildLocationDetails() {
     return Row(
@@ -388,6 +389,10 @@ class _SenderAddressState extends State<SenderAddress> {
   }
 
   Widget buildProceedButton(BuildContext context) {
+    final orderViewModel = Provider.of<OrderViewModel>(context);
+
+    bool isMobileNumberFilled =
+        mobileController.text.isNotEmpty && mobileController.text.length == 10;
     return Container(
       height: screenHeight * 0.09,
       decoration: BoxDecoration(
@@ -406,20 +411,31 @@ class _SenderAddressState extends State<SenderAddress> {
           vertical: screenHeight * 0.017,
         ),
         child: GestureDetector(
-          onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>NewPage()));
+          onTap: () {
+            final data = {
+              "address": selectedLocation,
+              "name": nameController.text,
+              "phone": mobileController.text,
+            };
+            print(data);
+            print("hloooch");
+            orderViewModel.setLocationData(data);
+            Navigator.pop(context , data);
+            Navigator.pop(context);
           },
           child: Container(
             alignment: Alignment.center,
             height: screenHeight * 0.03,
             width: screenWidth,
             decoration: BoxDecoration(
-              color: isContactDetailsSelected ? PortColor.blue : PortColor.grey,
+              color: isMobileNumberFilled ? PortColor.blue : PortColor.grey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: headingMedium(
-              text: "Enter Contact Details",
-              color: isContactDetailsSelected ? Colors.white : PortColor.gray,
+              text: isMobileNumberFilled
+                  ? "Confirm and proceed"
+                  : "Enter Contact Details",
+              color: isMobileNumberFilled ? Colors.white : PortColor.gray,
             ),
           ),
         ),

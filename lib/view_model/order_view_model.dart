@@ -3,20 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:porter/repo/order_repo.dart';
 import 'package:porter/utils/utils.dart';
 class OrderViewModel with ChangeNotifier {
-final fromLocation = TextEditingController();
-final toLocation = TextEditingController();
-final  recieverName = TextEditingController();
-final recieverNumber= TextEditingController();
-
-dynamic fromLat;
-dynamic fromLog;
-dynamic toLat ;
-dynamic toLog ;
-  final  _orderRepo = OrderRepository();
+  final _orderRepo = OrderRepository();
   bool _loading = false;
   bool get loading => _loading;
-  void setLoading(bool value) {
-    _loading = value;
+
+  int? _locationType;
+  int? get locationType => _locationType;
+   setLocationType(int value) {
+    _locationType = value;
+    notifyListeners();
+  }
+
+  dynamic _pickupData;
+  dynamic _dropData;
+
+  dynamic get pickupData => _pickupData;
+  dynamic get dropData => _dropData;
+
+   setLocationData(dynamic data) {
+     print(data);
+    if(_locationType==0){
+      print("pickup");
+      _pickupData = data;
+    }else{
+      print("drop");
+
+      _dropData = data;
+    }
     notifyListeners();
   }
 
@@ -34,7 +47,6 @@ dynamic toLog ;
       BuildContext context,
       ) async {
     setLoading(true);
-
     Map<String, dynamic> data = {
       "userid": "1",
       "vehicle_type": vehicle,
@@ -67,5 +79,10 @@ dynamic toLog ;
         print('Error: $error');
       }
     }
+  }
+
+  setLoading(bool value) {
+    _loading = value;
+    notifyListeners();
   }
 }

@@ -89,7 +89,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                         ],
                       ),
                       Spacer(),
-                      headingMedium(text: "14 mins", color: Colors.green),
+                      headingMedium(text: " 14 mins ", color: Colors.green),
                       elementsMedium(text: "away", color: Colors.black),
                     ],
                   ),
@@ -169,7 +169,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                     height: screenHeight * 0.05,
                   ),
                   headingMedium(text: "You Saved", color: PortColor.black),
-                  headingMedium(text: "₹75", color: Colors.green),
+                  headingMedium(text: " ₹75 ", color: Colors.green),
                   headingMedium(
                       text: "with FIRST20 🎉", color: PortColor.black),
                   SizedBox(
@@ -217,7 +217,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: "Trip Fare",
                           color: PortColor.black.withOpacity(0.8)),
                       headingMedium(
-                          text: "(incl.Toll)",
+                          text: " (incl.Toll)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
                       headingMedium(text: "₹582.24", color: PortColor.black),
@@ -264,7 +264,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: "Amount Payable",
                           color: PortColor.black.withOpacity(0.8)),
                       titleSmall(
-                          text: "(rounded)",
+                          text: " (rounded)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
                       headingMedium(text: "₹508", color: PortColor.black),

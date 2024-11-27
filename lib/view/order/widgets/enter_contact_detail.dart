@@ -7,6 +7,8 @@ import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
 import 'package:porter/view/order/widgets/select_vehicles.dart';
+import 'package:porter/view_model/order_view_model.dart';
+import 'package:provider/provider.dart';
 
 class EnterContactDetail extends StatefulWidget {
   final String selectedLocation;
@@ -325,8 +327,6 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
       ),
     );
   }
-
-
   Widget buildLocationDetails() {
     return Row(
       children: [
@@ -389,6 +389,8 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
   }
 
   Widget buildProceedButton(BuildContext context) {
+    final orderViewModel = Provider.of<OrderViewModel>(context);
+    bool isMobileNumberFilled = mobileController.text.isNotEmpty && mobileController.text.length ==10;
     return Container(
       height: screenHeight * 0.09,
       decoration: BoxDecoration(
@@ -408,6 +410,14 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
         ),
         child: GestureDetector(
           onTap: (){
+            final data = {
+              "address": selectedLocation,
+              "name": nameController.text,
+              "phone": mobileController.text,
+            };
+            print(data);
+            print("hloooch");
+            orderViewModel.setLocationData(data);
             Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectVehicles()));
           },
           child: Container(
@@ -415,12 +425,12 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
             height: screenHeight * 0.03,
             width: screenWidth,
             decoration: BoxDecoration(
-              color: isContactDetailsSelected ? PortColor.blue : PortColor.grey,
+              color: isMobileNumberFilled ? PortColor.blue : PortColor.grey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: headingMedium(
-              text: "Enter Contact Details",
-              color: isContactDetailsSelected ? Colors.white : PortColor.gray,
+              text: isMobileNumberFilled ?"Confirm and Proceed" :"Enter Contact Details",
+              color: isMobileNumberFilled ? Colors.white : PortColor.gray,
             ),
           ),
         ),

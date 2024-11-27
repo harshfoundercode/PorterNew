@@ -4,6 +4,8 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/order/widgets/review_booking.dart';
+import 'package:porter/view_model/order_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SelectVehicles extends StatefulWidget {
   const SelectVehicles({super.key});
@@ -13,17 +15,19 @@ class SelectVehicles extends StatefulWidget {
 }
 
 class _SelectVehiclesState extends State<SelectVehicles> {
+
   bool isContactDetailsSelected = false;
 
   List<OrderModel> orderList = [
     OrderModel(
-        pickupAddress: "Founder Code Technol pvt ltd.",
+        pickupAddress: "Sector H, Jankipuram, Lucknow, Uttar Pradesh",
         destAddress: "Chandrika Devi temple ",
         mobile: "7235947667",
         amount: 10,
         status: 10,
         date: '',
-        time: '')
+        time: ''
+    )
   ];
 
   @override
@@ -122,10 +126,9 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
-                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     headingMedium(
-                                      text: orderList[index].pickupAddress,
+                                      text: "Founder Code Technol pvt ltd.",
                                       color: PortColor.black,
                                     ),
                                     titleMedium(
@@ -135,19 +138,18 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                   ],
                                 ),
                                 elementsSmall(
-                                  text: "Sector H, Jankipuram, Lucknow, Uttar Pradesh",
+                                  text: orderList[index].pickupAddress,
                                   color: PortColor.gray,
                                 ),
                                 SizedBox(height: screenHeight * 0.02),
                                 Row(
-                                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     headingMedium(
-                                      text: orderList[index].destAddress,
+                                      text: "Chandrika Devi temple",
                                       color: PortColor.black,
                                     ),
                                     titleMedium(
-                                      text: orderList[index].mobile,
+                                      text: "7654345435",
                                       color: PortColor.gray,
                                     ),
                                   ],

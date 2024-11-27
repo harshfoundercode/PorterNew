@@ -18,10 +18,10 @@ class DeliverByTruck extends StatefulWidget {
 }
 
 class _DeliverByTruckState extends State<DeliverByTruck> {
+  bool hasData = false;
   List<dynamic> searchResults = [];
   Map<String, String> placeDetailsCache = {};
   String? selectedLocation;
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,10 +75,11 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                             Column(
                               children: List.generate(
                                 10,
-                                    (index) => Container(
+                                (index) => Container(
                                   width: screenWidth * 0.005,
                                   height: screenHeight * 0.0025,
-                                  margin: const EdgeInsets.symmetric(vertical: 2),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 2),
                                   color: PortColor.gray,
                                 ),
                               ),
@@ -96,64 +97,144 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                           child: Column(
                             children: [
                               InkWell(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const PickUpLocation()));
+                                onTap: () {
+                                  orderViewModel.setLocationType(0);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const PickUpLocation()));
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.02,
-                                    vertical: screenHeight * 0.015,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: screenWidth * 0.02,
+                                      vertical: screenHeight * 0.015,
+                                    ),
+                                    height: screenHeight * 0.068,
+                                    width: screenWidth * 0.78,
+                                    decoration: BoxDecoration(
+                                      color: PortColor.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: PortColor.gray,
+                                          width: screenWidth * 0.002),
+                                    ),
+                                    child: hasData
+                                        ? Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            elementsMedium(
+                                              text: "Founder code technology pvtltd.",
+                                              color: PortColor.black,
+                                            ),
+                                            elementsSmall(
+                                              text: "7235947667",
+                                              color: PortColor.gray,
+                                            ),
+                                            const Spacer(),
+                                            Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: screenHeight * 0.017,
+                                            ),
+                                          ],
+                                        ),
+                                        elementsSmall(
+                                          text: "SectorH, jankipuram, lucknow, uttar pradesh..",
+                                          color: PortColor.black,
+                                        ),
+                                      ],
+                                    )
+                                        : (orderViewModel.pickupData != null
+                                        ? Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            elementsMedium(
+                                              text: orderViewModel.pickupData["name"] ?? "N/A",
+                                              color: PortColor.black,
+                                            ),
+                                            elementsSmall(
+                                              text: orderViewModel.pickupData["phone"] ?? "N/A",
+                                              color: PortColor.gray,
+                                            ),
+                                            const Spacer(),
+                                            Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: screenHeight * 0.017,
+                                            ),
+                                          ],
+                                        ),
+                                        elementsSmall(
+                                          text: orderViewModel.pickupData["address"] ?? "N/A",
+                                          color: PortColor.black,
+                                        ),
+                                      ],
+                                    )
+                                        : Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            elementsMedium(
+                                              text: "Founder code technology pvtltd.",
+                                              color: PortColor.black,
+                                            ),
+                                            elementsSmall(
+                                              text: "7235947667",
+                                              color: PortColor.gray,
+                                            ),
+                                            const Spacer(),
+                                            Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: screenHeight * 0.017,
+                                            ),
+                                          ],
+                                        ),
+                                        elementsSmall(
+                                          text: "SectorH, jankipuram, lucknow, uttar pradesh..",
+                                          color: PortColor.black,
+                                        ),
+                                      ],
+                                    ))
 
-                                  ),
-                                  height: screenHeight * 0.068,
-                                  width: screenWidth * 0.78,
-                                  decoration: BoxDecoration(
-                                    color: PortColor.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: PortColor.gray, width: screenWidth * 0.002),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          elementsMedium(text: "Founder code technology pvtltd.", color: PortColor.black),
-                                          elementsSmall(text: "7235947667", color: PortColor.gray),
-                                          const Spacer(),
-                                          Icon(Icons.arrow_forward_ios_rounded, size: screenHeight * 0.017),
-                                        ],
-                                      ),
-                                      elementsSmall(text: "SectorH, jankipuram, lucknow, uttar pradesh..", color: PortColor.black),
-                                    ],
-                                  ),
+
                                 ),
                               ),
                               SizedBox(height: screenHeight * 0.018),
                               TextField(
+                                onTap: () {
+                                  orderViewModel.setLocationType(1);
+                                },
                                 onChanged: (value) {
                                   placeSearchApi(value);
                                 },
                                 decoration: InputDecoration(
-                                  constraints: BoxConstraints(maxHeight: screenHeight * 0.055),
+                                  constraints: BoxConstraints(
+                                      maxHeight: screenHeight * 0.055),
                                   hintText: "Where is your Drop?",
                                   hintStyle: TextStyle(
                                     color: PortColor.gray.withOpacity(0.5),
                                     fontSize: 15,
                                   ),
-                                  suffixIcon: const Icon(Icons.mic, color: PortColor.blue),
+                                  suffixIcon: const Icon(Icons.mic,
+                                      color: PortColor.blue),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(color: PortColor.gray),
+                                    borderSide:
+                                        const BorderSide(color: PortColor.gray),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: const BorderSide(color: Colors.black),
+                                    borderSide:
+                                        const BorderSide(color: Colors.black),
                                   ),
                                   filled: true,
                                   fillColor: PortColor.white,
                                 ),
                               ),
-
                             ],
                           ),
                         ),
@@ -185,53 +266,50 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
             SizedBox(height: screenHeight * 0.035),
             if (searchResults.isNotEmpty)
               SizedBox(
-                height: screenHeight * 0.22,
-                child:ListView.builder(
-                  itemCount: searchResults.length,
-                  itemBuilder: (context, index) {
-                    final place = searchResults[index];
-                    return Column(
-                      children: [
-                        ListTile(
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.04,
-                          ),
-                          title: titleMedium(
-                            text: place['description'],
-                            color: PortColor.black.withOpacity(0.5),
-                          ),
-                          onTap: () async {
-                            String placeId = place['place_id'];
-                            LatLng latLng = await fetchLatLng(placeId);
-                            print(latLng);
-                            print("hel");
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EnterContactDetail(
-                                  selectedLocation: place['description'],
-                                  selectedLatLng: latLng,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        if (index < searchResults.length - 1)
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                            child: Divider(
-                              color: PortColor.gray,
-                              thickness: screenWidth * 0.002,
+                  height: screenHeight * 0.22,
+                  child: ListView.builder(
+                    itemCount: searchResults.length,
+                    itemBuilder: (context, index) {
+                      final place = searchResults[index];
+                      return Column(
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.04,
                             ),
+                            title: titleMedium(
+                              text: place['description'],
+                              color: PortColor.black.withOpacity(0.5),
+                            ),
+                            onTap: () async {
+                              String placeId = place['place_id'];
+                              LatLng latLng = await fetchLatLng(placeId);
+                              print(latLng);
+                              print("hel");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EnterContactDetail(
+                                    selectedLocation: place['description'],
+                                    selectedLatLng: latLng,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                      ],
-                    );
-                  },
-                )
-
-              ),
-
-
+                          if (index < searchResults.length - 1)
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.04),
+                              child: Divider(
+                                color: PortColor.gray,
+                                thickness: screenWidth * 0.002,
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  )),
             if (searchResults.isEmpty)
               Container(
                 padding: EdgeInsets.symmetric(
@@ -264,7 +342,8 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                               color: PortColor.black.withOpacity(0.6),
                             ),
                             titleMedium(
-                              text: "Mandir Road, lucknow, uttar pradesh, India\nFounder Code.. 6785467899",
+                              text:
+                                  "Mandir Road, lucknow, uttar pradesh, India\nFounder Code.. 6785467899",
                               color: PortColor.gray,
                             ),
                           ],
@@ -297,7 +376,8 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Icons.location_on, color: PortColor.blue),
-                  headingMedium(text: " Locate on the map", color: PortColor.black),
+                  headingMedium(
+                      text: " Locate on the map", color: PortColor.black),
                 ],
               ),
             ),
@@ -308,7 +388,8 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
   }
 
   Future<void> placeSearchApi(String searchCon) async {
-    Uri uri = Uri.https("maps.googleapis.com", 'maps/api/place/autocomplete/json', {
+    Uri uri =
+        Uri.https("maps.googleapis.com", 'maps/api/place/autocomplete/json', {
       "input": searchCon,
       "key": "AIzaSyCOqfJTgg1Blp1GIeh7o8W8PC1w5dDyhWI",
       "components": "country:in",
@@ -326,6 +407,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
       print('Error fetching suggestions: ${response.body}');
     }
   }
+
   Future<LatLng> fetchLatLng(String placeId) async {
     Uri uri = Uri.https("maps.googleapis.com", 'maps/api/place/details/json', {
       "place_id": placeId,
