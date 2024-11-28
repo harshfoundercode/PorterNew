@@ -5,19 +5,36 @@ import 'package:porter/res/constant_color.dart';
 import 'package:porter/view/home/widgets/pickup/deliver_all_india_parcel.dart';
 import 'package:porter/view/home/widgets/pickup/deliver_by_packer_mover.dart';
 import 'package:porter/view/home/widgets/pickup/deliver_by_truck.dart';
+import 'package:porter/view_model/service_type_view_model.dart';
+import 'package:provider/provider.dart';
 
-class CategoryGrid extends StatelessWidget {
+class CategoryGrid extends StatefulWidget {
   const CategoryGrid({super.key});
 
   @override
+  State<CategoryGrid> createState() => _CategoryGridState();
+}
+
+class _CategoryGridState extends State<CategoryGrid> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final serviceTypeViewModel =
+      Provider.of<ServiceTypeViewModel>(context, listen: false);
+      serviceTypeViewModel.serviceTypeApi();
+      print("helokokfio");
+    });
+  }
+  @override
   Widget build(BuildContext context) {
-    List<GridModel> gridList = [
-      GridModel(title: 'Trucks', img: Assets.assetsTruck),
-      GridModel(title: '2 Wheeler', img: Assets.assetsBike),
-      GridModel(title: 'Packers & \nMovers', img: Assets.assetsWashing),
-      GridModel(title: 'All India \nParcel', img: Assets.assetsMart),
-    ];
-    return GridView.builder(
+    final serviceTypeViewModel = Provider.of<ServiceTypeViewModel>(context);
+
+    return serviceTypeViewModel.loading
+      ?const Center(child: CircularProgressIndicator())
+    :serviceTypeViewModel.serviceTypeModel?.data
+      ?.isNotEmpty == true
+    ?  GridView.builder(
       padding: const EdgeInsets.all(10),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -26,25 +43,26 @@ class CategoryGrid extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 7,
       ),
-      itemCount: gridList.length,
+      itemCount: serviceTypeViewModel.serviceTypeModel!.data!.length,
       itemBuilder: (context, index) {
+        final services = serviceTypeViewModel.serviceTypeModel!.data![index];
         return GestureDetector(
           onTap: () {
-            if (gridList[index].title == 'Trucks' || gridList[index].title == '2 Wheeler') {
+            if (index == 0 || index == 1) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const DeliverByTruck(),
                 ),
               );
-            } else if (gridList[index].title == 'All India \nParcel') {
+            } else if (index == 2) {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const DeliverAllIndiaParcel(),
                 ),
               );
-            }else if (gridList[index].title == 'Packers & \nMovers') {
+            } else  {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -79,7 +97,7 @@ class CategoryGrid extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          gridList[index].title,
+                          services.name??"",
                           style: const TextStyle(
                               fontSize: 14, fontWeight: FontWeight.w600),
                         ),
@@ -97,7 +115,9 @@ class CategoryGrid extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: screenHeight * 0.006),
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Image.asset(gridList[index].img, height: 90),
+                    child: Image.network(
+                        services.images??"",
+                        height: 90),
                   ),
                 ),
               ],
@@ -105,12 +125,8 @@ class CategoryGrid extends StatelessWidget {
           ),
         );
       },
-    );
+    )
+        : const Center(child: Text("No vehicles Available"));
   }
 }
 
-class GridModel {
-  final String title;
-  final String img;
-  GridModel({required this.title, required this.img});
-}

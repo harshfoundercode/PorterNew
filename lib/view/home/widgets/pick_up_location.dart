@@ -188,7 +188,7 @@ class _PickUpLocationState extends State<PickUpLocation> {
                               color: PortColor.black.withOpacity(0.6)),
                           titleMedium(
                               text:
-                                  "Jankipuram,lucknow,UttarPradesh 2260..\nFouonder Code 6785467899",
+                                  "Jankipuram,lucknow,UttarPradesh 2260..\nPrachi Singh 3213456787",
                               color: PortColor.gray)
                         ],
                       ),

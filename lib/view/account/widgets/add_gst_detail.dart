@@ -66,7 +66,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                             firstnameController.text,
                             lastnameController.text,
                             emailIdController.text,
-                            "7235947667",
+                            "2312321232",
                             gstINController.text,
                             gstRegistrationController.text,
                             context,
@@ -92,7 +92,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                       left: screenWidth * 0.045, bottom: screenHeight * 0.01),
                   child: Row(
                     children: [
-                      titleSmall(text: "7234567656", color: PortColor.black),
+                      titleSmall(text: "2123212321", color: PortColor.black),
                       SizedBox(width: screenWidth * 0.02),
                       elementsSmall(
                           text: "Cannot be changed", color: PortColor.gray),

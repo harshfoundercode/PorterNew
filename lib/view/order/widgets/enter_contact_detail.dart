@@ -6,6 +6,7 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
+import 'package:porter/utils/utils.dart';
 import 'package:porter/view/order/widgets/select_vehicles.dart';
 import 'package:porter/view_model/order_view_model.dart';
 import 'package:provider/provider.dart';
@@ -221,7 +222,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                       ),
                       SizedBox(width: screenWidth * 0.028),
                       titleMedium(
-                        text: "Use My Mobile Number: 7234567667",
+                        text: "Use My Mobile Number: 3232123212",
                         color: PortColor.black,
                       ),
                     ],
@@ -410,15 +411,22 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
         ),
         child: GestureDetector(
           onTap: (){
-            final data = {
-              "address": selectedLocation,
-              "name": nameController.text,
-              "phone": mobileController.text,
-            };
-            print(data);
-            print("hloooch");
-            orderViewModel.setLocationData(data);
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectVehicles()));
+            if (nameController.text.isEmpty){
+              Utils.showErrorMessage(context, "Enter receiver name ");
+            }else if(mobileController.text.isEmpty){
+              Utils.showErrorMessage(context, "Enter Mobile number");
+            }else {
+              final data = {
+                "address": selectedLocation,
+                "name": nameController.text,
+                "phone": mobileController.text,
+              };
+              print(data);
+              print("hloooch");
+              orderViewModel.setLocationData(data);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SelectVehicles()));
+            }
           },
           child: Container(
             alignment: Alignment.center,

@@ -126,6 +126,7 @@ class _RegistrationState extends State<Registration> {
                   height: screenHeight * 0.045,
                   cursorHeight: screenHeight * 0.022,
                   focusedBorder: PortColor.blue,
+                  suffixIcon: Icon(Icons.arrow_drop_down),
                 ),
                 SizedBox(height: screenHeight * 0.02),
                 Row(

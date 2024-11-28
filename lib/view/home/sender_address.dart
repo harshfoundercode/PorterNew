@@ -6,6 +6,7 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
+import 'package:porter/utils/utils.dart';
 import 'package:porter/view_model/order_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -220,7 +221,7 @@ class _SenderAddressState extends State<SenderAddress> {
                       ),
                       SizedBox(width: screenWidth * 0.028),
                       titleMedium(
-                        text: "Use My Mobile Number: 7235947667",
+                        text: "Use My Mobile Number: 3212321232",
                         color: PortColor.black,
                       ),
                     ],
@@ -412,16 +413,22 @@ class _SenderAddressState extends State<SenderAddress> {
         ),
         child: GestureDetector(
           onTap: () {
-            final data = {
-              "address": selectedLocation,
-              "name": nameController.text,
-              "phone": mobileController.text,
-            };
-            print(data);
-            print("hloooch");
-            orderViewModel.setLocationData(data);
-            Navigator.pop(context , data);
-            Navigator.pop(context);
+            if(nameController.text.isEmpty){
+              Utils.showErrorMessage(context, "Enter sender's name");
+            } else if(mobileController.text.isEmpty){
+              Utils.showErrorMessage(context, "Enter sender's mobile number");
+            }else {
+              final data = {
+                "address": selectedLocation,
+                "name": nameController.text,
+                "phone": mobileController.text,
+              };
+              print(data);
+              print("hloooch");
+              orderViewModel.setLocationData(data);
+              Navigator.pop(context, data);
+              Navigator.pop(context);
+            }
           },
           child: Container(
             alignment: Alignment.center,

@@ -126,11 +126,11 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                                         Row(
                                           children: [
                                             elementsMedium(
-                                              text: "Founder code technology pvtltd.",
+                                              text: "Prachi Singh",
                                               color: PortColor.black,
                                             ),
                                             elementsSmall(
-                                              text: "7235947667",
+                                              text: "3212321232",
                                               color: PortColor.gray,
                                             ),
                                             const Spacer(),
@@ -179,11 +179,12 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                                         Row(
                                           children: [
                                             elementsMedium(
-                                              text: "Founder code technology pvtltd.",
+                                              text: "Prachi Singh",
                                               color: PortColor.black,
                                             ),
+                                            SizedBox(width: screenWidth*0.01,),
                                             elementsSmall(
-                                              text: "7235947667",
+                                              text: "3212321232",
                                               color: PortColor.gray,
                                             ),
                                             const Spacer(),
@@ -343,7 +344,7 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                             ),
                             titleMedium(
                               text:
-                                  "Mandir Road, lucknow, uttar pradesh, India\nFounder Code.. 6785467899",
+                                  "Mandir Road, lucknow, uttar pradesh, India\nprachi .. 6785467899",
                               color: PortColor.gray,
                             ),
                           ],

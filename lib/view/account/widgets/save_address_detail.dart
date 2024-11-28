@@ -137,7 +137,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
                           children: [
                             headingMedium(text: "Shop", color: PortColor.black),
                             titleMedium(
-                                text: "Founder code technol pvt ltd.7345678998",
+                                text: "Prachi singh.6754321234",
                                 color: PortColor.gray)
                           ],
                         )

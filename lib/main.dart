@@ -7,6 +7,8 @@ import 'package:porter/view_model/order_view_model.dart';
 import 'package:porter/view_model/profile_update_view_model.dart';
 import 'package:porter/view_model/profile_view_model.dart';
 import 'package:porter/view_model/register_view_model.dart';
+import 'package:porter/view_model/select_vehicles_view_model.dart';
+import 'package:porter/view_model/service_type_view_model.dart';
 import 'package:provider/provider.dart';
 void main() {
   runApp(const MyApp());
@@ -28,6 +30,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> AuthViewModel()),
         ChangeNotifierProvider(create: (context)=> ProfileUpdateViewModel()),
         ChangeNotifierProvider(create: (context)=> OrderViewModel()),
+        ChangeNotifierProvider(create: (context)=> SelectVehiclesViewModel()),
+        ChangeNotifierProvider(create: (context)=> ServiceTypeViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

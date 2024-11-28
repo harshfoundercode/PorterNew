@@ -128,7 +128,7 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
                         ),
                         SizedBox(width: screenWidth * 0.028),
                         titleMedium(
-                          text: "Use My Mobile Number: 7234567667",
+                          text: "Use My Mobile Number: 2123212321",
                           color: PortColor.black,
                         ),
                       ],
