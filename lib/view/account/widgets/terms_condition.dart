@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+
+import 'terms/terms_and_condition.dart';
 class TermsCondition extends StatefulWidget {
   const TermsCondition({super.key});
 
@@ -60,7 +62,11 @@ class _TermsConditionState extends State<TermsCondition> {
                 children: [
                   Row(
                     children: [
-                      headingMedium(text: "Terms and Condition",color: PortColor.black),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>TermsAndCondition()));
+                          },
+                          child: Container(child: headingMedium(text: "Terms and Condition",color: PortColor.black))),
                       Spacer(),
                       Icon(Icons.arrow_forward_ios_rounded,size: screenHeight*0.015,),
                     ],

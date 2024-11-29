@@ -31,7 +31,7 @@ class _CategoryGridState extends State<CategoryGrid> {
     final serviceTypeViewModel = Provider.of<ServiceTypeViewModel>(context);
 
     return serviceTypeViewModel.loading
-      ?const Center(child: CircularProgressIndicator())
+      ?const Center(child: CircularProgressIndicator(color: Colors.blueAccent,))
     :serviceTypeViewModel.serviceTypeModel?.data
       ?.isNotEmpty == true
     ?  GridView.builder(
