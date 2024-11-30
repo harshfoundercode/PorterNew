@@ -41,7 +41,6 @@ class OrderViewModel with ChangeNotifier {
       dynamic dropLongitude,
       dynamic pickupLatitude,
       dynamic pickupLongitude,
-      dynamic amount,
       dynamic name,
       dynamic phone,
       BuildContext context,
@@ -58,7 +57,6 @@ class OrderViewModel with ChangeNotifier {
       "pickup_longitude": pickupLongitude,
       "name": name,
       "phone": phone,
-      "amount": amount,
     };
 
     try {

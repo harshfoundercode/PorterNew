@@ -422,6 +422,8 @@ class _SenderAddressState extends State<SenderAddress> {
                 "address": selectedLocation,
                 "name": nameController.text,
                 "phone": mobileController.text,
+                " latitude": selectedLatLng.latitude,
+                "longitude": selectedLatLng.longitude,
               };
               print(data);
               print("hloooch");

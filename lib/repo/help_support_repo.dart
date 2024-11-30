@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:porter/helper/helper/network/base_api_services.dart';
 import 'package:porter/helper/helper/network/network_api_services.dart';
-import 'package:porter/model/address_delete_model.dart';
 import 'package:porter/res/api_url.dart';
-class AddressDeleteRepo {
+class HelpSupportRepo {
   final BaseApiServices _apiServices = NetworkApiServices();
-  Future<dynamic> addressDeleteApi(dynamic data) async {
+  Future<dynamic> helpSupportApi(dynamic data) async {
     try {
       dynamic response =
-      await _apiServices.getPostApiResponse(ApiUrl.addressDeleteUrl, data);
+      await _apiServices.getGetApiResponse(ApiUrl.helpSupportUrl+ data);
       return response;
     } catch (e) {
       if (kDebugMode) {

@@ -1,18 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:porter/helper/helper/network/base_api_services.dart';
 import 'package:porter/helper/helper/network/network_api_services.dart';
-import 'package:porter/model/address_delete_model.dart';
+import 'package:porter/model/privacy_policy_model.dart';
 import 'package:porter/res/api_url.dart';
-class AddressDeleteRepo {
+class PrivacyPolicyRepo {
   final BaseApiServices _apiServices = NetworkApiServices();
-  Future<dynamic> addressDeleteApi(dynamic data) async {
+
+  Future<PrivacyPolicyModel> privacyPolicyApi() async {
     try {
       dynamic response =
-      await _apiServices.getPostApiResponse(ApiUrl.addressDeleteUrl, data);
-      return response;
+      await _apiServices.getGetApiResponse(ApiUrl.privacyPolicyUrl);
+      return PrivacyPolicyModel.fromJson(response);
     } catch (e) {
       if (kDebugMode) {
-        print('Error occurred during addressDeleteApi: $e');
+        print('Error occurred during privacyPolicyApi: $e');
       }
       rethrow;
     }

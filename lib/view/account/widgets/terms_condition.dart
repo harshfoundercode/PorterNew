@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view/account/widgets/terms/privacy_policy.dart';
 
 import 'terms/terms_and_condition.dart';
 class TermsCondition extends StatefulWidget {
@@ -77,7 +78,11 @@ class _TermsConditionState extends State<TermsCondition> {
 
                   Row(
                     children: [
-                      headingMedium(text: "Privacy and policy",color: PortColor.black),
+                      GestureDetector(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> PrivacyPolicy()));
+                          },
+                          child: Container(child: headingMedium(text: "Privacy and policy",color: PortColor.black))),
                       Spacer(),
                       Icon(Icons.arrow_forward_ios_rounded,size: screenHeight*0.015,),
                     ],

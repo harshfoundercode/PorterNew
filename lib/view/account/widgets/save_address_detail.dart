@@ -246,7 +246,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
                                                 BorderRadius.vertical(top: Radius.circular(10)),
                                               ),
                                               builder: (BuildContext context) {
-                                                return deleteBottomSheet(context);
+                                                return deleteBottomSheet(context, saveAddress!.id.toString());
                                               },
                                             );
                                           },
@@ -280,7 +280,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
       ),
     );
   }
-  Widget deleteBottomSheet(context){
+  Widget deleteBottomSheet(context, String addressId){
     final addressDeleteViewModel = Provider.of<AddressDeleteViewModel>(context);
     return Padding(
       padding: EdgeInsets.all(screenHeight * 0.02),
@@ -322,7 +322,7 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
               ),
               GestureDetector(
                 onTap: (){
-                  addressDeleteViewModel.deleteAddressApi(userid: "", addressId: "", context: context);
+                  addressDeleteViewModel.deleteAddressApi(userid: "", addressId: addressId, context: context);
                   Navigator.pop(context);
                 },
                 child: Container(

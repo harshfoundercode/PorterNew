@@ -12,6 +12,8 @@ class ApiUrl{
   static const String addressShowUrl="${baseUrl}view_address/";
   static const String addressDeleteUrl="${baseUrl}address_delete";
   static const String termAndConditionUrl="${baseUrl}term_condition";
+  static const String privacyPolicyUrl="${baseUrl}privacy_policy";
+  static const String helpSupportUrl="${baseUrl}help";
   static const String sendOtpUrl ="https://otp.fctechteam.org/send_otp.php?mode=test&digit=4&mobile=";
   static const String verifyOtpUrl ="https://otp.fctechteam.org/verifyotp.php?mobile=";
 }

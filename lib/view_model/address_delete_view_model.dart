@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/address_delete_repo.dart';
 import 'package:porter/utils/utils.dart';
+import 'package:porter/view_model/address_show_view_model.dart';
 import 'package:porter/view_model/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class AddressDeleteViewModel with ChangeNotifier {
   final AddressDeleteRepo _addressDeleteRepo = AddressDeleteRepo();
@@ -16,8 +18,8 @@ class AddressDeleteViewModel with ChangeNotifier {
   }
 
   Future<void> deleteAddressApi({
-    required String userid,
-    required String addressId,
+    required  userid,
+    required  addressId,
     required BuildContext context,
   }) async {
     setLoading(true);
@@ -36,9 +38,13 @@ class AddressDeleteViewModel with ChangeNotifier {
 
     try {
       final response = await _addressDeleteRepo.addressDeleteApi(data);
-      setLoading(false);
 
-      if (response.status == true) {
+
+      if (response["status"] == true) {
+
+        // Provider.of<AddressShowViewModel>(context, listen: false).addressShowApi();
+        // Utils.showSuccessMessage(context, "Address deleted successfully");
+
         if (kDebugMode) {
           print("Address deleted successfully: ${response.message}");
         }

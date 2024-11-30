@@ -33,7 +33,7 @@ class AddressShowViewModel with ChangeNotifier {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error in profileApi: $e');
+        print('Error in addressApi: $e');
       }
     } finally {
       setLoading(false);

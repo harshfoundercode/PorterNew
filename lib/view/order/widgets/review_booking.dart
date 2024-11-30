@@ -3,9 +3,14 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view_model/order_view_model.dart';
+import 'package:porter/view_model/select_vehicles_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ReviewBooking extends StatefulWidget {
-  const ReviewBooking({super.key});
+  final int? index;
+  final String price;
+  const ReviewBooking({super.key, this.index, required this.price, });
 
   @override
   State<ReviewBooking> createState() => _ReviewBookingState();
@@ -14,6 +19,10 @@ class ReviewBooking extends StatefulWidget {
 class _ReviewBookingState extends State<ReviewBooking> {
   @override
   Widget build(BuildContext context) {
+     final orderViewModel = Provider.of<OrderViewModel>(context);
+    // final selectVehiclesViewModel =
+    // Provider.of<SelectVehiclesViewModel>(context);
+    final vehicle = Provider.of<SelectVehiclesViewModel>(context).selectVehiclesModel!.data![widget.index!];
     return Scaffold(
       backgroundColor: PortColor.grey,
       body: ListView(
@@ -76,14 +85,16 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   Row(
                     children: [
                       Image(
-                        image: AssetImage(Assets.assetsBookingtruck),
+                        image: NetworkImage(vehicle.image.toString()
+
+                        ),
                         height: screenHeight * 0.065,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           headingMedium(
-                              text: "Tata Ace", color: PortColor.black),
+                              text: vehicle.name.toString(), color: PortColor.black),
                           titleMedium(
                               text: "View Address detail", color: Colors.blue),
                         ],
@@ -220,7 +231,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: " (incl.Toll)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
-                      headingMedium(text: "₹582.24", color: PortColor.black),
+                      headingMedium(text: widget.price, color: PortColor.black),
                     ],
                   ),
                   SizedBox(
@@ -267,7 +278,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: " (rounded)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
-                      headingMedium(text: "₹508", color: PortColor.black),
+                      headingMedium(text:  widget.price, color: PortColor.black),
                     ],
                   ),
                 ],
@@ -395,16 +406,30 @@ class _ReviewBookingState extends State<ReviewBooking> {
               ],
             ),
             SizedBox(height: screenHeight*0.014,),
-            Container(
-              alignment: Alignment.center,
-              height: screenHeight * 0.07,
-              width: screenWidth,
-              decoration: BoxDecoration(
-                color: PortColor.buttonBlue,
-                borderRadius: BorderRadius.circular(5),
+            InkWell(
+              onTap: (){
+                // orderViewModel.orderApi(vehicle,
+                //     orderViewModel.pickupData["address"]["name"]["phone"]["latitude"]["longitude"],
+                //     orderViewModel.dropData["address"]["name"]["phone"]["latitude"]["longitude"],
+                //     orderViewModel.,
+                //     dropLongitude,
+                //     pickupLatitude,
+                //     pickupLongitude,
+                //     orderViewModel.,
+                //     phone,
+                //     context);
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: screenHeight * 0.07,
+                width: screenWidth,
+                decoration: BoxDecoration(
+                  color: PortColor.buttonBlue,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child:
+                    headingMedium(text: "Book Tata Ace", color: PortColor.white),
               ),
-              child:
-                  headingMedium(text: "Book Tata Ace", color: PortColor.white),
             ),
           ],
         ),

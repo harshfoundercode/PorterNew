@@ -420,6 +420,8 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                 "address": selectedLocation,
                 "name": nameController.text,
                 "phone": mobileController.text,
+               " latitude": selectedLatLng.latitude,
+                "longitude": selectedLatLng.longitude,
               };
               print(data);
               print("hloooch");

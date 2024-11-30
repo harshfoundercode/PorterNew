@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
-import 'package:porter/view_model/terms_and_condition_view_model.dart';
+import 'package:porter/view_model/privacy_policy_view_model.dart';
 import 'package:provider/provider.dart';
-class TermsAndCondition extends StatefulWidget {
-  const TermsAndCondition({super.key});
+
+class PrivacyPolicy extends StatefulWidget {
+  const PrivacyPolicy({super.key});
 
   @override
-  State<TermsAndCondition> createState() => _TermsAndConditionState();
+  State<PrivacyPolicy> createState() => _PrivacyPolicyState();
 }
-
-class _TermsAndConditionState extends State<TermsAndCondition> {
+class _PrivacyPolicyState extends State<PrivacyPolicy> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final termConditionViewModel =
-      Provider.of<TermAndConditionViewModel>(context, listen: false);
-      termConditionViewModel.termConditionApi();
-      print("I am the....");
+      final privacyPolicyViewModel =
+      Provider.of<PrivacyPolicyViewModel>(context, listen: false);
+      privacyPolicyViewModel.privacyPolicyApi();
+      print("I am the....don");
     });
   }
   @override
@@ -44,11 +44,11 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                     width: screenWidth * 0.24,
                   ),
                   titleSmall(
-                    text: "Terms and Condition",
+                    text: "Privacy and Policy",
                     color: PortColor.black,
                   ),
                   SizedBox(
-                    width: screenWidth * 0.16,
+                    width: screenWidth * 0.22,
                   ),
                   InkWell(
                       onTap: (){
@@ -60,7 +60,6 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
             ),
           ],
         ),
-      
       ),
     );
   }
