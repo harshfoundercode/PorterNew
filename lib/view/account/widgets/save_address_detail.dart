@@ -214,9 +214,10 @@ class _SaveAddressDetailState extends State<SaveAddressDetail> {
                                       height: screenHeight * 0.01,
                                     ),
                                     elementsMedium(
-                                        text: saveAddress?.pincode.toString() ??
-                                            "",
-                                        color: PortColor.gray),
+                                      text: " Pin code: ${saveAddress?.pincode.toString() ?? ""} ",
+                                      color: PortColor.gray,
+                                    ),
+
                                     SizedBox(height: screenHeight * 0.01),
                                     Row(
                                       children: [

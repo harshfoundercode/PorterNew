@@ -72,8 +72,7 @@ class _OrderPageState extends State<OrderPage> {
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.03,
                     vertical: screenHeight * 0.018),
-                child:
-                headingMedium(text: "Past", color: PortColor.gray),
+                child: headingMedium(text: "Past", color: PortColor.gray),
               ),
               Container(
                 padding: EdgeInsets.symmetric(

@@ -3,7 +3,6 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
-import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/view/account/widgets/help_support.dart';
 import 'package:porter/view/account/widgets/save_address_detail.dart';
 import 'package:porter/view/account/widgets/terms_condition.dart';
@@ -268,7 +267,6 @@ class AccountDetail extends StatelessWidget {
       ),
     );
   }
-
   Widget buttonLayoutUi(context, IconData icon, String label,
       {Widget? page, Widget? trailing}) {
     return ListTile(

@@ -4,6 +4,7 @@ import 'package:porter/utils/routes/routes_name.dart';
 import 'package:porter/view_model/add_address_view_model.dart';
 import 'package:porter/view_model/address_delete_view_model.dart';
 import 'package:porter/view_model/address_show_view_model.dart';
+import 'package:porter/view_model/help_and_support_view_model.dart';
 import 'package:porter/view_model/login_view_model.dart';
 import 'package:porter/view_model/order_view_model.dart';
 import 'package:porter/view_model/privacy_policy_view_model.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> AddressDeleteViewModel()),
         ChangeNotifierProvider(create: (context)=> TermAndConditionViewModel()),
         ChangeNotifierProvider(create: (context)=> PrivacyPolicyViewModel()),
+        ChangeNotifierProvider(create: (context)=> HelpAndSupportViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

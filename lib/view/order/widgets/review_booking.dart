@@ -231,7 +231,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: " (incl.Toll)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
-                      headingMedium(text: widget.price, color: PortColor.black),
+                      headingMedium(text: "₹${(widget.price)}", color: PortColor.black),
                     ],
                   ),
                   SizedBox(
@@ -278,7 +278,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: " (rounded)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
-                      headingMedium(text:  widget.price, color: PortColor.black),
+                      headingMedium(text:  "₹${(widget.price)}", color: PortColor.black),
                     ],
                   ),
                 ],
@@ -402,22 +402,24 @@ class _ReviewBookingState extends State<ReviewBooking> {
                 headingMedium(
                     text: "Choose Payment mode", color: PortColor.black),
                 Spacer(),
-                headingMedium(text: "₹585", color: PortColor.black),
+                headingMedium(text: "₹${(widget.price)}", color: PortColor.black),
               ],
             ),
             SizedBox(height: screenHeight*0.014,),
             InkWell(
               onTap: (){
-                // orderViewModel.orderApi(vehicle,
-                //     orderViewModel.pickupData["address"]["name"]["phone"]["latitude"]["longitude"],
-                //     orderViewModel.dropData["address"]["name"]["phone"]["latitude"]["longitude"],
-                //     orderViewModel.,
-                //     dropLongitude,
-                //     pickupLatitude,
-                //     pickupLongitude,
-                //     orderViewModel.,
-                //     phone,
-                //     context);
+                orderViewModel.orderApi(vehicle.id.toString(),
+                    orderViewModel.pickupData["address"],
+                    orderViewModel.dropData["address"],
+                    orderViewModel.dropData["latitude"],
+                    orderViewModel.dropData["longitude"],
+                    orderViewModel.pickupData["latitude"],
+                    orderViewModel.pickupData["longitude"],
+                   orderViewModel.pickupData["name"],
+                   orderViewModel.pickupData["phone"],
+                   orderViewModel.dropData["name"],
+                   orderViewModel.dropData["phone"],
+                    context);
               },
               child: Container(
                 alignment: Alignment.center,

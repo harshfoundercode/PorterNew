@@ -12,7 +12,7 @@ class AddAddressRepo {
       return AddAddressModel.fromJson(response);
     } catch (e) {
       if (kDebugMode) {
-        print('Error occurred during loginApi: $e');
+        print('Error occurred during AddAddress: $e');
       }
       rethrow;
     }

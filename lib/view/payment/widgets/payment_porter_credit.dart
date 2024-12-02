@@ -12,6 +12,7 @@ class PaymentPorterCredit extends StatefulWidget {
 
 class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
   TextEditingController _controller = TextEditingController();
+  bool isBottomSheetVisible = false;
   bool isProceedEnabled = false;
 
   @override
@@ -34,9 +35,29 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
     _updateProceedButton();
   }
 
-  void _clearAmount() {
-    _controller.clear();
-    _updateProceedButton();
+  // void _clearAmount() {
+  //   _controller.clear();
+  //   _updateProceedButton();
+  // }
+
+  Widget _quickAddButton(String label, int amount) {
+    return GestureDetector(
+      onTap: () => _addAmount(amount),
+      child: Container(
+        height: screenHeight * 0.04,
+        width: screenWidth * 0.14,
+        decoration: BoxDecoration(
+          color: PortColor.blue.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Center(
+          child: elementsSmall(
+            text: label,
+            color: PortColor.blue,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -55,7 +76,7 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
                 BoxShadow(
                   color: Colors.black.withOpacity(0.1),
                   blurRadius: 2,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -86,167 +107,11 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
               child: Row(
                 children: [
                   titleMedium(text: "Balance ₹0", color: PortColor.black),
-                  Spacer(),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
-                          ),
-                        ),
-                        builder: (BuildContext context) {
-                          return WillPopScope(
-                            onWillPop: () async {
-                              _clearAmount();
-                              return true;
-                            },
-                            child: Container(
-                              height: screenHeight * 0.28,
-                              width: screenWidth,
-                              decoration: BoxDecoration(
-                                color: PortColor.white,
-                                borderRadius: const BorderRadius.only(
-
-                                  topLeft: Radius.circular(20),
-                                  topRight: Radius.circular(20),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: PortColor.gray.withOpacity(0.3),
-                                    offset: const Offset(0, 2),
-                                    blurRadius: 10,
-                                    spreadRadius: 1,
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: screenWidth * 0.04),
-                                child: Column(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: screenHeight * 0.01),
-                                    headingMedium(
-                                        text: "Add Money",
-                                        color: PortColor.black),
-                                    SizedBox(height: screenHeight * 0.01),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: TextField(
-                                            controller: _controller,
-                                            keyboardType:
-                                            TextInputType.number,
-                                            onChanged: (value) =>
-                                                _updateProceedButton(),
-                                            decoration: InputDecoration(
-                                              hintText: 'Enter Amount',
-                                              hintStyle: const TextStyle(
-                                                  color: PortColor.gray),
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(
-                                                    15),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: screenWidth * 0.04),
-                                        GestureDetector(
-                                          onTap: () => _addAmount(500),
-                                          child: Container(
-                                            height: screenHeight * 0.04,
-                                            width: screenWidth * 0.14,
-                                            decoration: BoxDecoration(
-                                              color: PortColor.blue
-                                                  .withOpacity(0.1),
-                                              borderRadius:
-                                              BorderRadius.circular(15),
-                                            ),
-                                            child: Center(
-                                              child: elementsSmall(
-                                                text: "+500",
-                                                color: PortColor.blue,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: screenWidth * 0.04),
-                                        GestureDetector(
-                                          onTap: () => _addAmount(1000),
-                                          child: Container(
-                                            height: screenHeight * 0.04,
-                                            width: screenWidth * 0.14,
-                                            decoration: BoxDecoration(
-                                              color: PortColor.blue
-                                                  .withOpacity(0.1),
-                                              borderRadius:
-                                              BorderRadius.circular(15),
-                                            ),
-                                            child: Center(
-                                              child: elementsSmall(
-                                                text: "+1000",
-                                                color: PortColor.blue,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: screenWidth * 0.04),
-                                        GestureDetector(
-                                          onTap: () => _addAmount(2000),
-                                          child: Container(
-                                            height: screenHeight * 0.04,
-                                            width: screenWidth * 0.14,
-                                            decoration: BoxDecoration(
-                                              color: PortColor.blue
-                                                  .withOpacity(0.1),
-                                              borderRadius:
-                                              BorderRadius.circular(15),
-                                            ),
-                                            child: Center(
-                                              child: elementsSmall(
-                                                text: "+2000",
-                                                color: PortColor.blue,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: screenHeight * 0.05),
-                                    Container(
-                                      height: screenHeight * 0.06,
-                                      width: screenWidth * 0.88,
-                                      decoration: BoxDecoration(
-                                        color: isProceedEnabled
-                                            ? PortColor.blue
-                                            : PortColor.grey,
-                                        borderRadius:
-                                        BorderRadius.circular(20),
-                                      ),
-                                      child: Center(
-                                        child: headingMedium(
-                                          text: "Proceed",
-                                          color: isProceedEnabled
-                                              ? PortColor.white
-                                              : PortColor.gray,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ).whenComplete(() {
-                        _clearAmount();
+                      setState(() {
+                        isBottomSheetVisible = true;
                       });
                     },
                     child: headingMedium(
@@ -260,6 +125,100 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
           ),
         ],
       ),
+      bottomSheet: isBottomSheetVisible
+          ? Container(
+              height: screenHeight * 0.26,
+              width: screenWidth,
+              decoration: BoxDecoration(
+                color: PortColor.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: PortColor.gray.withOpacity(0.3),
+                    offset: const Offset(0, 2),
+                    blurRadius: 10,
+                    spreadRadius: 1,
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: screenHeight * 0.015),
+                    headingMedium(text: "Add Money", color: PortColor.black),
+                    SizedBox(height: screenHeight * 0.012),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            cursorColor: PortColor.gray,
+                            controller: _controller,
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => _updateProceedButton(),
+                            decoration: InputDecoration(
+                              hintText: 'Enter Amount',
+                              hintStyle: const TextStyle(color: PortColor.gray),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: PortColor.gray),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(color: PortColor.gray),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: const BorderSide(
+                                    color: PortColor.gray, width: 1.5),
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(
+                                vertical: 8,
+                                horizontal: 12,
+                              ),
+                            ),
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ),
+                        SizedBox(width: screenWidth * 0.04),
+                        _quickAddButton("+500", 500),
+                        SizedBox(width: screenWidth * 0.04),
+                        _quickAddButton("+1000", 1000),
+                        SizedBox(width: screenWidth * 0.04),
+                        _quickAddButton("+2000", 2000),
+                      ],
+                    ),
+                    SizedBox(height: screenHeight * 0.055),
+                    GestureDetector(
+                      onTap: isProceedEnabled ? () {} : null,
+                      child: Container(
+                        height: screenHeight * 0.06,
+                        width: screenWidth * 0.88,
+                        decoration: BoxDecoration(
+                          color: isProceedEnabled
+                              ? PortColor.blue
+                              : PortColor.grey,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Center(
+                          child: headingMedium(
+                            text: "Proceed",
+                            color: isProceedEnabled
+                                ? PortColor.white
+                                : PortColor.gray,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : null,
     );
   }
 }

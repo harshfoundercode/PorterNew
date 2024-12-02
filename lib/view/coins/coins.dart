@@ -130,15 +130,18 @@ class _CoinsPageState extends State<CoinsPage> {
                                     bottomRight: Radius.circular(10))),
                             child: Row(
                               children: [
+                                SizedBox(width: screenWidth*0.02,),
                                 headingMedium(
                                     text: "Coin transaction History",
                                     color: PortColor.black),
                                 const Spacer(),
                                 Icon(
                                   Icons.arrow_forward,
-                                  size: screenHeight * 0.03,
+                                  size: screenHeight * 0.025,
                                   color: PortColor.gray,
                                 ),
+                                SizedBox(width: screenWidth*0.01,),
+
                               ],
                             ),
                           ),

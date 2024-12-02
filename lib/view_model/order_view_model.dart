@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/order_repo.dart';
@@ -21,7 +23,7 @@ class OrderViewModel with ChangeNotifier {
   dynamic get dropData => _dropData;
 
    setLocationData(dynamic data) {
-     print(data);
+     print("ddddd $data");
     if(_locationType==0){
       print("pickup");
       _pickupData = data;
@@ -41,29 +43,34 @@ class OrderViewModel with ChangeNotifier {
       dynamic dropLongitude,
       dynamic pickupLatitude,
       dynamic pickupLongitude,
-      dynamic name,
-      dynamic phone,
+      dynamic senderName,
+      dynamic senderPhone,
+      dynamic recieverName,
+      dynamic recieverPhone,
       BuildContext context,
       ) async {
     setLoading(true);
-    Map<String, dynamic> data = {
+    Map data = {
       "userid": "1",
       "vehicle_type": vehicle,
-      "pickup_address": pickupAddress,
-      "drop_address": dropAddress,
-      "drop_latitude": dropLatitude,
-      "drop_longitude": dropLongitude,
-      "pickup_latitude": pickupLatitude,
-      "pickup_longitude": pickupLongitude,
-      "name": name,
-      "phone": phone,
+      "pickup_address": pickupAddress.toString(),
+      "drop_address": dropAddress.toString(),
+      "drop_latitute": dropLatitude.toString(),
+      "drop_logitute": dropLongitude.toString(),
+      "pickup_latitute": pickupLatitude.toString(),
+      "pickup_logitute": pickupLongitude.toString(),
+      "sender_name":senderName,
+      "sender_phone":senderPhone,
+      "reciver_name":recieverName,
+      "reciver_phone":recieverPhone,
     };
-
+print(jsonEncode(data));
+print("qwer");
     try {
       final response = await _orderRepo.orderApi(data);
       setLoading(false);
 
-      if (response.status == 200) {
+      if (response["status"] == 200) {
         Utils.showSuccessMessage(context, "Order successfully placed!");
       } else {
         Utils.showErrorMessage(context, 'Failed to place order. Please try again.');

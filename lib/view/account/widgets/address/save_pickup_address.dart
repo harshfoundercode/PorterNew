@@ -5,7 +5,6 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/account/widgets/address/save_pick_up_address_detail.dart';
-import 'package:porter/view/home/sender_address.dart';
 import 'package:porter/view/home/widgets/use_current_location.dart';
 import 'package:http/http.dart'as http;
 

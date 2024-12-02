@@ -51,19 +51,29 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
         index: _selectedIndex,
         children: _pages,
       ),
-      bottomNavigationBar: Container(
-        color: PortColor.white,
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildNavItem(0, Icons.home, 'Home'),
-            _buildNavItem(1, Icons.receipt_long, 'Orders'),
-            _buildNavItem(2, Icons.account_balance_wallet, 'Coins'),
-            _buildNavItem(3, Icons.payment, 'Payments'),
-            _buildNavItem(4, Icons.account_circle, 'Account'),
-          ],
-        ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Divider(
+            color: PortColor.grey,
+            thickness: 1,
+            height: 1,
+          ),
+          Container(
+            color: PortColor.white,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildNavItem(0, Icons.home, 'Home'),
+                _buildNavItem(1, Icons.receipt_long, 'Orders'),
+                _buildNavItem(2, Icons.account_balance_wallet, 'Coins'),
+                _buildNavItem(3, Icons.payment, 'Payments'),
+                _buildNavItem(4, Icons.account_circle, 'Account'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
