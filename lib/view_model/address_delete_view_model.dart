@@ -27,7 +27,7 @@ class AddressDeleteViewModel with ChangeNotifier {
     UserViewModel userViewModel = UserViewModel();
     String? userId = await userViewModel.getUser();
 
-    Map<String, dynamic> data = {
+    Map  data = {
       "userid": userId,
       "address_id": addressId,
     };
@@ -42,8 +42,8 @@ class AddressDeleteViewModel with ChangeNotifier {
 
       if (response["status"] == true) {
 
-        // Provider.of<AddressShowViewModel>(context, listen: false).addressShowApi();
-        // Utils.showSuccessMessage(context, "Address deleted successfully");
+        Provider.of<AddressShowViewModel>(context, listen: false).addressShowApi();
+        Utils.showSuccessMessage(context, "Address deleted successfully");
 
         if (kDebugMode) {
           print("Address deleted successfully: ${response.message}");

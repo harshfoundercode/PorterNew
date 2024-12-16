@@ -8,6 +8,7 @@ import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
 import 'package:porter/utils/utils.dart';
 import 'package:porter/view_model/order_view_model.dart';
+import 'package:porter/view_model/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
 class SenderAddress extends StatefulWidget {
@@ -154,6 +155,7 @@ class _SenderAddressState extends State<SenderAddress> {
   }
 
   Widget buildBottomSheet(BuildContext context) {
+    final profileViewModel = Provider.of<ProfileViewModel>(context);
     return Container(
       width: screenWidth,
       decoration: const BoxDecoration(
@@ -220,9 +222,17 @@ class _SenderAddressState extends State<SenderAddress> {
                             : null,
                       ),
                       SizedBox(width: screenWidth * 0.028),
-                      titleMedium(
-                        text: "Use My Mobile Number: 3212321232",
-                        color: PortColor.black,
+                      Row(
+                        children: [
+                          titleMedium(
+                            text: "Use My Mobile Number:",
+                            color: PortColor.black,
+                          ),
+                          titleMedium(
+                            text: profileViewModel.profileModel!.data!.phone.toString()??"",
+                            color: PortColor.black,
+                          ),
+                        ],
                       ),
                     ],
                   ),

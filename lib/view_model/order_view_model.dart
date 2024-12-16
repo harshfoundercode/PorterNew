@@ -1,9 +1,11 @@
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/order_repo.dart';
 import 'package:porter/utils/utils.dart';
+import 'package:porter/view_model/user_view_model.dart';
+
+
 class OrderViewModel with ChangeNotifier {
   final _orderRepo = OrderRepository();
   bool _loading = false;
@@ -45,13 +47,17 @@ class OrderViewModel with ChangeNotifier {
       dynamic pickupLongitude,
       dynamic senderName,
       dynamic senderPhone,
-      dynamic recieverName,
-      dynamic recieverPhone,
-      BuildContext context,
+      dynamic receiverName,
+      dynamic receiverPhone,
+      dynamic amount,
+       dynamic distance,
+       context,
       ) async {
+    UserViewModel userViewModel = UserViewModel();
+    String? UserId = await userViewModel.getUser();
     setLoading(true);
     Map data = {
-      "userid": "1",
+      "userid": UserId,
       "vehicle_type": vehicle,
       "pickup_address": pickupAddress.toString(),
       "drop_address": dropAddress.toString(),
@@ -61,12 +67,17 @@ class OrderViewModel with ChangeNotifier {
       "pickup_logitute": pickupLongitude.toString(),
       "sender_name":senderName,
       "sender_phone":senderPhone,
-      "reciver_name":recieverName,
-      "reciver_phone":recieverPhone,
+      "reciver_name":receiverName,
+      "reciver_phone":receiverPhone,
+      "amount":amount,
+      "distance":distance,
     };
-print(jsonEncode(data));
-print("qwer");
+    
+    print("Ajay");
+    print(data);
+   // print(d)
     try {
+     
       final response = await _orderRepo.orderApi(data);
       setLoading(false);
 

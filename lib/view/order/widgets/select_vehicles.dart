@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
-import 'package:porter/model/select_vehicles_model.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/order/widgets/review_booking.dart';
@@ -50,23 +49,17 @@ class _SelectVehiclesState extends State<SelectVehicles> {
   double _degreeToRadian(double degree) {
     return degree * pi / 180;
   }
-
   @override
   Widget build(BuildContext context) {
     final orderViewModel = Provider.of<OrderViewModel>(context);
     final selectVehiclesViewModel =
         Provider.of<SelectVehiclesViewModel>(context);
-    print(orderViewModel.pickupData);
-    print(orderViewModel.dropData);
     double pickupLat = orderViewModel.pickupData["latitude"] ?? 0.0;
     double pickupLon = orderViewModel.pickupData["longitude"] ?? 0.0;
     double dropLat = orderViewModel.dropData["latitude"] ?? 0.0;
     double dropLon = orderViewModel.dropData["longitude"] ?? 0.0;
-    print("asdfgh");
     double distance = calculateDistance(pickupLat, pickupLon, dropLat, dropLon);
-    print("Calculated distance: $distance km");
-    print("asdfgh");
-
+    print("distance $distance");
     return SafeArea(
         child: Scaffold(
             backgroundColor: PortColor.grey,
@@ -165,6 +158,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                         "N/A",
                                     color: PortColor.black,
                                   ),
+                                  SizedBox(width: screenWidth*0.02,),
                                   titleMedium(
                                     text: orderViewModel.pickupData["phone"] ??
                                         "N/A",
@@ -185,6 +179,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                         "N/A",
                                     color: PortColor.black,
                                   ),
+                                  SizedBox(width: screenWidth*0.01,),
                                   titleMedium(
                                     text: orderViewModel.dropData["phone"] ??
                                         "N/A",
@@ -373,7 +368,8 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => ReviewBooking(index:selectedIndex, price:((selectVehiclesViewModel
-                                      .selectVehiclesModel?.data![selectedIndex!].price??0) * distance ).toStringAsFixed(2)),
+                                      .selectVehiclesModel?.data![selectedIndex!].price??0) * distance ).toStringAsFixed(2), distance: distance.toStringAsFixed(2),),
+
                                 ),
                               );
                             }

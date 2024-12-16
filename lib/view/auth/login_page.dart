@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(25),
             ),
             alignment: Alignment.center,
-            child: headingMedium(text: "Login", color: PortColor.white),
+            child:  headingMedium(text: "Login", color: PortColor.white),
           ),
         ),
         SizedBox(height: screenHeight * 0.02),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:porter/main.dart';
@@ -8,6 +9,7 @@ import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/home/widgets/pick_up_location.dart';
 import 'package:porter/view/order/widgets/enter_contact_detail.dart';
 import 'package:porter/view_model/order_view_model.dart';
+import 'package:porter/view_model/profile_view_model.dart';
 import 'package:provider/provider.dart';
 
 class DeliverByTruck extends StatefulWidget {
@@ -18,14 +20,93 @@ class DeliverByTruck extends StatefulWidget {
 }
 
 class _DeliverByTruckState extends State<DeliverByTruck> {
+
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
   bool hasData = false;
   List<dynamic> searchResults = [];
   Map<String, String> placeDetailsCache = {};
   String? selectedLocation;
+  String? _currentAddress;
+  @override
+
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      return;
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+
+    setState(() {});
+
+    _fetchAddress(position.latitude, position.longitude);
+
+  }
+
+  Future<void> _fetchAddress(double latitude, double longitude) async {
+    final profileViewModel = Provider.of<ProfileViewModel>(context, listen: false);
+    final orderViewModel = Provider.of<OrderViewModel>(context, listen: false);
+
+    const String apiKey = 'AIzaSyCOqfJTgg1Blp1GIeh7o8W8PC1w5dDyhWI';
+    final url =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      print('Response: ${response.body}');
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['results'] != null && data['results'].isNotEmpty) {
+          final address = data['results'][0]['formatted_address'];
+          setState(() {
+            _currentAddress = address;
+          });
+          final locationData = {
+            "address": _currentAddress,
+            "name": profileViewModel.profileModel?.data?.firstName ?? "",
+            "phone": profileViewModel.profileModel?.data?.phone.toString() ?? "",
+            "latitude": latitude,
+            "longitude": longitude,
+          };
+          print('Location Data: $locationData');
+          orderViewModel.setLocationType(0);
+          orderViewModel.setLocationData(locationData);
+          print('Updated Address: $_currentAddress');
+        } else {
+          print('No results found for the given coordinates.');
+        }
+      } else {
+        print('Failed to fetch address. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching address: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final orderViewModel = Provider.of<OrderViewModel>(context);
+    final profileViewModel = Provider.of<ProfileViewModel>(context);
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: PortColor.grey,
@@ -110,7 +191,6 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                                       horizontal: screenWidth * 0.02,
                                       vertical: screenHeight * 0.015,
                                     ),
-                                    height: screenHeight * 0.068,
                                     width: screenWidth * 0.78,
                                     decoration: BoxDecoration(
                                       color: PortColor.white,
@@ -121,88 +201,107 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                                     ),
                                     child: hasData
                                         ? Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            elementsMedium(
-                                              text: "Prachi Singh",
-                                              color: PortColor.black,
-                                            ),
-                                            elementsSmall(
-                                              text: "3212321232",
-                                              color: PortColor.gray,
-                                            ),
-                                            const Spacer(),
-                                            Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: screenHeight * 0.017,
-                                            ),
-                                          ],
-                                        ),
-                                        elementsSmall(
-                                          text: "SectorH, jankipuram, lucknow, uttar pradesh..",
-                                          color: PortColor.black,
-                                        ),
-                                      ],
-                                    )
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  elementsMedium(
+                                                    text: profileViewModel.profileModel!.data!.firstName??"",
+                                                    color: PortColor.black,
+                                                  ),
+                                                  elementsSmall(
+                                                    text: profileViewModel.profileModel!.data!.phone.toString()??"",
+                                                    color: PortColor.gray,
+                                                  ),
+                                                  const Spacer(),
+                                                  Icon(
+                                                    Icons
+                                                        .arrow_forward_ios_rounded,
+                                                    size: screenHeight * 0.017,
+                                                  ),
+                                                ],
+                                              ),
+                                              elementsSmall(
+                                                text:
+                                                    "SectorH, jankipuram, lucknow, uttar pradesh..",
+                                                color: PortColor.black,
+                                              ),
+                                            ],
+                                          )
                                         : (orderViewModel.pickupData != null
-                                        ? Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            elementsMedium(
-                                              text: orderViewModel.pickupData["name"] ?? "N/A",
-                                              color: PortColor.black,
-                                            ),
-                                            elementsSmall(
-                                              text: orderViewModel.pickupData["phone"] ?? "N/A",
-                                              color: PortColor.gray,
-                                            ),
-                                            const Spacer(),
-                                            Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: screenHeight * 0.017,
-                                            ),
-                                          ],
-                                        ),
-                                        elementsSmall(
-                                          text: orderViewModel.pickupData["address"] ?? "N/A",
-                                          color: PortColor.black,
-                                        ),
-                                      ],
-                                    )
-                                        : Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            elementsMedium(
-                                              text: "Prachi Singh",
-                                              color: PortColor.black,
-                                            ),
-                                            SizedBox(width: screenWidth*0.01,),
-                                            elementsSmall(
-                                              text: "3212321232",
-                                              color: PortColor.gray,
-                                            ),
-                                            const Spacer(),
-                                            Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: screenHeight * 0.017,
-                                            ),
-                                          ],
-                                        ),
-                                        elementsSmall(
-                                          text: "SectorH, jankipuram, lucknow, uttar pradesh..",
-                                          color: PortColor.black,
-                                        ),
-                                      ],
-                                    ))
-
-
-                                ),
+                                            ? Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      elementsMedium(
+                                                        text: orderViewModel
+                                                                    .pickupData[
+                                                                "name"] ??
+                                                            "N/A",
+                                                        color: PortColor.black,
+                                                      ),
+                                                      elementsSmall(
+                                                        text: orderViewModel
+                                                                    .pickupData[
+                                                                "phone"] ??
+                                                            "N/A",
+                                                        color: PortColor.gray,
+                                                      ),
+                                                      const Spacer(),
+                                                      Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_rounded,
+                                                        size: screenHeight *
+                                                            0.017,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  elementsSmall(
+                                                    text: orderViewModel
+                                                                .pickupData[
+                                                            "address"] ??
+                                                        "N/A",
+                                                    color: PortColor.black,
+                                                  ),
+                                                ],
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  // Row(
+                                                  //   children: [
+                                                  //     elementsMedium(
+                                                  //       text:profileViewModel.profileModel!.data!.firstName??"",
+                                                  //       color: PortColor.black,
+                                                  //     ),
+                                                  //     SizedBox(
+                                                  //       width:
+                                                  //           screenWidth * 0.01,
+                                                  //     ),
+                                                  //     elementsSmall(
+                                                  //       text: profileViewModel.profileModel!.data!.phone.toString()??"",
+                                                  //       color: PortColor.gray,
+                                                  //     ),
+                                                  //     const Spacer(),
+                                                  //     Icon(
+                                                  //       Icons
+                                                  //           .arrow_forward_ios_rounded,
+                                                  //       size: screenHeight *
+                                                  //           0.017,
+                                                  //     ),
+                                                  //   ],
+                                                  // ),
+                                                  // elementsSmall(
+                                                  //   text:
+                                                  //   _currentAddress ?? "Fetching address...",
+                                                  //   color: PortColor.black,
+                                                  // ),
+                                                ],
+                                              ))),
                               ),
                               SizedBox(height: screenHeight * 0.018),
                               TextField(

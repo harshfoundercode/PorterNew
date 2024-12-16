@@ -3,7 +3,7 @@ import 'package:porter/helper/helper/network/base_api_services.dart';
 import 'package:porter/helper/helper/network/network_api_services.dart';
 import 'package:porter/model/profile_model.dart';
 import 'package:porter/res/api_url.dart';
-class OrderRepository {
+class ProfileUpdateRepository {
   final BaseApiServices _apiServices = NetworkApiServices();
   Future<ProfileModel> profileUpdateApi(dynamic data) async {
     try {

@@ -1,9 +1,8 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/utils/routes/routes.dart';
-import 'package:porter/view/auth/login_page.dart';
-import 'package:porter/view/bottom_nav_bar.dart';
 import 'package:porter/view_model/user_view_model.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      checkSession();
+      checkSession(context);
     });
   }
 
@@ -50,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Future<void> checkSession() async {
+  Future<void> checkSession(context) async {
     try {
       UserViewModel userViewModel = UserViewModel();
       String? userId = await userViewModel.getUser();
@@ -61,7 +60,9 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, RoutesName.login);
       }
     } catch (e) {
-      print("Error fetching user ID: $e");
+      if (kDebugMode) {
+        print("Error fetching user ID: $e");
+      }
     }
   }
 }

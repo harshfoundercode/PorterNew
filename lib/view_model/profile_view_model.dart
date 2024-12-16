@@ -21,21 +21,19 @@ class ProfileViewModel with ChangeNotifier {
   }
   Future<void> profileApi() async {
     setLoading(true);
-    try {
       UserViewModel userViewModel = UserViewModel();
       String? userId = await userViewModel.getUser();
-      print(userId);
-      final response = await _profileRepo.profileApi(userId);
-      if (response.status == 200) {
-        setModelData(response);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print('Error in profileApi: $e');
-      }
-    } finally {
-      setLoading(false);
-    }
+       _profileRepo.profileApi(userId).then((value){
+         print('value:$value');
+         if (value.status == 200) {
+           setModelData(value);
+         }
+       }).onError((error, stackTrace) {
+         setLoading(false);
+         if (kDebugMode) {
+           print('error: $error');
+         }
+       });
   }
 }
 

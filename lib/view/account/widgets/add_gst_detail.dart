@@ -66,7 +66,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                             firstnameController.text,
                             lastnameController.text,
                             emailIdController.text,
-                            "2312321232",
+                            profileViewModel.profileModel!.data!.phone.toString(),
                             gstINController.text,
                             gstRegistrationController.text,
                             context,
@@ -92,7 +92,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                       left: screenWidth * 0.045, bottom: screenHeight * 0.01),
                   child: Row(
                     children: [
-                      titleSmall(text: "2123212321", color: PortColor.black),
+                      titleSmall(text: '${profileViewModel.profileModel!.data!.phone??""}', color: PortColor.black),
                       SizedBox(width: screenWidth * 0.02),
                       elementsSmall(
                           text: "Cannot be changed", color: PortColor.gray),
@@ -127,7 +127,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                           controller: firstnameController,
                           decoration: InputDecoration(
                             hintText: profileViewModel
-                                    .profileModel!.data!.firstName ??
+                                    .profileModel?.data?.firstName ??
                                 "",
                             hintStyle: TextStyle(
                               color: PortColor.black.withOpacity(0.7),
@@ -152,7 +152,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                           controller: lastnameController,
                           decoration: InputDecoration(
                             hintText:
-                                profileViewModel.profileModel!.data!.lastName ??
+                                profileViewModel.profileModel?.data?.lastName ??
                                     "",
                             hintStyle: TextStyle(
                               color: PortColor.black.withOpacity(0.7),
@@ -177,7 +177,7 @@ class _AddGstDetailState extends State<AddGstDetail> {
                           controller: emailIdController,
                           decoration: InputDecoration(
                             hintText:
-                                profileViewModel.profileModel!.data!.email ??
+                                profileViewModel.profileModel?.data?.email ??
                                     "",
                             hintStyle: TextStyle(
                               color: PortColor.black.withOpacity(0.7),

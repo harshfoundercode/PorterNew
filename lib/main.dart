@@ -14,6 +14,7 @@ import 'package:porter/view_model/register_view_model.dart';
 import 'package:porter/view_model/select_vehicles_view_model.dart';
 import 'package:porter/view_model/service_type_view_model.dart';
 import 'package:porter/view_model/terms_and_condition_view_model.dart';
+import 'package:porter/view_model/user_history_view_model.dart';
 import 'package:provider/provider.dart';
 void main() {
   runApp(const MyApp());
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> TermAndConditionViewModel()),
         ChangeNotifierProvider(create: (context)=> PrivacyPolicyViewModel()),
         ChangeNotifierProvider(create: (context)=> HelpAndSupportViewModel()),
+        ChangeNotifierProvider(create: (context)=> UserHistoryViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

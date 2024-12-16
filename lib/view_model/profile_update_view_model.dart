@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:porter/repo/profile_update_repo.dart';
 import 'package:porter/utils/utils.dart';
 import 'package:porter/view_model/profile_view_model.dart';
+import 'package:porter/view_model/user_view_model.dart';
 import 'package:provider/provider.dart';
 class ProfileUpdateViewModel with ChangeNotifier {
-  final _profileUpdateRepo = OrderRepository();
+  final _profileUpdateRepo = ProfileUpdateRepository();
   bool _loading = false;
   bool get loading => _loading;
   void setLoading(bool value) {
@@ -19,12 +20,13 @@ class ProfileUpdateViewModel with ChangeNotifier {
       dynamic mobileNumber,
       dynamic gstNumber,
       dynamic gstRegistration,
-      BuildContext context,
+       context,
       ) async {
     setLoading(true);
-
-    Map<String, dynamic> data = {
-      "id": "1",
+    UserViewModel userViewModel = UserViewModel();
+    String? userId= await userViewModel.getUser();
+    Map data = {
+      "id": userId,
       "first_name": firstname,
       "last_name": lastname,
       "email": email,

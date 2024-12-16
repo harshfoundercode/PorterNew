@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/const_map.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/res/custom_text_field.dart';
+import 'package:porter/utils/utils.dart';
+import 'package:porter/view/home/widgets/pickup/deliver_by_truck.dart';
+import 'package:porter/view_model/order_view_model.dart';
+import 'package:porter/view_model/profile_view_model.dart';
+import 'package:provider/provider.dart';
 
 class UseCurrentLocation extends StatefulWidget {
   const UseCurrentLocation({super.key});
@@ -15,11 +21,29 @@ class UseCurrentLocation extends StatefulWidget {
 
 class _UseCurrentLocationState extends State<UseCurrentLocation> {
   bool isContactDetailsSelected = false;
+  String? _currentAddress;
+  LatLng? _currentLatLng;
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final orderViewModel = Provider.of<OrderViewModel>(context);
+    final profileViewModel = Provider.of<ProfileViewModel>(context);
+
     return Scaffold(
-      body: const ConstMap(),
+      body: ConstMap(
+        onAddressFetched: (address) {
+          setState(() {
+            _currentAddress = address;
+          });
+        },
+        onLatLngFetched: (latLng) {
+          setState(() {
+            _currentLatLng = latLng;
+          });
+        },
+      ),
       bottomSheet: Container(
         width: screenWidth,
         decoration: const BoxDecoration(
@@ -52,17 +76,16 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          titleMedium(text: "Sector H", color: PortColor.black),
-                          SizedBox(height: screenHeight * 0.007),
-                          elementsMedium(
-                              text: "Sector H, Jankipuram Lucknow..",
-                              color: PortColor.black),
+                          Container(
+                              width: screenWidth*0.6,
+                              child: titleMedium(text: _currentAddress ?? "Fetching address...", color: PortColor.black)),
+                          // SizedBox(height: screenHeight * 0.007),
                         ],
                       ),
                       const Spacer(),
                       Container(
                         height: screenHeight * 0.038,
-                        width: screenWidth * 0.25,
+                        width: screenWidth * 0.17,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
                           border: Border.all(color: PortColor.gray),
@@ -84,6 +107,7 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
                   ),
                   SizedBox(height: screenHeight * 0.03),
                    CustomTextField(
+                     controller: nameController,
                     height: screenHeight*0.055,
                      cursorHeight: screenHeight*0.023,
                      labelText: "Sender's Name",
@@ -92,7 +116,10 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
                   ),
                   SizedBox(height: screenHeight * 0.03),
                    CustomTextField(
+                     controller: mobileController,
                      height: screenHeight*0.055,
+                     keyboardType: TextInputType.number,
+                     maxLength: 10,
                      cursorHeight: screenHeight*0.023,
                      labelText: "Sender's Mobile Number",
                   ),
@@ -127,9 +154,17 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
                               : null,
                         ),
                         SizedBox(width: screenWidth * 0.028),
-                        titleMedium(
-                          text: "Use My Mobile Number: 2123212321",
-                          color: PortColor.black,
+                        Row(
+                          children: [
+                            titleMedium(
+                              text: "Use My Mobile Number:",
+                              color: PortColor.black,
+                            ),
+                            titleMedium(
+                              text: profileViewModel.profileModel!.data!.phone.toString()??"",
+                              color: PortColor.black,
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -219,38 +254,70 @@ class _UseCurrentLocationState extends State<UseCurrentLocation> {
                 ],
               ),
             ),
-            Container(
-              height: screenHeight * 0.09,
-              decoration: BoxDecoration(
-                color: PortColor.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 5,
-                    offset: const Offset(0, -3),
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.04,
-                  vertical: screenHeight * 0.017,
+            InkWell(
+              onTap: () {
+                if (nameController.text.isEmpty) {
+                  Utils.showErrorMessage(context, "Enter sender's name");
+                } else if (mobileController.text.isEmpty || mobileController.text.length != 10) {
+                  Utils.showErrorMessage(context, "Enter a valid 10-digit mobile number");
+                } else {
+                  final data = {
+                    "address": _currentAddress,
+                    "name": nameController.text,
+                    "phone": mobileController.text,
+                    "latitude": _currentLatLng?.latitude,
+                    "longitude": _currentLatLng?.longitude,
+                  };
+                  print(data);
+                  print("hloooch");
+                  orderViewModel.setLocationType(0);
+                  orderViewModel.setLocationData(data);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => DeliverByTruck()),
+                  );
+                }
+              },
+              child: Container(
+                height: screenHeight * 0.09,
+                decoration: BoxDecoration(
+                  color: PortColor.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 5,
+                      offset: const Offset(0, -3),
+                    ),
+                  ],
                 ),
-                child: Container(
-                  alignment: Alignment.center,
-                  height: screenHeight * 0.03,
-                  width: screenWidth,
-                  decoration: BoxDecoration(
-                    color: isContactDetailsSelected ? PortColor.blue : PortColor.grey,
-                    borderRadius: BorderRadius.circular(10),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04,
+                    vertical: screenHeight * 0.017,
                   ),
-                  child: headingMedium(
-                    text: "Enter Contact Details",
-                    color: isContactDetailsSelected ? Colors.white : PortColor.gray,
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: screenHeight * 0.03,
+                    width: screenWidth,
+                    decoration: BoxDecoration(
+                      color: (mobileController.text.isNotEmpty && mobileController.text.length == 10)
+                          ? PortColor.blue
+                          : PortColor.grey,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: headingMedium(
+                      text: (mobileController.text.isNotEmpty && mobileController.text.length == 10)
+                          ? "Confirm and Proceed"
+                          : "Enter Contact Details",
+                      color: (mobileController.text.isNotEmpty && mobileController.text.length == 10)
+                          ? Colors.white
+                          : PortColor.gray,
+                    ),
                   ),
                 ),
               ),
             ),
+
           ],
         ),
       ),

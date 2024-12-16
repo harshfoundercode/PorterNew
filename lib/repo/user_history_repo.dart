@@ -1,17 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:porter/helper/helper/network/base_api_services.dart';
 import 'package:porter/helper/helper/network/network_api_services.dart';
+import 'package:porter/model/user_history_model.dart';
 import 'package:porter/res/api_url.dart';
-class OrderRepository {
+class UserHistoryRepo {
   final BaseApiServices _apiServices = NetworkApiServices();
-  Future<dynamic> orderApi(dynamic data) async {
+
+  Future<UserHistoryModel> userHistoryApi(dynamic data) async {
     try {
       dynamic response =
-      await _apiServices.getPostApiResponse(ApiUrl.orderUrl, data);
-      return response;
+      await _apiServices.getGetApiResponse(ApiUrl.userHistoryUrl+ data);
+      return UserHistoryModel.fromJson(response);
     } catch (e) {
       if (kDebugMode) {
-        print('Error occurred during orderApi: $e');
+        print('Error occurred during loginApi: $e');
       }
       rethrow;
     }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/view/home/widgets/pickup/deliver_all_india_parcel.dart';

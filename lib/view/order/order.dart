@@ -3,6 +3,8 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/view_model/user_history_view_model.dart';
+import 'package:provider/provider.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -11,6 +13,18 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userHistoryViewModel =
+      Provider.of<UserHistoryViewModel>(context, listen: false);
+      userHistoryViewModel.userHistoryApi();
+      print("helokokfio");
+    });
+  }
+
+
   List<OrderModel> orderList = [
     OrderModel(
         img: Assets.assetsBookingtruck,
@@ -24,6 +38,7 @@ class _OrderPageState extends State<OrderPage> {
         date: '',
         time: '')
   ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -62,9 +77,12 @@ class _OrderPageState extends State<OrderPage> {
   }
 
   Widget orderListUi(){
+    final userHistoryViewModel = Provider.of<UserHistoryViewModel>(context);
     return ListView.builder(
-        itemCount: orderList.length,
+        itemCount: userHistoryViewModel.userHistoryModel!.data!.length,
         itemBuilder: (context, index) {
+          final history = userHistoryViewModel.userHistoryModel!.data![index];
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -78,7 +96,7 @@ class _OrderPageState extends State<OrderPage> {
                 padding: EdgeInsets.symmetric(
                     horizontal: screenWidth * 0.04,
                     vertical: screenHeight * 0.01),
-                height: screenHeight * 0.334,
+                // height: screenHeight * 0.334,
                 color: PortColor.white,
                 child: Column(
                   children: [
@@ -92,7 +110,7 @@ class _OrderPageState extends State<OrderPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             elementsMedium(
-                                text: orderList[index].title,
+                                text: history.vehicleType??"",
                                 color: PortColor.black),
                             elementsMedium(
                                 text: orderList[index].subtitle,
@@ -117,7 +135,7 @@ class _OrderPageState extends State<OrderPage> {
                           padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.01,
                               vertical: screenHeight * 0.02),
-                          height: screenHeight * 0.17,
+                          // height: screenHeight * 0.17,
                           decoration: BoxDecoration(
                               color: PortColor.grey.withOpacity(0.4),
                               borderRadius: BorderRadius.circular(10)),
@@ -168,42 +186,47 @@ class _OrderPageState extends State<OrderPage> {
                                       Row(
                                         children: [
                                           titleMedium(
-                                            text: orderList[index]
-                                                .pickupAddress,
+                                            text: history.senderName??"",
                                             color: PortColor.black,
                                           ),
+                                          SizedBox(width: screenWidth*0.015,),
                                           titleMedium(
                                             text:
-                                            orderList[index].mobile,
+                                           history.senderPhone.toString()??"",
                                             color: PortColor.gray,
                                           ),
                                         ],
                                       ),
-                                      elementsSmall(
-                                        text:
-                                        "Sector H, Jankipuram, Lucknow, Uttar Pradesh",
-                                        color: PortColor.gray,
+                                      Container(
+                                        width: screenWidth*0.7,
+                                        child: elementsSmall(
+                                          text:
+                                          history.pickupAddress??"",
+                                          color: PortColor.gray,
+                                        ),
                                       ),
                                       SizedBox(
                                           height: screenHeight * 0.04),
                                       Row(
                                         children: [
                                           titleMedium(
-                                            text: orderList[index]
-                                                .pickupAddress,
+                                            text: history.reciverName??"",
                                             color: PortColor.black,
                                           ),
+                                          SizedBox(width: screenWidth*0.015,),
                                           titleMedium(
                                             text:
-                                            orderList[index].mobile,
+                                            history.reciverPhone.toString()??"",
                                             color: PortColor.gray,
                                           ),
                                         ],
                                       ),
-                                      elementsSmall(
-                                        text: orderList[index]
-                                            .destAddress,
-                                        color: PortColor.gray,
+                                      Container(
+                                        width: screenWidth*0.7,
+                                        child: elementsSmall(
+                                          text: history.dropAddress??"",
+                                          color: PortColor.gray,
+                                        ),
                                       ),
                                     ],
                                   ),

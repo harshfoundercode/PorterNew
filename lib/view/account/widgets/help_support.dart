@@ -188,7 +188,7 @@ class _HelpSupportState extends State<HelpSupport> {
                     ),
                     Spacer(),
                     GestureDetector(
-                      onTap: () =>Launcher.launchEmail(context,'tanishansh02@gmail.com'),
+                      onTap: () =>Launcher.launchEmail(context,'foundercodetechteam@gmail.com'),
                       child: Container(
                         padding: EdgeInsets.all(6.0),
                         decoration: BoxDecoration(

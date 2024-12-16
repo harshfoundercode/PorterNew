@@ -1,11 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:porter/main.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ConstMap extends StatefulWidget {
   final double? height;
-  const ConstMap({super.key,  this.height});
+  final ValueChanged<String>? onAddressFetched;
+  final ValueChanged<LatLng>? onLatLngFetched; // Add callback for LatLng
+
+  const ConstMap({
+    super.key,
+    this.height,
+    this.onAddressFetched,
+    this.onLatLngFetched,
+  });
 
   @override
   State<ConstMap> createState() => _ConstMapState();
@@ -53,12 +63,42 @@ class _ConstMapState extends State<ConstMap> {
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
     );
 
+    // Pass the LatLng back to the parent widget
+    widget.onLatLngFetched?.call(_currentPosition!);
+
     setState(() {});
+
+    _fetchAddress(position.latitude, position.longitude);
 
     if (mapController != null) {
       mapController!.animateCamera(CameraUpdate.newCameraPosition(
-          CameraPosition(target: _currentPosition!, zoom: 15)
+        CameraPosition(target: _currentPosition!, zoom: 15),
       ));
+    }
+  }
+
+  Future<void> _fetchAddress(double latitude, double longitude) async {
+    const String apiKey = 'AIzaSyCOqfJTgg1Blp1GIeh7o8W8PC1w5dDyhWI';
+    final url =
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=$latitude,$longitude&key=$apiKey';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['results'] != null && data['results'].isNotEmpty) {
+          final address = data['results'][0]['formatted_address'];
+          widget.onAddressFetched?.call(address);
+        }
+      } else {
+        if (kDebugMode) {
+          print('Failed to fetch address: ${response.statusCode}');
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error fetching address: $e');
+      }
     }
   }
 
@@ -67,7 +107,7 @@ class _ConstMapState extends State<ConstMap> {
     return Stack(
       children: [
         Container(
-          height: widget.height??screenHeight,
+          height: widget.height ?? MediaQuery.of(context).size.height,
           child: GoogleMap(
             onMapCreated: (GoogleMapController controller) {
               mapController = controller;
@@ -84,7 +124,9 @@ class _ConstMapState extends State<ConstMap> {
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             zoomControlsEnabled: false,
-            markers: _currentLocationMarker != null ? {_currentLocationMarker!} : {},
+            markers: _currentLocationMarker != null
+                ? {_currentLocationMarker!}
+                : {},
           ),
         ),
         Positioned(

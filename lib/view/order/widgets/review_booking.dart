@@ -10,13 +10,16 @@ import 'package:provider/provider.dart';
 class ReviewBooking extends StatefulWidget {
   final int? index;
   final String price;
-  const ReviewBooking({super.key, this.index, required this.price, });
+  final String distance;
+  const ReviewBooking({super.key, this.index, required this.price, required this.distance, });
 
   @override
   State<ReviewBooking> createState() => _ReviewBookingState();
 }
 
 class _ReviewBookingState extends State<ReviewBooking> {
+  final TextEditingController _distanceController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
      final orderViewModel = Provider.of<OrderViewModel>(context);
@@ -99,9 +102,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
                               text: "View Address detail", color: Colors.blue),
                         ],
                       ),
-                      Spacer(),
-                      headingMedium(text: " 14 mins ", color: Colors.green),
-                      elementsMedium(text: "away", color: Colors.black),
+                      // Spacer(),
+                      // headingMedium(text: " 14 mins ", color: Colors.green),
+                      // elementsMedium(text: "away", color: Colors.black),
                     ],
                   ),
                   SizedBox(
@@ -149,51 +152,51 @@ class _ReviewBookingState extends State<ReviewBooking> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
-            child: titleSmall(
-                text: "Offers and Discounts", color: PortColor.black),
-          ),
-          SizedBox(
-            height: screenHeight * 0.02,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
-            child: Container(
-              height: screenHeight * 0.08,
-              decoration: BoxDecoration(
-                color: PortColor.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 0.5,
-                    blurRadius: 3,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Image(
-                    image: AssetImage(Assets.assetsPop),
-                    height: screenHeight * 0.05,
-                  ),
-                  headingMedium(text: "You Saved", color: PortColor.black),
-                  headingMedium(text: " ₹75 ", color: Colors.green),
-                  headingMedium(
-                      text: "with FIRST20 🎉", color: PortColor.black),
-                  SizedBox(
-                    width: screenWidth * 0.03,
-                  ),
-                  headingMedium(text: "Remove", color: Colors.blue),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(
-            height: screenHeight * 0.02,
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
+          //   child: titleSmall(
+          //       text: "Offers and Discounts", color: PortColor.black),
+          // ),
+          // SizedBox(
+          //   height: screenHeight * 0.02,
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
+          //   child: Container(
+          //     height: screenHeight * 0.08,
+          //     decoration: BoxDecoration(
+          //       color: PortColor.white,
+          //       borderRadius: BorderRadius.circular(10),
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.grey.withOpacity(0.2),
+          //           spreadRadius: 0.5,
+          //           blurRadius: 3,
+          //           offset: const Offset(0, 1),
+          //         ),
+          //       ],
+          //     ),
+          //     child: Row(
+          //       children: [
+          //         Image(
+          //           image: AssetImage(Assets.assetsPop),
+          //           height: screenHeight * 0.05,
+          //         ),
+          //         headingMedium(text: "You Saved", color: PortColor.black),
+          //         headingMedium(text: " ₹75 ", color: Colors.green),
+          //         headingMedium(
+          //             text: "with FIRST20 🎉", color: PortColor.black),
+          //         SizedBox(
+          //           width: screenWidth * 0.03,
+          //         ),
+          //         headingMedium(text: "Remove", color: Colors.blue),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: screenHeight * 0.02,
+          // ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
             child: titleSmall(text: "Fare Summary", color: PortColor.black),
@@ -240,12 +243,17 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   Row(
                     children: [
                       headingMedium(
-                          text: "Coupon Discount-First 20",
-                          color: PortColor.black.withOpacity(0.8)),
+                        text: "GST (18%)",
+                        color: PortColor.black.withOpacity(0.8),
+                      ),
                       Spacer(),
-                      headingMedium(text: "₹75", color: Colors.green),
+                      headingMedium(
+                        text: "₹${(double.parse(widget.price) * 0.18).toStringAsFixed(2)}",
+                        color: Colors.green,
+                      ),
                     ],
                   ),
+
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
@@ -259,7 +267,9 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: "Net Fare",
                           color: PortColor.black.withOpacity(0.8)),
                       Spacer(),
-                      headingMedium(text: "₹508", color: PortColor.black),
+                      headingMedium(
+                          text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
+                          color: PortColor.black),
                     ],
                   ),
                   SizedBox(
@@ -278,51 +288,52 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: " (rounded)",
                           color: PortColor.black.withOpacity(0.5)),
                       Spacer(),
-                      headingMedium(text:  "₹${(widget.price)}", color: PortColor.black),
+                      headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
+                           color: PortColor.black),
                     ],
                   ),
                 ],
               ),
             ),
           ),
-          SizedBox(
-            height: screenHeight * 0.02,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: screenWidth * 0.03,
-                  vertical: screenHeight * 0.015),
-              height: screenHeight * 0.08,
-              decoration: BoxDecoration(
-                color: PortColor.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 0.5,
-                    blurRadius: 3,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  headingMedium(text: "Goods Type", color: PortColor.gray),
-                  Row(
-                    children: [
-                      titleMedium(
-                          text: "General loose ", color: PortColor.black),
-                      Spacer(),
-                      titleMedium(text: " Change ", color: Colors.blue),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
+          // SizedBox(
+          //   height: screenHeight * 0.02,
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(
+          //         horizontal: screenWidth * 0.03,
+          //         vertical: screenHeight * 0.015),
+          //     height: screenHeight * 0.08,
+          //     decoration: BoxDecoration(
+          //       color: PortColor.white,
+          //       borderRadius: BorderRadius.circular(10),
+          //       boxShadow: [
+          //         BoxShadow(
+          //           color: Colors.grey.withOpacity(0.2),
+          //           spreadRadius: 0.5,
+          //           blurRadius: 3,
+          //           offset: const Offset(0, 1),
+          //         ),
+          //       ],
+          //     ),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         headingMedium(text: "Goods Type", color: PortColor.gray),
+          //         Row(
+          //           children: [
+          //             titleMedium(
+          //                 text: "General loose ", color: PortColor.black),
+          //             Spacer(),
+          //             titleMedium(text: " Change ", color: Colors.blue),
+          //           ],
+          //         )
+          //       ],
+          //     ),
+          //   ),
+          // ),
           SizedBox(
             height: screenHeight * 0.02,
           ),
@@ -402,13 +413,15 @@ class _ReviewBookingState extends State<ReviewBooking> {
                 headingMedium(
                     text: "Choose Payment mode", color: PortColor.black),
                 Spacer(),
-                headingMedium(text: "₹${(widget.price)}", color: PortColor.black),
+                headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
+                     color: PortColor.black),
               ],
             ),
             SizedBox(height: screenHeight*0.014,),
             InkWell(
               onTap: (){
                 orderViewModel.orderApi(vehicle.id.toString(),
+
                     orderViewModel.pickupData["address"],
                     orderViewModel.dropData["address"],
                     orderViewModel.dropData["latitude"],
@@ -419,6 +432,8 @@ class _ReviewBookingState extends State<ReviewBooking> {
                    orderViewModel.pickupData["phone"],
                    orderViewModel.dropData["name"],
                    orderViewModel.dropData["phone"],
+                    widget.price,
+                    widget.distance,
                     context);
               },
               child: Container(
@@ -429,8 +444,10 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   color: PortColor.buttonBlue,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                child:
-                    headingMedium(text: "Book Tata Ace", color: PortColor.white),
+                child: !orderViewModel.loading?
+                    headingMedium(
+
+                        text: "Book Tata Ace", color: PortColor.white): const CircularProgressIndicator(color: PortColor.white,),
               ),
             ),
           ],

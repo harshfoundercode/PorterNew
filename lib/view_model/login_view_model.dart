@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/login_repo.dart';
 import 'package:porter/utils/routes/routes.dart';
-import 'package:porter/view/auth/otp_page.dart';
+import 'package:porter/utils/utils.dart';
 import 'package:porter/view/bottom_nav_bar.dart';
 import 'package:porter/view_model/user_view_model.dart';
 class AuthViewModel with ChangeNotifier {
@@ -14,7 +14,6 @@ class AuthViewModel with ChangeNotifier {
     _loading = value;
     notifyListeners();
   }
-
   Future<void> loginApi(dynamic mobile,  context) async {
     setLoading(true);
     Map data = {
@@ -39,9 +38,9 @@ class AuthViewModel with ChangeNotifier {
     setLoading(true);
     _loginRepo.sendOtpApi(mobile.toString()).then((value) {
       if (value['error'] == 200) {
-        UserViewModel userViewModel = UserViewModel();
-        userViewModel.saveUser(value["data"]["id"].toString());
-        // Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpPage(mobileNumber: mobile, userId: '',)));
+        Utils.showSuccessMessage(context, value['msg']);
+      }else{
+        Utils.showSuccessMessage(context, value['msg']);
       }
 
     }).onError((error, stackTrace) {
@@ -58,6 +57,8 @@ class AuthViewModel with ChangeNotifier {
         UserViewModel userViewModel = UserViewModel();
         userViewModel.saveUser(userId);
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>BottomNavigationPage()), (context)=>false);
+      }else{
+        Utils.showErrorMessage(context, value['msg']);
       }
 
     }).onError((error, stackTrace) {
