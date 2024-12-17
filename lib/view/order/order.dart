@@ -11,9 +11,7 @@ class OrderPage extends StatefulWidget {
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
-
 class _OrderPageState extends State<OrderPage> {
-
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -24,28 +22,14 @@ class _OrderPageState extends State<OrderPage> {
     });
   }
 
-
-  List<OrderModel> orderList = [
-    OrderModel(
-        img: Assets.assetsBookingtruck,
-        title: "Tata Ace",
-        subtitle: "11 sep 2024 ,10:56AM",
-        pickupAddress: " Prachi Singh ",
-        destAddress: "Chandrika Devi temple Parking area Mandir Road..",
-        mobile: "6543211123",
-        amount: 10,
-        status: 10,
-        date: '',
-        time: '')
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final userHistoryViewModel = Provider.of<UserHistoryViewModel>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: PortColor.grey,
         appBar: appbar(),
-        body: orderList.isNotEmpty
+        body: userHistoryViewModel.userHistoryModel != null
             ? orderListUi()
             : noOrderFoundUi()
       ),
@@ -102,8 +86,8 @@ class _OrderPageState extends State<OrderPage> {
                   children: [
                     Row(
                       children: [
-                        Image(
-                          image: AssetImage(orderList[index].img),
+                        const Image(
+                          image: AssetImage(Assets.assetsBookingtruck),
                           height: 50,
                         ),
                         Column(
@@ -113,13 +97,13 @@ class _OrderPageState extends State<OrderPage> {
                                 text: history.vehicleType??"",
                                 color: PortColor.black),
                             elementsMedium(
-                                text: orderList[index].subtitle,
+                                text:  history.datetime.toString()??"",
                                 color: PortColor.gray),
                           ],
                         ),
-                        const Spacer(),
+                         Spacer(),
                         elementsBold(
-                            text: "₹0", color: PortColor.black),
+                            text:("₹ ${history.amount?.toString() ?? ""}"), color: PortColor.black),
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: PortColor.gray,
@@ -324,28 +308,4 @@ class _OrderPageState extends State<OrderPage> {
   }
 }
 
-class OrderModel {
-  final String img;
-  final String title;
-  final String subtitle;
-  final String pickupAddress;
-  final String destAddress;
-  final String mobile;
-  final double amount;
-  final int status;
-  final String date;
-  final String time;
 
-  OrderModel({
-    required this.img,
-    required this.title,
-    required this.subtitle,
-    required this.pickupAddress,
-    required this.destAddress,
-    required this.mobile,
-    required this.amount,
-    required this.status,
-    required this.date,
-    required this.time,
-  });
-}

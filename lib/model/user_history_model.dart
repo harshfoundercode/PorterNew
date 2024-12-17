@@ -34,7 +34,7 @@ class Data {
   String? email;
   String? type;
   int? phone;
-  Null? otp;
+  dynamic otp;
   String? createdAt;
   String? updatedAt;
   int? userid;

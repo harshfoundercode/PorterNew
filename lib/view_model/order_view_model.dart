@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/order_repo.dart';
 import 'package:porter/utils/utils.dart';
+import 'package:porter/view/order/order.dart';
 import 'package:porter/view_model/user_view_model.dart';
 
 
@@ -83,6 +84,7 @@ class OrderViewModel with ChangeNotifier {
 
       if (response["status"] == 200) {
         Utils.showSuccessMessage(context, "Order successfully placed!");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
       } else {
         Utils.showErrorMessage(context, 'Failed to place order. Please try again.');
       }

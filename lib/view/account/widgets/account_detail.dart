@@ -6,6 +6,7 @@ import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/account/widgets/help_support.dart';
 import 'package:porter/view/account/widgets/save_address_detail.dart';
 import 'package:porter/view/account/widgets/terms_condition.dart';
+import 'package:porter/view/coins/coins.dart';
 import 'package:porter/view/splash_screen.dart';
 import 'package:porter/view_model/user_view_model.dart';
 
@@ -52,6 +53,7 @@ class AccountDetail extends StatelessWidget {
             child: Column(
               children: [
                 buttonLayoutUi(
+                  page: CoinsPage(),
                   context,
                   Icons.star_border_purple500_outlined,
                   "Porter Rewards",

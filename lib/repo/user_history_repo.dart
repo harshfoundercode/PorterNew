@@ -5,7 +5,6 @@ import 'package:porter/model/user_history_model.dart';
 import 'package:porter/res/api_url.dart';
 class UserHistoryRepo {
   final BaseApiServices _apiServices = NetworkApiServices();
-
   Future<UserHistoryModel> userHistoryApi(dynamic data) async {
     try {
       dynamic response =
@@ -13,7 +12,7 @@ class UserHistoryRepo {
       return UserHistoryModel.fromJson(response);
     } catch (e) {
       if (kDebugMode) {
-        print('Error occurred during loginApi: $e');
+        print('Error occurred during userHistoryApi: $e');
       }
       rethrow;
     }
