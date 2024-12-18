@@ -196,7 +196,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                               Row(
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       color: PortColor.blue,
                                       shape: BoxShape.circle,
                                     ),
@@ -246,7 +246,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                     vertical: screenHeight * 0.02,
                   ),
                   child: selectVehiclesViewModel.loading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const Center(child: CircularProgressIndicator(color: PortColor.blue,))
                       : selectVehiclesViewModel
                                   .selectVehiclesModel?.data?.isNotEmpty ==
                               true
@@ -267,7 +267,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                   child: Container(
                                     margin: EdgeInsets.only(
                                         bottom: screenHeight * 0.02),
-                                    padding: EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                                       color: isSelected
                                           ? PortColor.blue.withOpacity(0.1)
@@ -310,15 +310,13 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                               Row(
                                                 children: [
                                                   titleMedium(
-                                                    text: vehicle?.maxWeight
-                                                            .toString() ??
-                                                        "",
+                                                    text:(vehicle?.maxWeight?.toString() ?? "") + " kg",
+
                                                     color: PortColor.gray,
                                                   ),
                                                   titleMedium(
-                                                    text: vehicle?.time
-                                                            .toString() ??
-                                                        "",
+                                                    text:(vehicle?.time?.toString() ?? "") + " min",
+
                                                     color: PortColor.gray,
                                                   ),
                                                 ],
@@ -369,7 +367,6 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                 MaterialPageRoute(
                                   builder: (context) => ReviewBooking(index:selectedIndex, price:((selectVehiclesViewModel
                                       .selectVehiclesModel?.data![selectedIndex!].price??0) * distance ).toStringAsFixed(2), distance: distance.toStringAsFixed(2),),
-
                                 ),
                               );
                             }
@@ -384,29 +381,17 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                               : PortColor.gray,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: headingMedium(
+                        child:
+                        headingMedium(
                           text: selectedIndex != null
                               ? "Proceed with ${selectVehiclesViewModel.selectVehiclesModel?.data![selectedIndex!].name ?? ""}"
                               : "Select a Vehicle",
                           color: PortColor.white,
                         ),
-                      ),
+                      )
                     ),
                   ),
                 ),
-                // child: Container(
-                //   alignment: Alignment.center,
-                //   height: screenHeight * 0.03,
-                //   width: screenWidth,
-                //   decoration: BoxDecoration(
-                //     color: PortColor.buttonBlue,
-                //     borderRadius: BorderRadius.circular(10),
-                //   ),
-                //   child: headingMedium(
-                //     text: "Proceed with Tata Ace",
-                //     color: PortColor.white,
-                //   ),
-                // ),
               ]),
             )));
   }

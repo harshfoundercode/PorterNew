@@ -20,6 +20,7 @@ class ReviewBooking extends StatefulWidget {
 class _ReviewBookingState extends State<ReviewBooking> {
   final TextEditingController _distanceController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
+  String PaymentMethod = "";
   @override
   Widget build(BuildContext context) {
      final orderViewModel = Provider.of<OrderViewModel>(context);
@@ -116,7 +117,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                     height: screenHeight * 0.05,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           PortColor.lightGreen,
                           PortColor.lightGreen2,
@@ -233,7 +234,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                       headingMedium(
                           text: " (incl.Toll)",
                           color: PortColor.black.withOpacity(0.5)),
-                      Spacer(),
+                      const Spacer(),
                       headingMedium(text: "₹${(widget.price)}", color: PortColor.black),
                     ],
                   ),
@@ -246,7 +247,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                         text: "GST (18%)",
                         color: PortColor.black.withOpacity(0.8),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       headingMedium(
                         text: "₹${(double.parse(widget.price) * 0.18).toStringAsFixed(2)}",
                         color: Colors.green,
@@ -257,7 +258,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
-                  Divider(),
+                  const Divider(),
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
@@ -266,7 +267,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                       headingMedium(
                           text: "Net Fare",
                           color: PortColor.black.withOpacity(0.8)),
-                      Spacer(),
+                      const Spacer(),
                       headingMedium(
                           text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
                           color: PortColor.black),
@@ -275,7 +276,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   SizedBox(
                     height: screenHeight * 0.01,
                   ),
-                  Divider(),
+                  const Divider(),
                   SizedBox(
                     height: screenHeight * 0.005,
                   ),
@@ -287,7 +288,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                       titleSmall(
                           text: " (rounded)",
                           color: PortColor.black.withOpacity(0.5)),
-                      Spacer(),
+                      const Spacer(),
                       headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
                            color: PortColor.black),
                     ],
@@ -365,29 +366,29 @@ class _ReviewBookingState extends State<ReviewBooking> {
                       text:
                           '• Fare doesn\'t include labour charges for loading & unloading',
                       color: PortColor.black),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   elementsMedium(
                       text:
                           '• Fare includes 70 mins free loading/unloading time.',
                       color: PortColor.black),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   elementsMedium(
                       text:
                           '• ₹ 3.5/min for additional loading/unloading time.',
                       color: PortColor.black),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   elementsMedium(
                       text: '• Fare may change if route or location changes.',
                       color: PortColor.black),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   elementsMedium(
                       text: '• Parking charges to be paid by customer.',
                       color: PortColor.black),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   elementsMedium(
                       text: '• Fare includes toll and permit charges, if any.',
                       color: PortColor.black),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   elementsMedium(
                       text: '• We don\'t allow overloading.',
                       color: PortColor.black),
@@ -395,7 +396,93 @@ class _ReviewBookingState extends State<ReviewBooking> {
               ),
             ),
           ),
-          SizedBox(height: screenHeight*0.2,)
+          SizedBox(
+            height: screenHeight * 0.007,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.035),
+            child:
+            titleSmall(text: "Pay Mode", color: PortColor.black),
+          ),
+          SizedBox(
+            height: screenHeight * 0.02,
+          ),
+           Padding(
+             padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.035),
+             child: Container(
+               padding: EdgeInsets.symmetric(
+                   horizontal: screenWidth * 0.03,
+                   vertical: screenHeight * 0.02),
+               decoration: BoxDecoration(
+                 color: PortColor.white,
+                 borderRadius: const BorderRadius.all(Radius.circular(10)),
+                 boxShadow: [BoxShadow(
+                   color: Colors.grey.withOpacity(0.2),
+                   spreadRadius: 0.5,
+                   blurRadius: 3,
+                   offset: const Offset(0, 1),
+                 ),
+                 ],
+               ),
+               child: Column(
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   GestureDetector(
+                     onTap: () {
+                       setState(() {
+                         PaymentMethod = "1";
+                       });
+                     },
+                     child: Row(
+                       children: [
+                         Expanded(
+                           child: headingMedium(
+                             text: "Pay Via Cash",
+                             color: PortColor.black,
+                           ),
+                         ),
+                         if (PaymentMethod == "1")
+                           const Icon(
+                             Icons.check_circle,
+                             color: Colors.green,
+                           ),
+                       ],
+                     ),
+                   ),
+                   SizedBox(
+                     height: screenHeight * 0.01,
+                   ),
+                   const Divider(),
+                   SizedBox(
+                     height: screenHeight * 0.01,
+                   ),
+                   GestureDetector(
+                     onTap: () {
+                       setState(() {
+                         PaymentMethod = "2";
+                       });
+                     },
+                     child: Row(
+                       children: [
+                         Expanded(
+                           child: headingMedium(
+                             text: "Pay Via PG",
+                             color: PortColor.black,
+                           ),
+                         ),
+                         if (PaymentMethod == "2")
+                           const Icon(
+                             Icons.check_circle,
+                             color: Colors.green,
+                           ),
+                       ],
+                     ),
+                   ),
+                 ],
+               ),
+             ),
+           ),
+          SizedBox(height: screenHeight*0.2,),
         ],
       ),
       bottomSheet: Container(
@@ -407,12 +494,12 @@ class _ReviewBookingState extends State<ReviewBooking> {
             Row(
               children: [
                 Image(
-                  image: AssetImage(Assets.assetsRupeetwo),
+                  image: const AssetImage(Assets.assetsRupeetwo),
                   height: screenHeight * 0.04,
                 ),
                 headingMedium(
                     text: "Choose Payment mode", color: PortColor.black),
-                Spacer(),
+                const Spacer(),
                 headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
                      color: PortColor.black),
               ],
@@ -421,7 +508,6 @@ class _ReviewBookingState extends State<ReviewBooking> {
             InkWell(
               onTap: (){
                 orderViewModel.orderApi(vehicle.id.toString(),
-
                     orderViewModel.pickupData["address"],
                     orderViewModel.dropData["address"],
                     orderViewModel.dropData["latitude"],
@@ -434,6 +520,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                    orderViewModel.dropData["phone"],
                     widget.price,
                     widget.distance,
+                    PaymentMethod,
                     context);
               },
               child: Container(
@@ -446,13 +533,18 @@ class _ReviewBookingState extends State<ReviewBooking> {
                 ),
                 child: !orderViewModel.loading?
                     headingMedium(
-
-                        text: "Book Tata Ace", color: PortColor.white): const CircularProgressIndicator(color: PortColor.white,),
+                        text: "Book ${vehicle.name.toString()}", color: PortColor.white): const CircularProgressIndicator(color: PortColor.white,),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+  Widget payment({required String text, required Color color}) {
+    return Text(
+      text,
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: color),
     );
   }
 }

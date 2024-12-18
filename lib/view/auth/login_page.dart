@@ -149,6 +149,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
   Widget loginButton() {
+    final loginViewModel = Provider.of<AuthViewModel>(context, listen: false);
+
     return Column(
       children: [
         SizedBox(height: screenHeight * 0.03),
@@ -169,7 +171,8 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(25),
             ),
             alignment: Alignment.center,
-            child:  headingMedium(text: "Login", color: PortColor.white),
+            child: !loginViewModel.loading?
+            headingMedium(text: "Login", color: PortColor.white):CircularProgressIndicator(color: PortColor.white,),
           ),
         ),
         SizedBox(height: screenHeight * 0.02),

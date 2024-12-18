@@ -196,8 +196,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(25),
                     ),
                     alignment: Alignment.center,
-                    child:
-                        headingMedium(text: "Register", color: PortColor.white),
+                    child: !registerViewModel.loading?
+                        headingMedium(text: "Register", color: PortColor.white):const CircularProgressIndicator(color: PortColor.white,),
                   ),
                 ),
                 SizedBox(height: screenHeight * 0.02),

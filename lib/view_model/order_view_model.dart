@@ -5,6 +5,7 @@ import 'package:porter/repo/order_repo.dart';
 import 'package:porter/utils/utils.dart';
 import 'package:porter/view/order/order.dart';
 import 'package:porter/view_model/user_view_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class OrderViewModel with ChangeNotifier {
@@ -52,6 +53,7 @@ class OrderViewModel with ChangeNotifier {
       dynamic receiverPhone,
       dynamic amount,
        dynamic distance,
+       dynamic payMode,
        context,
       ) async {
     UserViewModel userViewModel = UserViewModel();
@@ -72,21 +74,20 @@ class OrderViewModel with ChangeNotifier {
       "reciver_phone":receiverPhone,
       "amount":amount,
       "distance":distance,
+      "paymode":payMode,
     };
-    
-    print("Ajay");
-    print(data);
-   // print(d)
     try {
      
       final response = await _orderRepo.orderApi(data);
       setLoading(false);
 
       if (response["status"] == 200) {
+        if (payMode == "1"){
         Utils.showSuccessMessage(context, "Order successfully placed!");
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));}
       } else {
-        Utils.showErrorMessage(context, 'Failed to place order. Please try again.');
+        launchURL(response["paymentlink"]);
+        // Utils.showErrorMessage(context, 'Failed to place order. Please try again.');
       }
     } catch (error) {
       setLoading(false);
@@ -102,5 +103,13 @@ class OrderViewModel with ChangeNotifier {
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
+  }
+  Future<void> launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
