@@ -14,23 +14,19 @@ import 'package:provider/provider.dart';
 
 class UseCurrentLocation extends StatefulWidget {
   const UseCurrentLocation({super.key});
-
   @override
   State<UseCurrentLocation> createState() => _UseCurrentLocationState();
 }
-
 class _UseCurrentLocationState extends State<UseCurrentLocation> {
   bool isContactDetailsSelected = false;
   String? _currentAddress;
   LatLng? _currentLatLng;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final orderViewModel = Provider.of<OrderViewModel>(context);
     final profileViewModel = Provider.of<ProfileViewModel>(context);
-
     return Scaffold(
       body: ConstMap(
         onAddressFetched: (address) {

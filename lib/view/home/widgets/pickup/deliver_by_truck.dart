@@ -25,7 +25,6 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
     super.initState();
     _getCurrentLocation();
   }
-
   bool hasData = false;
   List<dynamic> searchResults = [];
   Map<String, String> placeDetailsCache = {};

@@ -26,7 +26,6 @@ class _SelectVehiclesState extends State<SelectVehicles> {
       final selectVehiclesViewModel =
           Provider.of<SelectVehiclesViewModel>(context, listen: false);
       selectVehiclesViewModel.selectVehiclesApi();
-      print("helokokfio");
     });
   }
 
@@ -49,6 +48,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
   double _degreeToRadian(double degree) {
     return degree * pi / 180;
   }
+
   @override
   Widget build(BuildContext context) {
     final orderViewModel = Provider.of<OrderViewModel>(context);
@@ -59,7 +59,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
     double dropLat = orderViewModel.dropData["latitude"] ?? 0.0;
     double dropLon = orderViewModel.dropData["longitude"] ?? 0.0;
     double distance = calculateDistance(pickupLat, pickupLon, dropLat, dropLon);
-    print("distance $distance");
+     print("distance $distance");
     return SafeArea(
         child: Scaffold(
             backgroundColor: PortColor.grey,
@@ -158,7 +158,9 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                         "N/A",
                                     color: PortColor.black,
                                   ),
-                                  SizedBox(width: screenWidth*0.02,),
+                                  SizedBox(
+                                    width: screenWidth * 0.02,
+                                  ),
                                   titleMedium(
                                     text: orderViewModel.pickupData["phone"] ??
                                         "N/A",
@@ -179,7 +181,9 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                         "N/A",
                                     color: PortColor.black,
                                   ),
-                                  SizedBox(width: screenWidth*0.01,),
+                                  SizedBox(
+                                    width: screenWidth * 0.01,
+                                  ),
                                   titleMedium(
                                     text: orderViewModel.dropData["phone"] ??
                                         "N/A",
@@ -242,11 +246,14 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                 Container(
                   height: screenHeight * 0.5,
                   padding: EdgeInsets.symmetric(
-                   // horizontal: screenWidth * 0.04,
+                    // horizontal: screenWidth * 0.04,
                     vertical: screenHeight * 0.02,
                   ),
                   child: selectVehiclesViewModel.loading
-                      ? const Center(child: CircularProgressIndicator(color: PortColor.blue,))
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: PortColor.blue,
+                        ))
                       : selectVehiclesViewModel
                                   .selectVehiclesModel?.data?.isNotEmpty ==
                               true
@@ -288,7 +295,6 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                             );
                                           },
                                         ),
-
                                         const SizedBox(width: 8),
                                         Expanded(
                                           child: Column(
@@ -310,13 +316,13 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                               Row(
                                                 children: [
                                                   titleMedium(
-                                                    text:(vehicle?.maxWeight?.toString() ?? "") + " kg",
-
+                                                    text:
+                                                        "${vehicle?.maxWeight?.toString() ?? ""} kg",
                                                     color: PortColor.gray,
                                                   ),
                                                   titleMedium(
-                                                    text:(vehicle?.time?.toString() ?? "") + " min",
-
+                                                    text:
+                                                        "${vehicle?.time?.toString() ?? ""} min",
                                                     color: PortColor.gray,
                                                   ),
                                                 ],
@@ -329,7 +335,7 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                                           children: [
                                             headingMedium(
                                               text:
-                                                  "₹${((vehicle?.price ?? 0) * distance).toStringAsFixed(2)}",
+                                                  "₹${((vehicle?.price ?? 0) * distance).toStringAsFixed(0)}",
                                               color: PortColor.black,
                                             ),
                                           ],
@@ -360,36 +366,43 @@ class _SelectVehiclesState extends State<SelectVehicles> {
                       vertical: screenHeight * 0.017,
                     ),
                     child: InkWell(
-                      onTap: selectedIndex != null
-                          ? () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ReviewBooking(index:selectedIndex, price:((selectVehiclesViewModel
-                                      .selectVehiclesModel?.data![selectedIndex!].price??0) * distance ).toStringAsFixed(2), distance: distance.toStringAsFixed(2),),
-                                ),
-                              );
-                            }
-                          : null,
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: screenHeight * 0.03,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          color: selectedIndex != null
-                              ? PortColor.buttonBlue
-                              : PortColor.gray,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child:
-                        headingMedium(
-                          text: selectedIndex != null
-                              ? "Proceed with ${selectVehiclesViewModel.selectVehiclesModel?.data![selectedIndex!].name ?? ""}"
-                              : "Select a Vehicle",
-                          color: PortColor.white,
-                        ),
-                      )
-                    ),
+                        onTap: selectedIndex != null
+                            ? () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ReviewBooking(
+                                      index: selectedIndex,
+                                      price: ((selectVehiclesViewModel
+                                                      .selectVehiclesModel
+                                                      ?.data![selectedIndex!]
+                                                      .price ??
+                                                  0) *
+                                              distance)
+                                          .toStringAsFixed(0),
+                                      distance: distance.toStringAsFixed(0),
+                                    ),
+                                  ),
+                                );
+                              }
+                            : null,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: screenHeight * 0.03,
+                          width: screenWidth,
+                          decoration: BoxDecoration(
+                            color: selectedIndex != null
+                                ? PortColor.buttonBlue
+                                : PortColor.gray,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: headingMedium(
+                            text: selectedIndex != null
+                                ? "Proceed with ${selectVehiclesViewModel.selectVehiclesModel?.data![selectedIndex!].name ?? ""}"
+                                : "Select a Vehicle",
+                            color: PortColor.white,
+                          ),
+                        )),
                   ),
                 ),
               ]),

@@ -34,7 +34,7 @@ class Data {
   String? email;
   String? type;
   int? phone;
-  dynamic otp;
+  int? status;
   String? createdAt;
   String? updatedAt;
   int? userid;
@@ -50,10 +50,13 @@ class Data {
   String? reciverName;
   int? reciverPhone;
   int? rideStatus;
-  int? driverId;
+  dynamic driverId;
   int? amount;
   int? distance;
   String? datetime;
+  int? paymentStatus;
+  dynamic paymode;
+  String? txnId;
 
   Data(
       {this.id,
@@ -62,7 +65,7 @@ class Data {
         this.email,
         this.type,
         this.phone,
-        this.otp,
+        this.status,
         this.createdAt,
         this.updatedAt,
         this.userid,
@@ -81,7 +84,10 @@ class Data {
         this.driverId,
         this.amount,
         this.distance,
-        this.datetime});
+        this.datetime,
+        this.paymentStatus,
+        this.paymode,
+        this.txnId});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -90,7 +96,7 @@ class Data {
     email = json['email'];
     type = json['type'];
     phone = json['phone'];
-    otp = json['otp'];
+    status = json['status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     userid = json['userid'];
@@ -110,6 +116,9 @@ class Data {
     amount = json['amount'];
     distance = json['distance'];
     datetime = json['datetime'];
+    paymentStatus = json['payment_status'];
+    paymode = json['paymode'];
+    txnId = json['txn_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -120,7 +129,7 @@ class Data {
     data['email'] = email;
     data['type'] = type;
     data['phone'] = phone;
-    data['otp'] = otp;
+    data['status'] = status;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['userid'] = userid;
@@ -140,6 +149,9 @@ class Data {
     data['amount'] = amount;
     data['distance'] = distance;
     data['datetime'] = datetime;
+    data['payment_status'] = paymentStatus;
+    data['paymode'] = paymode;
+    data['txn_id'] = txnId;
     return data;
   }
 }

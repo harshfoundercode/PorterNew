@@ -249,7 +249,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                       ),
                       const Spacer(),
                       headingMedium(
-                        text: "₹${(double.parse(widget.price) * 0.18).toStringAsFixed(2)}",
+                        text: "₹${(double.parse(widget.price) * 0.18).toStringAsFixed(0)}",
                         color: Colors.green,
                       ),
                     ],
@@ -269,7 +269,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           color: PortColor.black.withOpacity(0.8)),
                       const Spacer(),
                       headingMedium(
-                          text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
+                          text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(0)}",
                           color: PortColor.black),
                     ],
                   ),
@@ -289,7 +289,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                           text: " (rounded)",
                           color: PortColor.black.withOpacity(0.5)),
                       const Spacer(),
-                      headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
+                      headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(0)}",
                            color: PortColor.black),
                     ],
                   ),
@@ -500,7 +500,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                 headingMedium(
                     text: "Choose Payment mode", color: PortColor.black),
                 const Spacer(),
-                headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(2)}",
+                headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(0)}",
                      color: PortColor.black),
               ],
             ),

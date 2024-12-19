@@ -11,12 +11,13 @@ class OrderPage extends StatefulWidget {
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
+
 class _OrderPageState extends State<OrderPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userHistoryViewModel =
-      Provider.of<UserHistoryViewModel>(context, listen: false);
+          Provider.of<UserHistoryViewModel>(context, listen: false);
       userHistoryViewModel.userHistoryApi();
       print("helokokfio");
     });
@@ -27,16 +28,15 @@ class _OrderPageState extends State<OrderPage> {
     final userHistoryViewModel = Provider.of<UserHistoryViewModel>(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: PortColor.grey,
-        appBar: appbar(),
-        body: userHistoryViewModel.userHistoryModel != null
-            ? orderListUi()
-            : noOrderFoundUi()
-      ),
+          backgroundColor: PortColor.grey,
+          appBar: appbar(),
+          body: userHistoryViewModel.userHistoryModel != null
+              ? orderListUi()
+              : noOrderFoundUi()),
     );
   }
 
-  PreferredSizeWidget appbar(){
+  PreferredSizeWidget appbar() {
     return PreferredSize(
         preferredSize: Size(screenWidth, screenHeight * 0.065),
         child: Container(
@@ -60,7 +60,7 @@ class _OrderPageState extends State<OrderPage> {
         ));
   }
 
-  Widget orderListUi(){
+  Widget orderListUi() {
     final userHistoryViewModel = Provider.of<UserHistoryViewModel>(context);
     return ListView.builder(
         itemCount: userHistoryViewModel.userHistoryModel!.data!.length,
@@ -94,16 +94,17 @@ class _OrderPageState extends State<OrderPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             elementsMedium(
-                                text: history.vehicleType??"",
+                                text: history.vehicleType ?? "",
                                 color: PortColor.black),
                             elementsMedium(
-                                text:  history.datetime.toString()??"",
+                                text: history.datetime.toString() ?? "",
                                 color: PortColor.gray),
                           ],
                         ),
-                         Spacer(),
+                        Spacer(),
                         elementsBold(
-                            text:("₹ ${history.amount?.toString() ?? ""}"), color: PortColor.black),
+                            text: ("₹ ${history.amount?.toString() ?? ""}"),
+                            color: PortColor.black),
                         Icon(
                           Icons.arrow_forward_ios_rounded,
                           color: PortColor.gray,
@@ -126,8 +127,7 @@ class _OrderPageState extends State<OrderPage> {
                           child: Column(
                             children: [
                               Row(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Column(
                                     children: [
@@ -142,16 +142,13 @@ class _OrderPageState extends State<OrderPage> {
                                       Column(
                                         children: List.generate(
                                             10,
-                                                (index) => Container(
-                                              width: screenWidth *
-                                                  0.003,
-                                              height: screenHeight *
-                                                  0.0025,
-                                              margin: const EdgeInsets
-                                                  .symmetric(
-                                                  vertical: 2),
-                                              color: PortColor.gray,
-                                            )),
+                                            (index) => Container(
+                                                  width: screenWidth * 0.003,
+                                                  height: screenHeight * 0.0025,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(vertical: 2),
+                                                  color: PortColor.gray,
+                                                )),
                                       ),
                                       Icon(
                                         Icons.location_on_rounded,
@@ -165,56 +162,84 @@ class _OrderPageState extends State<OrderPage> {
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
                                         children: [
                                           titleMedium(
-                                            text: history.senderName??"",
+                                            text: history.senderName ?? "",
                                             color: PortColor.black,
                                           ),
-                                          SizedBox(width: screenWidth*0.015,),
+                                          SizedBox(
+                                            width: screenWidth * 0.015,
+                                          ),
                                           titleMedium(
-                                            text:
-                                           history.senderPhone.toString()??"",
+                                            text: history.senderPhone
+                                                    .toString() ??
+                                                "",
                                             color: PortColor.gray,
                                           ),
                                         ],
                                       ),
                                       Container(
-                                        width: screenWidth*0.7,
+                                        width: screenWidth * 0.7,
                                         child: elementsSmall(
-                                          text:
-                                          history.pickupAddress??"",
+                                          text: history.pickupAddress ?? "",
                                           color: PortColor.gray,
                                         ),
                                       ),
-                                      SizedBox(
-                                          height: screenHeight * 0.04),
+                                      SizedBox(height: screenHeight * 0.04),
                                       Row(
                                         children: [
                                           titleMedium(
-                                            text: history.reciverName??"",
+                                            text: history.reciverName ?? "",
                                             color: PortColor.black,
                                           ),
-                                          SizedBox(width: screenWidth*0.015,),
+                                          SizedBox(
+                                            width: screenWidth * 0.015,
+                                          ),
                                           titleMedium(
-                                            text:
-                                            history.reciverPhone.toString()??"",
+                                            text: history.reciverPhone
+                                                    .toString() ??
+                                                "",
                                             color: PortColor.gray,
                                           ),
                                         ],
                                       ),
                                       Container(
-                                        width: screenWidth*0.7,
+                                        width: screenWidth * 0.7,
                                         child: elementsSmall(
-                                          text: history.dropAddress??"",
+                                          text: history.dropAddress ?? "",
                                           color: PortColor.gray,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ],
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.01,
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsets.only(left: screenWidth * 0.08),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    titleMedium(
+                                        text: "Payment Status: ",
+                                        color: PortColor.black),
+                                    elementsSmall(
+                                        text: history.paymentStatus == 0
+                                            ? "Pending"
+                                            : history.paymentStatus == 1
+                                                ? "Success"
+                                                : history.paymentStatus == 2
+                                                    ? "Failed"
+                                                    : '',
+                                        color: PortColor.gray),
+                                  ],
+                                ),
                               ),
                             ],
                           )),
@@ -229,7 +254,9 @@ class _OrderPageState extends State<OrderPage> {
                             width: screenWidth * 0.02,
                           ),
                           const Image(
-                              image: AssetImage(Assets.assetsRedcross,)),
+                              image: AssetImage(
+                            Assets.assetsRedcross,
+                          )),
                           headingMedium(
                               text: "Cancelled", color: PortColor.red),
                           const Spacer(),
@@ -254,7 +281,7 @@ class _OrderPageState extends State<OrderPage> {
         });
   }
 
-  Widget noOrderFoundUi(){
+  Widget noOrderFoundUi() {
     return Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -268,8 +295,8 @@ class _OrderPageState extends State<OrderPage> {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                     image: AssetImage(
-                      Assets.assetsBox,
-                    ))),
+                  Assets.assetsBox,
+                ))),
           ),
           SizedBox(height: screenHeight * 0.03),
           headingSmall(text: "No Orders !", color: PortColor.black),
@@ -307,5 +334,3 @@ class _OrderPageState extends State<OrderPage> {
     );
   }
 }
-
-

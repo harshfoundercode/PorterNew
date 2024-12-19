@@ -353,11 +353,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                 width: screenWidth * 0.5,
                 child: titleMedium(
                     text: selectedLocation, color: PortColor.black)),
-            SizedBox(height: screenHeight * 0.007),
-            Container(
-                width: screenWidth * 0.5,
-                child: elementsMedium(
-                    text: selectedLocation, color: PortColor.black)),
+            SizedBox(height: screenHeight * 0.004),
           ],
         ),
         const Spacer(),

@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +77,7 @@ class OrderViewModel with ChangeNotifier {
       "distance":distance,
       "paymode":payMode,
     };
+    print(jsonEncode(data));
     try {
      
       final response = await _orderRepo.orderApi(data);
@@ -86,8 +88,8 @@ class OrderViewModel with ChangeNotifier {
         Utils.showSuccessMessage(context, "Order successfully placed!");
         Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));}
       } else {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
         launchURL(response["paymentlink"]);
-        // Utils.showErrorMessage(context, 'Failed to place order. Please try again.');
       }
     } catch (error) {
       setLoading(false);
@@ -99,7 +101,6 @@ class OrderViewModel with ChangeNotifier {
       }
     }
   }
-
   setLoading(bool value) {
     _loading = value;
     notifyListeners();

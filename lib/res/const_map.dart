@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class ConstMap extends StatefulWidget {
   final double? height;
   final ValueChanged<String>? onAddressFetched;
-  final ValueChanged<LatLng>? onLatLngFetched; // Add callback for LatLng
+  final ValueChanged<LatLng>? onLatLngFetched;
 
   const ConstMap({
     super.key,
