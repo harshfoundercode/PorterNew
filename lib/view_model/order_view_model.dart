@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/order_repo.dart';
@@ -8,7 +7,6 @@ import 'package:porter/view/order/order.dart';
 import 'package:porter/view_model/user_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class OrderViewModel with ChangeNotifier {
   final _orderRepo = OrderRepository();
   bool _loading = false;
@@ -16,7 +14,7 @@ class OrderViewModel with ChangeNotifier {
 
   int? _locationType;
   int? get locationType => _locationType;
-   setLocationType(int value) {
+  setLocationType(int value) {
     _locationType = value;
     notifyListeners();
   }
@@ -27,12 +25,12 @@ class OrderViewModel with ChangeNotifier {
   dynamic get pickupData => _pickupData;
   dynamic get dropData => _dropData;
 
-   setLocationData(dynamic data) {
-     print("ddddd $data");
-    if(_locationType==0){
+  setLocationData(dynamic data) {
+    print("ddddd $data");
+    if (_locationType == 0) {
       print("pickup");
       _pickupData = data;
-    }else{
+    } else {
       print("drop");
 
       _dropData = data;
@@ -41,22 +39,23 @@ class OrderViewModel with ChangeNotifier {
   }
 
   Future<void> orderApi(
-      dynamic vehicle,
-      dynamic pickupAddress,
-      dynamic dropAddress,
-      dynamic dropLatitude,
-      dynamic dropLongitude,
-      dynamic pickupLatitude,
-      dynamic pickupLongitude,
-      dynamic senderName,
-      dynamic senderPhone,
-      dynamic receiverName,
-      dynamic receiverPhone,
-      dynamic amount,
-       dynamic distance,
-       dynamic payMode,
-       context,
-      ) async {
+    dynamic vehicle,
+    dynamic pickupAddress,
+    dynamic dropAddress,
+    dynamic dropLatitude,
+    dynamic dropLongitude,
+    dynamic pickupLatitude,
+    dynamic pickupLongitude,
+    dynamic senderName,
+    dynamic senderPhone,
+    dynamic receiverName,
+    dynamic receiverPhone,
+    dynamic amount,
+    dynamic distance,
+    dynamic payMode,
+    context,
+  ) async {
+    print("gjvk $payMode");
     UserViewModel userViewModel = UserViewModel();
     String? UserId = await userViewModel.getUser();
     setLoading(true);
@@ -69,27 +68,32 @@ class OrderViewModel with ChangeNotifier {
       "drop_logitute": dropLongitude.toString(),
       "pickup_latitute": pickupLatitude.toString(),
       "pickup_logitute": pickupLongitude.toString(),
-      "sender_name":senderName,
-      "sender_phone":senderPhone,
-      "reciver_name":receiverName,
-      "reciver_phone":receiverPhone,
-      "amount":amount,
-      "distance":distance,
-      "paymode":payMode,
+      "sender_name": senderName,
+      "sender_phone": senderPhone,
+      "reciver_name": receiverName,
+      "reciver_phone": receiverPhone,
+      "amount": amount,
+      "distance": distance,
+      "paymode": payMode,
     };
     print(jsonEncode(data));
     try {
-     
       final response = await _orderRepo.orderApi(data);
       setLoading(false);
 
       if (response["status"] == 200) {
-        if (payMode == "1"){
-        Utils.showSuccessMessage(context, "Order successfully placed!");
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));}
+        if (payMode == "1") {
+          Utils.showSuccessMessage(context, "Order successfully placed!");
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const OrderPage()));
+        } else {
+          await launchURL(response["paymentlink"]).then((_) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const OrderPage()));
+          });
+        }
       } else {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage()));
-        launchURL(response["paymentlink"]);
+        print("something went wrong");
       }
     } catch (error) {
       setLoading(false);
@@ -101,10 +105,12 @@ class OrderViewModel with ChangeNotifier {
       }
     }
   }
+
   setLoading(bool value) {
     _loading = value;
     notifyListeners();
   }
+
   Future<void> launchURL(String url) async {
     final Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {

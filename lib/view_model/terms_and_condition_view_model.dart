@@ -23,6 +23,9 @@ class TermAndConditionViewModel with ChangeNotifier {
   Future<void> termConditionApi() async {
     _termsAndConditionRepo.termAndConditionApi().then((value) {
       if (value.status == 200) {
+
+
+
         setModelData(value);
         setLoading(false);
       } else {

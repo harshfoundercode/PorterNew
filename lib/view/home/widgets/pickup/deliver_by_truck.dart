@@ -466,21 +466,22 @@ class _DeliverByTruckState extends State<DeliverByTruck> {
                   ],
                 ),
               ),
-            const Spacer(),
-            Container(
-              height: screenHeight * 0.08,
-              color: PortColor.white,
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.location_on, color: PortColor.blue),
-                  headingMedium(
-                      text: " Locate on the map", color: PortColor.black),
-                ],
-              ),
-            ),
+           // const Spacer(),
+
           ],
+        ),
+        bottomSheet: Container(
+          height: screenHeight * 0.08,
+          color: PortColor.white,
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.location_on, color: PortColor.blue),
+              headingMedium(
+                  text: " Locate on the map", color: PortColor.black),
+            ],
+          ),
         ),
       ),
     );

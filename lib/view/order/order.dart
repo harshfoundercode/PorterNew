@@ -206,7 +206,7 @@ class _OrderPageState extends State<OrderPage> {
                                           ),
                                         ],
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width: screenWidth * 0.7,
                                         child: elementsSmall(
                                           text: history.dropAddress ?? "",
@@ -241,6 +241,20 @@ class _OrderPageState extends State<OrderPage> {
                                   ],
                                 ),
                               ),
+                              SizedBox(height: screenHeight*0.006,),
+                              Padding(
+                                padding:  EdgeInsets.only(left: screenWidth * 0.08),
+                                child: Row(
+                                  children: [
+                                    titleMedium(text: "Pay Mode: ",color: PortColor.black),
+                                    elementsSmall(text:
+                                     history.paymode==1?"Cash on Delivery":
+                                         history.paymode==2?"Online Payment":"Nothing"
+                                        ,color: PortColor.gray,
+                                    )
+                                  ],
+                                ),
+                              )
                             ],
                           )),
                     ),

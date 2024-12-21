@@ -15,9 +15,9 @@ class HomePage extends StatelessWidget {
     return (await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.white, // White background
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12), // Rounded corners
+          borderRadius: BorderRadius.circular(12),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         title: const Text(

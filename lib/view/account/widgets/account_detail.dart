@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
+import 'package:porter/res/app_constant.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/res/launcher.dart';
 import 'package:porter/view/account/widgets/help_support.dart';
 import 'package:porter/view/account/widgets/save_address_detail.dart';
 import 'package:porter/view/account/widgets/terms_condition.dart';
@@ -53,7 +55,7 @@ class AccountDetail extends StatelessWidget {
             child: Column(
               children: [
                 buttonLayoutUi(
-                  page: CoinsPage(),
+                  page: const CoinsPage(),
                   context,
                   Icons.star_border_purple500_outlined,
                   "Porter Rewards",
@@ -90,28 +92,33 @@ class AccountDetail extends StatelessWidget {
                   context,
                   Icons.share,
                   "Refer your Friends!",
-                  trailing: Container(
-                    height: screenHeight * 0.03,
-                    width: screenWidth * 0.16,
-                    decoration: BoxDecoration(
-                      color: PortColor.blue.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.share,
-                          color: PortColor.blue,
-                          size: screenHeight * 0.02,
-                        ),
-                        const SizedBox(width: 4.0),
-                        elementsMedium(
-                          text: "Invite",
-                          color: PortColor.blue,
-                        ),
-                      ],
+                  trailing: GestureDetector(
+                    onTap: () {
+                      Launcher.shareApk(AppConstant.apkUrl, context);
+                    },
+                    child: Container(
+                      height: screenHeight * 0.03,
+                      width: screenWidth * 0.16,
+                      decoration: BoxDecoration(
+                        color: PortColor.blue.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.share,
+                            color: PortColor.blue,
+                            size: screenHeight * 0.02,
+                          ),
+                          const SizedBox(width: 4.0),
+                          elementsMedium(
+                            text: "Invite",
+                            color: PortColor.blue,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -139,8 +146,10 @@ class AccountDetail extends StatelessWidget {
             ),
             child: Column(
               children: [
-                buttonLayoutUi(context, Icons.help_outline, "Help & Support",page:HelpSupport() ),
-                buttonLayoutUi(context,  Icons.copy_all, "Terms and Condition",page: TermsCondition())
+                buttonLayoutUi(context, Icons.help_outline, "Help & Support",
+                    page: const HelpSupport()),
+                buttonLayoutUi(context, Icons.copy_all, "Terms and Condition",
+                    page: const TermsCondition())
               ],
             ),
           ),
@@ -193,8 +202,9 @@ class AccountDetail extends StatelessWidget {
           ),
           SizedBox(height: screenHeight * 0.04),
           Center(
-            child:
-                headingMedium(text: "App version 6.0.0", color: PortColor.gray),
+            child: headingMedium(
+                text: "App version ${AppConstant.appVersion}",
+                color: PortColor.gray),
           ),
           SizedBox(height: screenHeight * 0.04),
         ],
@@ -202,7 +212,7 @@ class AccountDetail extends StatelessWidget {
     );
   }
 
-  Widget logoutBottomSheet(context){
+  Widget logoutBottomSheet(context) {
     return Padding(
       padding: EdgeInsets.all(screenHeight * 0.02),
       child: Column(
@@ -217,7 +227,7 @@ class AccountDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context);
                 },
                 child: Container(
@@ -226,15 +236,12 @@ class AccountDetail extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: PortColor.white,
                     border: Border.all(
-                        color: PortColor.blue.withOpacity(0.75),
-                        width: 2),
-                    borderRadius: const BorderRadius.all(
-                        Radius.circular(20)),
+                        color: PortColor.blue.withOpacity(0.75), width: 2),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
                   child: Center(
                     child: titleMedium(
-                        text: "No",
-                        color: PortColor.blue.withOpacity(0.75)),
+                        text: "No", color: PortColor.blue.withOpacity(0.75)),
                   ),
                 ),
               ),
@@ -242,24 +249,26 @@ class AccountDetail extends StatelessWidget {
                 width: screenWidth * 0.02,
               ),
               InkWell(
-                onTap: (){
+                onTap: () {
                   UserViewModel().remove();
                   // Navigator.pushReplacementNamed(context, RoutesName.splash);
                   // Navigator.pushNamedAndRemoveUntil(context, RoutesName.splash, (context)=>true);
-                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SplashScreen()), (context)=>false);
-                //  Navigator.pushAndRemoveUntil(context, RoutesName.splash, (context)=>false);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SplashScreen()),
+                      (context) => false);
+                  //  Navigator.pushAndRemoveUntil(context, RoutesName.splash, (context)=>false);
                 },
                 child: Container(
                   height: screenHeight * 0.058,
                   width: screenWidth * 0.4,
                   decoration: BoxDecoration(
                     color: PortColor.blue.withOpacity(0.75),
-                    borderRadius: const BorderRadius.all(
-                        Radius.circular(20)),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
                   child: Center(
-                    child: titleMedium(
-                        text: "Yes", color: PortColor.white),
+                    child: titleMedium(text: "Yes", color: PortColor.white),
                   ),
                 ),
               ),
@@ -269,6 +278,7 @@ class AccountDetail extends StatelessWidget {
       ),
     );
   }
+
   Widget buttonLayoutUi(context, IconData icon, String label,
       {Widget? page, Widget? trailing}) {
     return ListTile(

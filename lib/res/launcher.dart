@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:porter/utils/utils.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Launcher {
@@ -36,6 +37,18 @@ class Launcher {
     } else {
       if (kDebugMode) {
         print("Url not found");
+      }
+    }
+  }
+
+  static shareApk(String urlData, context) async {
+    if (urlData.isNotEmpty) {
+      await Share.share(
+        "Hi, I recommend Porter for mini trucks requirement. It's convenient & cost effective. Download app ${Uri.parse(urlData)} & get up to Rs 50 cashback on first ride.",
+      );
+    } else {
+      if (kDebugMode) {
+        print('Inter Url');
       }
     }
   }

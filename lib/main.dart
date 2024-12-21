@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:porter/res/app_constant.dart';
 import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/utils/routes/routes_name.dart';
 import 'package:porter/view_model/add_address_view_model.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
           }
           return null;
         },
-        title: 'Porter',
+        title: AppConstant.appName,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,

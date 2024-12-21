@@ -17,7 +17,7 @@ class TermsAndConditionModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
@@ -29,7 +29,7 @@ class TermsAndConditionModel {
 
 class Data {
   int? id;
-  Null? description;
+  String? description;
 
   Data({this.id, this.description});
 
@@ -39,7 +39,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['description'] = description;
     return data;
