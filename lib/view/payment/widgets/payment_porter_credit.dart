@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
@@ -11,7 +12,7 @@ class PaymentPorterCredit extends StatefulWidget {
 }
 
 class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
   bool isBottomSheetVisible = false;
   bool isProceedEnabled = false;
 
@@ -34,12 +35,6 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
     _controller.text = newAmount.toString();
     _updateProceedButton();
   }
-
-  // void _clearAmount() {
-  //   _controller.clear();
-  //   _updateProceedButton();
-  // }
-
   Widget _quickAddButton(String label, int amount) {
     return GestureDetector(
       onTap: () => _addAmount(amount),
@@ -94,14 +89,17 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
                   ),
                 ),
                 SizedBox(width: screenWidth * 0.28),
-                headingMedium(text: "Porter Credits", color: PortColor.black),
+                headingMedium(text: "Courier Credits", color: PortColor.black),
               ],
             ),
           ),
           Container(
             height: screenHeight * 0.07,
             width: screenWidth,
-            color: PortColor.blue.withOpacity(0.1),
+            decoration: BoxDecoration(
+              color: PortColor.blue.withOpacity(0.1),
+              border: const Border(bottom: BorderSide(color: PortColor.white)),
+            ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
               child: Row(
@@ -123,6 +121,50 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
               ),
             ),
           ),
+          SizedBox(
+            height: screenHeight * 0.01,
+          ),
+          Container(
+            width: screenWidth,
+            color: PortColor.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.03,
+                      vertical: screenHeight * 0.01),
+                  child: elementsMedium(
+                      text: "Dec 23 ,2024", color: PortColor.gray),
+                ),
+                Divider(
+                  thickness: screenWidth * 0.002,
+                  color: PortColor.grey,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.035,
+                  ),
+                  child: Row(
+                    children: [
+                      Image(
+                        image: const AssetImage(Assets.assetsRuppee),
+                        height: screenHeight * 0.07,
+                        width: screenWidth * 0.13,
+                      ),
+                      SizedBox(
+                        width: screenWidth * 0.02,
+                      ),
+                      titleMedium(
+                          text: "Wallet Recharge", color: PortColor.black),
+                      const Spacer(),
+                      titleSmall(text: "1.0", color: Colors.green),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
       bottomSheet: isBottomSheetVisible
@@ -165,11 +207,13 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
                               hintStyle: const TextStyle(color: PortColor.gray),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(color: PortColor.gray),
+                                borderSide:
+                                    const BorderSide(color: PortColor.gray),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(color: PortColor.gray),
+                                borderSide:
+                                    const BorderSide(color: PortColor.gray),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -222,3 +266,21 @@ class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -5,7 +5,6 @@ import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/utils/utils.dart';
 import 'package:porter/view/auth/login_page.dart';
-import 'package:porter/view/auth/otp_page.dart';
 import 'package:porter/view_model/register_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -53,30 +52,21 @@ class _RegisterPageState extends State<RegisterPage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.05, vertical: screenHeight * 0.04),
+                horizontal: screenWidth * 0.05),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'PORTER',
-                      style: TextStyle(
-                        color: PortColor.blue,
-                        fontSize: 45,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.location_on,
-                      color: PortColor.blue,
-                      size: 30,
-                    ),
-                  ],
+                Center(
+                  child: Container(
+                     height: screenHeight * 0.2,
+                      width: screenWidth * 0.65,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(Assets.assetsCourierLogo),
+                            fit: BoxFit.fill),
+                      )),
                 ),
-                SizedBox(height: screenHeight * 0.03),
+               // SizedBox(height: screenHeight * 0.01),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -229,7 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     SizedBox(width: screenWidth * 0.02),
                     elementsSmall(
-                        text: "Allow Porter to send updates on ",
+                        text: "Allow Courier to send updates on ",
                         color: PortColor.black.withOpacity(0.6)),
                     Image(
                         image: const AssetImage(Assets.assetsWhatsappcolor),
@@ -245,6 +235,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     text:
                         "A one-time password (OTP) will be sent to this number for verification",
                     color: PortColor.black),
+                SizedBox(height: screenHeight*0.02,),
               ],
             ),
           ),

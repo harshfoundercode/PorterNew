@@ -51,7 +51,7 @@ class _SenderAddressState extends State<SenderAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final orderViewModel = Provider.of<OrderViewModel>(context);
+    //  final orderViewModel = Provider.of<OrderViewModel>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -200,6 +200,13 @@ class _SenderAddressState extends State<SenderAddress> {
                   onTap: () {
                     setState(() {
                       isContactDetailsSelected = !isContactDetailsSelected;
+                      if (isContactDetailsSelected) {
+                        mobileController.text = profileViewModel
+                            .profileModel!.data!.phone
+                            .toString();
+                      } else {
+                        mobileController.clear();
+                      }
                     });
                   },
                   child: Row(
@@ -229,7 +236,8 @@ class _SenderAddressState extends State<SenderAddress> {
                             color: PortColor.black,
                           ),
                           titleMedium(
-                            text: profileViewModel.profileModel!.data!.phone.toString()??"",
+                            text: profileViewModel.profileModel!.data!.phone
+                                .toString(),
                             color: PortColor.black,
                           ),
                         ],
@@ -285,13 +293,13 @@ class _SenderAddressState extends State<SenderAddress> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenWidth * 0.7,
                     child: headingMedium(
                         text: selectedLocation, color: PortColor.black),
                   ),
                   SizedBox(height: screenHeight * 0.007),
-                  Container(
+                  SizedBox(
                     width: screenWidth * 0.8,
                     child: titleMedium(
                         text: selectedLocation, color: PortColor.black),
@@ -349,7 +357,7 @@ class _SenderAddressState extends State<SenderAddress> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
                 width: screenWidth * 0.5,
                 child: titleMedium(
                     text: selectedLocation, color: PortColor.black)),
@@ -419,11 +427,11 @@ class _SenderAddressState extends State<SenderAddress> {
         ),
         child: GestureDetector(
           onTap: () {
-            if(nameController.text.isEmpty){
+            if (nameController.text.isEmpty) {
               Utils.showErrorMessage(context, "Enter sender's name");
-            } else if(mobileController.text.isEmpty){
+            } else if (mobileController.text.isEmpty) {
               Utils.showErrorMessage(context, "Enter sender's mobile number");
-            }else {
+            } else {
               final data = {
                 "address": selectedLocation,
                 "name": nameController.text,
@@ -431,8 +439,6 @@ class _SenderAddressState extends State<SenderAddress> {
                 " latitude": selectedLatLng.latitude,
                 "longitude": selectedLatLng.longitude,
               };
-              print(data);
-              print("hloooch");
               orderViewModel.setLocationData(data);
               Navigator.pop(context, data);
               Navigator.pop(context);

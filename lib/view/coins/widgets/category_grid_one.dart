@@ -11,7 +11,7 @@ class CategoryGridOne extends StatelessWidget {
     List<GridTile> porterList = [
       GridTile(
         title: "Transfer into",
-        subtitle: "Porter Credit",
+        subtitle: "Courier Credit",
         img: Assets.assetsPurse,
 
       ),

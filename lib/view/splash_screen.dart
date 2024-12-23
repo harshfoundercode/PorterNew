@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/view_model/user_view_model.dart';
+
+import '../generated/assets.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -23,26 +26,21 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       backgroundColor: PortColor.blue,
-      body: Center(
-        child: Row(
+      body:  Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'PORTER',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(width: 5),
-            Icon(
-              Icons.location_on,
-              color: Colors.white,
-              size: 30,
-            ),
+            Container(
+                height: screenHeight * 0.23,
+                width: screenWidth * 0.65,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Assets.assetsCourierLogo),
+                      fit: BoxFit.fill),
+                )),
           ],
         ),
       ),

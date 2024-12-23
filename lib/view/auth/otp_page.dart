@@ -80,29 +80,17 @@ class _OtpPageState extends State<OtpPage> {
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.07, vertical: screenHeight * 0.04),
+                horizontal: screenWidth * 0.07),
             child: Column(
               children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'PORTER',
-                      style: TextStyle(
-                        color: PortColor.blue,
-                        fontSize: 45,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(width: 5),
-                    Icon(
-                      Icons.location_on,
-                      color: PortColor.blue,
-                      size: 30,
-                    ),
-                  ],
-                ),
-                SizedBox(height: screenHeight * 0.03),
+                Container(
+                    height: screenHeight * 0.23,
+                    width: screenWidth * 0.65,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(Assets.assetsCourierLogo),
+                          fit: BoxFit.fill),
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

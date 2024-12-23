@@ -39,33 +39,19 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final loginViewModel = Provider.of<AuthViewModel>(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: PortColor.grey,
-        body: ListView(
+        body: Column(
           children: [
-            SizedBox(height: screenHeight * 0.02),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'PORTER',
-                  style: TextStyle(
-                    color: PortColor.blue,
-                    fontSize: 45,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.location_on,
-                  color: PortColor.blue,
-                  size: 30,
-                ),
-              ],
-            ),
-            SizedBox(height: screenHeight * 0.12),
+            Container(
+                height: screenHeight * 0.23,
+                width: screenWidth * 0.65,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(Assets.assetsCourierLogo),
+                      fit: BoxFit.fill),
+                )),
             const Image(image: AssetImage(Assets.assetsMainimage)),
           ],
         ),
@@ -148,9 +134,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
   Widget loginButton() {
     final loginViewModel = Provider.of<AuthViewModel>(context, listen: false);
-
     return Column(
       children: [
         SizedBox(height: screenHeight * 0.03),
@@ -158,10 +144,12 @@ class _LoginPageState extends State<LoginPage> {
           onTap: () {
             if (_controller.text.length == 10 &&
                 RegExp(r'^\d{10}$').hasMatch(_controller.text)) {
-              final loginViewModel = Provider.of<AuthViewModel>(context, listen: false);
-              loginViewModel.loginApi(_controller.text,context);
+              final loginViewModel =
+                  Provider.of<AuthViewModel>(context, listen: false);
+              loginViewModel.loginApi(_controller.text, context);
             } else {
-            Utils.showErrorMessage(context, "please enter a valid 10 digit number");
+              Utils.showErrorMessage(
+                  context, "please enter a valid 10 digit number");
             }
           },
           child: Container(
@@ -171,8 +159,11 @@ class _LoginPageState extends State<LoginPage> {
               borderRadius: BorderRadius.circular(25),
             ),
             alignment: Alignment.center,
-            child: !loginViewModel.loading?
-            headingMedium(text: "Login", color: PortColor.white):CircularProgressIndicator(color: PortColor.white,),
+            child: !loginViewModel.loading
+                ? headingMedium(text: "Login", color: PortColor.white)
+                : const CircularProgressIndicator(
+                    color: PortColor.white,
+                  ),
           ),
         ),
         SizedBox(height: screenHeight * 0.02),
@@ -209,5 +200,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-

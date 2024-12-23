@@ -18,8 +18,8 @@ class EnterContactDetail extends StatefulWidget {
 
   const EnterContactDetail(
       {super.key,
-        required this.selectedLocation,
-        required this.selectedLatLng});
+      required this.selectedLocation,
+      required this.selectedLatLng});
 
   @override
   State<EnterContactDetail> createState() => _EnterContactDetailState();
@@ -62,7 +62,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
             ),
             markers: {
               Marker(
-                markerId: MarkerId('selected_location'),
+                markerId: const MarkerId('selected_location'),
                 position: selectedLatLng,
                 infoWindow: InfoWindow(
                   title: "Selected Location",
@@ -184,7 +184,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   height: screenHeight * 0.055,
                   cursorHeight: screenHeight * 0.023,
                   labelText: "Receiver's Name",
-                  suffixIcon: Icon(Icons.perm_contact_cal_outlined,
+                  suffixIcon: const Icon(Icons.perm_contact_cal_outlined,
                       color: PortColor.blue),
                 ),
                 SizedBox(height: screenHeight * 0.03),
@@ -201,6 +201,13 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                   onTap: () {
                     setState(() {
                       isContactDetailsSelected = !isContactDetailsSelected;
+                      if (isContactDetailsSelected) {
+                        mobileController.text = profileViewModel
+                            .profileModel!.data!.phone
+                            .toString();
+                      } else {
+                        mobileController.clear();
+                      }
                     });
                   },
                   child: Row(
@@ -219,7 +226,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                         ),
                         child: isContactDetailsSelected
                             ? Icon(Icons.check,
-                            color: Colors.white, size: screenHeight * 0.02)
+                                color: Colors.white, size: screenHeight * 0.02)
                             : null,
                       ),
                       SizedBox(width: screenWidth * 0.028),
@@ -230,7 +237,8 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                             color: PortColor.black,
                           ),
                           titleMedium(
-                            text: profileViewModel.profileModel!.data!.phone.toString()??"",
+                            text: profileViewModel.profileModel!.data!.phone
+                                .toString(),
                             color: PortColor.black,
                           ),
                         ],
@@ -265,7 +273,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
     return Container(
       height: screenHeight * 0.2,
       width: screenWidth,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: PortColor.white,
         borderRadius: BorderRadius.only(
           topRight: Radius.circular(15),
@@ -286,13 +294,13 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenWidth * 0.7,
                     child: headingMedium(
                         text: selectedLocation, color: PortColor.black),
                   ),
                   SizedBox(height: screenHeight * 0.007),
-                  Container(
+                  SizedBox(
                     width: screenWidth * 0.8,
                     child: titleMedium(
                         text: selectedLocation, color: PortColor.black),
@@ -324,12 +332,12 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
                 height: screenHeight * 0.02,
                 width: screenWidth,
                 decoration: BoxDecoration(
-                  color: PortColor.blue ,
+                  color: PortColor.blue,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: headingMedium(
                   text: "Confirm Drop Location",
-                  color:Colors.white ,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -338,6 +346,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
       ),
     );
   }
+
   Widget buildLocationDetails() {
     return Row(
       children: [
@@ -349,7 +358,7 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
                 width: screenWidth * 0.5,
                 child: titleMedium(
                     text: selectedLocation, color: PortColor.black)),
@@ -397,7 +406,8 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
 
   Widget buildProceedButton(BuildContext context) {
     final orderViewModel = Provider.of<OrderViewModel>(context);
-    bool isMobileNumberFilled = mobileController.text.isNotEmpty && mobileController.text.length ==10;
+    bool isMobileNumberFilled =
+        mobileController.text.isNotEmpty && mobileController.text.length == 10;
     return Container(
       height: screenHeight * 0.09,
       decoration: BoxDecoration(
@@ -416,24 +426,24 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
           vertical: screenHeight * 0.017,
         ),
         child: GestureDetector(
-          onTap: (){
-            if (nameController.text.isEmpty){
+          onTap: () {
+            if (nameController.text.isEmpty) {
               Utils.showErrorMessage(context, "Enter receiver name ");
-            }else if(mobileController.text.isEmpty){
+            } else if (mobileController.text.isEmpty) {
               Utils.showErrorMessage(context, "Enter Mobile number");
-            }else {
+            } else {
               final data = {
                 "address": selectedLocation,
                 "name": nameController.text,
                 "phone": mobileController.text,
-               " latitude": selectedLatLng.latitude,
+                " latitude": selectedLatLng.latitude,
                 "longitude": selectedLatLng.longitude,
               };
-              print(data);
-              print("hloooch");
               orderViewModel.setLocationData(data);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SelectVehicles()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SelectVehicles()));
             }
           },
           child: Container(
@@ -445,7 +455,9 @@ class _EnterContactDetailState extends State<EnterContactDetail> {
               borderRadius: BorderRadius.circular(10),
             ),
             child: headingMedium(
-              text: isMobileNumberFilled ?"Confirm and Proceed" :"Enter Contact Details",
+              text: isMobileNumberFilled
+                  ? "Confirm and Proceed"
+                  : "Enter Contact Details",
               color: isMobileNumberFilled ? Colors.white : PortColor.gray,
             ),
           ),

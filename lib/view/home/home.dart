@@ -168,7 +168,7 @@ class HomePage extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            titleSmall(text: 'Explore Porter Reward'),
+                            titleSmall(text: 'Explore Courier Reward'),
                             elementsSmall(
                               text: 'Earn 4 coins for every 100 spent',
                               color: PortColor.grayLight,

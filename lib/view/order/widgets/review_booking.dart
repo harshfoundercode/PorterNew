@@ -3,6 +3,7 @@ import 'package:porter/generated/assets.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
+import 'package:porter/utils/utils.dart';
 import 'package:porter/view_model/order_view_model.dart';
 import 'package:porter/view_model/select_vehicles_view_model.dart';
 import 'package:provider/provider.dart';
@@ -498,7 +499,7 @@ class _ReviewBookingState extends State<ReviewBooking> {
                   height: screenHeight * 0.04,
                 ),
                 headingMedium(
-                    text: "Choose Payment mode", color: PortColor.black),
+                    text: " Payment", color: PortColor.black),
                 const Spacer(),
                 headingMedium(text: "₹${(double.parse(widget.price) + (double.parse(widget.price) * 0.18)).toStringAsFixed(0)}",
                      color: PortColor.black),
@@ -507,21 +508,27 @@ class _ReviewBookingState extends State<ReviewBooking> {
             SizedBox(height: screenHeight*0.014,),
             InkWell(
               onTap: (){
-                orderViewModel.orderApi(vehicle.id.toString(),
-                    orderViewModel.pickupData["address"],
-                    orderViewModel.dropData["address"],
-                    orderViewModel.dropData["latitude"],
-                    orderViewModel.dropData["longitude"],
-                    orderViewModel.pickupData["latitude"],
-                    orderViewModel.pickupData["longitude"],
-                   orderViewModel.pickupData["name"],
-                   orderViewModel.pickupData["phone"],
-                   orderViewModel.dropData["name"],
-                   orderViewModel.dropData["phone"],
-                    widget.price,
-                    widget.distance,
-                    PaymentMethod,
-                    context);
+
+                if (PaymentMethod.isEmpty) {
+              Utils.showErrorMessage(context, "Please select PayMode");
+                }else {
+                  orderViewModel.orderApi(
+                      vehicle.id.toString(),
+                      orderViewModel.pickupData["address"],
+                      orderViewModel.dropData["address"],
+                      orderViewModel.dropData["latitude"],
+                      orderViewModel.dropData["longitude"],
+                      orderViewModel.pickupData["latitude"],
+                      orderViewModel.pickupData["longitude"],
+                      orderViewModel.pickupData["name"],
+                      orderViewModel.pickupData["phone"],
+                      orderViewModel.dropData["name"],
+                      orderViewModel.dropData["phone"],
+                      widget.price,
+                      widget.distance,
+                      PaymentMethod,
+                      context);
+                }
               },
               child: Container(
                 alignment: Alignment.center,

@@ -36,10 +36,10 @@ class _PaymentsPageState extends State<PaymentsPage> {
     _updateProceedButton();
   }
 
-  void _clearAmount() {
-    _controller.clear();
-    _updateProceedButton();
-  }
+  // void _clearAmount() {
+  //   _controller.clear();
+  //   _updateProceedButton();
+  // }
 
   Widget _quickAddButton(String label, int amount) {
     return GestureDetector(
@@ -99,7 +99,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                           );
                         },
                         child: titleMedium(
-                            text: "Porter credits", color: PortColor.black),
+                            text: "Courier credits", color: PortColor.black),
                       ),
                       const Spacer(),
                       GestureDetector(

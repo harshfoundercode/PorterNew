@@ -16,6 +16,7 @@ class Assets {
   static const String assetsCoinreward = 'assets/coinreward.jpeg';
   static const String assetsCoinrewardremov = 'assets/coinrewardremov.png';
   static const String assetsCoinsbundle = 'assets/coinsbundle.png';
+  static const String assetsCourierLogo = 'assets/courier_logo.png';
   static const String assetsCrossicon = 'assets/crossicon.png';
   static const String assetsDeliveryman = 'assets/deliveryman.png';
   static const String assetsDrivebusiness = 'assets/drivebusiness.png';

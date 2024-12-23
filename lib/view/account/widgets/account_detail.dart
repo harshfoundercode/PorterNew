@@ -58,7 +58,7 @@ class AccountDetail extends StatelessWidget {
                   page: const CoinsPage(),
                   context,
                   Icons.star_border_purple500_outlined,
-                  "Porter Rewards",
+                  "Courier Rewards",
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
