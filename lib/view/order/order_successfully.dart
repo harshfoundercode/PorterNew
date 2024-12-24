@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
-import 'package:porter/view/order/order.dart';
+import 'package:porter/view/bottom_nav_bar.dart';
 
 class OrderSuccessfully extends StatefulWidget {
   const OrderSuccessfully({super.key});
@@ -22,9 +22,9 @@ class _OrderSuccessfullyState extends State<OrderSuccessfully> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/order_successfully.gif",
-                width: 150,
-                height: 150,
+                "assets/order-unscreen.gif",
+                width: 170,
+                height: 170,
                 fit: BoxFit.contain,
               ),
               const SizedBox(height: 20),
@@ -40,7 +40,12 @@ class _OrderSuccessfullyState extends State<OrderSuccessfully> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => const OrderPage()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomNavigationPage(initialIndex: 1),
+                        ),
+                      );
+
                     },
                     child: titleMedium(text: "My Order ", color: PortColor.blue),
                   ),

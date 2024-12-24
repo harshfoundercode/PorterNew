@@ -8,13 +8,22 @@ import 'package:porter/view/order/order.dart';
 import 'package:porter/view/payment/payment.dart';
 
 class BottomNavigationPage extends StatefulWidget {
-  const BottomNavigationPage({super.key});
+  final int initialIndex;
+  final Widget? page;
+  const BottomNavigationPage({super.key, this.initialIndex = 0, this.page});
 
   @override
   State<BottomNavigationPage> createState() => _BottomNavigationPageState();
 }
 
 class _BottomNavigationPageState extends State<BottomNavigationPage> {
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
