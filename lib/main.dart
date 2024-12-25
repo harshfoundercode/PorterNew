@@ -3,6 +3,7 @@ import 'package:porter/res/app_constant.dart';
 import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/utils/routes/routes_name.dart';
 import 'package:porter/view_model/add_address_view_model.dart';
+import 'package:porter/view_model/add_wallet_view_model.dart';
 import 'package:porter/view_model/address_delete_view_model.dart';
 import 'package:porter/view_model/address_show_view_model.dart';
 import 'package:porter/view_model/help_and_support_view_model.dart';
@@ -16,6 +17,7 @@ import 'package:porter/view_model/select_vehicles_view_model.dart';
 import 'package:porter/view_model/service_type_view_model.dart';
 import 'package:porter/view_model/terms_and_condition_view_model.dart';
 import 'package:porter/view_model/user_history_view_model.dart';
+import 'package:porter/view_model/wallet_history_view_model.dart';
 import 'package:provider/provider.dart';
 void main() {
   runApp(const MyApp());
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context)=> PrivacyPolicyViewModel()),
         ChangeNotifierProvider(create: (context)=> HelpAndSupportViewModel()),
         ChangeNotifierProvider(create: (context)=> UserHistoryViewModel()),
+        ChangeNotifierProvider(create: (context)=> AddWalletViewModel()),
+        ChangeNotifierProvider(create: (context)=> WalletHistoryViewModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

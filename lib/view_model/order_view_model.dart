@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/repo/order_repo.dart';
 import 'package:porter/utils/utils.dart';
-import 'package:porter/view/order/order.dart';
 import 'package:porter/view/order/order_successfully.dart';
 import 'package:porter/view_model/user_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';

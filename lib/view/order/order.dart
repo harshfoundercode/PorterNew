@@ -13,13 +13,13 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userHistoryViewModel =
           Provider.of<UserHistoryViewModel>(context, listen: false);
       userHistoryViewModel.userHistoryApi();
-      print("helokokfio");
     });
   }
 
@@ -97,11 +97,11 @@ class _OrderPageState extends State<OrderPage> {
                                 text: history.vehicleType ?? "",
                                 color: PortColor.black),
                             elementsMedium(
-                                text: history.datetime.toString() ?? "",
+                                text: history.datetime.toString(),
                                 color: PortColor.gray),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         elementsBold(
                             text: ("₹ ${history.amount?.toString() ?? ""}"),
                             color: PortColor.black),
@@ -174,14 +174,13 @@ class _OrderPageState extends State<OrderPage> {
                                             width: screenWidth * 0.015,
                                           ),
                                           titleMedium(
-                                            text: history.senderPhone
-                                                    .toString() ??
-                                                "",
+                                            text:
+                                                history.senderPhone.toString(),
                                             color: PortColor.gray,
                                           ),
                                         ],
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width: screenWidth * 0.7,
                                         child: elementsSmall(
                                           text: history.pickupAddress ?? "",
@@ -199,9 +198,8 @@ class _OrderPageState extends State<OrderPage> {
                                             width: screenWidth * 0.015,
                                           ),
                                           titleMedium(
-                                            text: history.reciverPhone
-                                                    .toString() ??
-                                                "",
+                                            text:
+                                                history.reciverPhone.toString(),
                                             color: PortColor.gray,
                                           ),
                                         ],
@@ -241,16 +239,24 @@ class _OrderPageState extends State<OrderPage> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: screenHeight*0.006,),
+                              SizedBox(
+                                height: screenHeight * 0.006,
+                              ),
                               Padding(
-                                padding:  EdgeInsets.only(left: screenWidth * 0.08),
+                                padding:
+                                    EdgeInsets.only(left: screenWidth * 0.08),
                                 child: Row(
                                   children: [
-                                    titleMedium(text: "Pay Mode: ",color: PortColor.black),
-                                    elementsSmall(text:
-                                     history.paymode==1?"Cash on Delivery":
-                                         history.paymode==2?"Online Payment":"Nothing"
-                                        ,color: PortColor.gray,
+                                    titleMedium(
+                                        text: "Pay Mode: ",
+                                        color: PortColor.black),
+                                    elementsSmall(
+                                      text: history.paymode == 1
+                                          ? "Cash on Delivery"
+                                          : history.paymode == 2
+                                              ? "Online Payment"
+                                              : "Nothing",
+                                      color: PortColor.gray,
                                     )
                                   ],
                                 ),
@@ -329,9 +335,7 @@ class _OrderPageState extends State<OrderPage> {
           ),
           SizedBox(height: screenHeight * 0.025),
           InkWell(
-            onTap: () {
-              //navigate to booking page
-            },
+            onTap: () {},
             child: Container(
               alignment: Alignment.center,
               height: screenHeight * 0.06,

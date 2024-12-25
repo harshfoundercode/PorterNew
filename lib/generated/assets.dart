@@ -38,6 +38,9 @@ class Assets {
   static const String assetsMap = 'assets/map.png';
   static const String assetsMart = 'assets/mart.png';
   static const String assetsMover = 'assets/mover.jpg';
+  static const String assetsNoHistory = 'assets/no_history.gif';
+  static const String assetsOrderSuccessfully = 'assets/order_successfully.gif';
+  static const String assetsOrderUnscreen = 'assets/order-unscreen.gif';
   static const String assetsOrdertruck = 'assets/ordertruck.png';
   static const String assetsPackerandmover = 'assets/packerandmover.jpg';
   static const String assetsPakingmoving = 'assets/pakingmoving.png';

@@ -3,6 +3,9 @@ import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/view/payment/widgets/payment_porter_credit.dart';
+import 'package:porter/view_model/add_wallet_view_model.dart';
+import 'package:porter/view_model/wallet_history_view_model.dart';
+import 'package:provider/provider.dart';
 
 class PaymentsPage extends StatefulWidget {
   const PaymentsPage({super.key});
@@ -63,6 +66,9 @@ class _PaymentsPageState extends State<PaymentsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final addWalletViewModel = Provider.of<AddWalletViewModel>(context);
+    final walletHistoryViewModel = Provider.of<WalletHistoryViewModel>(context);
+
     return WillPopScope(
       onWillPop: () async {
         if (isBottomSheetVisible) {
@@ -213,26 +219,27 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       ),
                       SizedBox(height: screenHeight * 0.055),
                       GestureDetector(
-                        onTap: isProceedEnabled ? () {} : null,
+                        onTap: isProceedEnabled
+                            ? () {
+                          addWalletViewModel.addWalletApi(context,_controller.text);
+                        }
+                            : null,
                         child: Container(
                           height: screenHeight * 0.06,
                           width: screenWidth * 0.88,
                           decoration: BoxDecoration(
-                            color: isProceedEnabled
-                                ? PortColor.blue
-                                : PortColor.grey,
+                            color: isProceedEnabled ? PortColor.blue : PortColor.grey,
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Center(
-                            child: headingMedium(
+                            child: !addWalletViewModel.loading?headingMedium(
                               text: "Proceed",
-                              color: isProceedEnabled
-                                  ? PortColor.white
-                                  : PortColor.gray,
-                            ),
+                              color: isProceedEnabled ? PortColor.white : PortColor.gray,
+                            ):const CircularProgressIndicator(color: PortColor.white,),
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
