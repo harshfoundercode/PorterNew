@@ -15,7 +15,6 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     final profileViewModel = Provider.of<ProfileViewModel>(context, listen: true);
-
     return Scaffold(
       backgroundColor: PortColor.greyLight.withOpacity(0.7),
       body: const Column(

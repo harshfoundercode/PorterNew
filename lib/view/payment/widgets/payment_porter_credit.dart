@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:porter/generated/assets.dart';
-import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
 import 'package:porter/res/constant_text.dart';
 import 'package:porter/view_model/wallet_history_view_model.dart';
@@ -15,6 +14,7 @@ class PaymentPorterCredit extends StatefulWidget {
 
 class _PaymentPorterCreditState extends State<PaymentPorterCredit> {
 
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {

@@ -12,14 +12,12 @@ class ConstantAppbar extends StatefulWidget {
 }
 class _ConstantAppbarState extends State<ConstantAppbar> {
   @override
-  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
       final profileViewModel = Provider.of<ProfileViewModel>(context, listen: false);
-      profileViewModel.profileApi();
+      profileViewModel.profileApi(context);
     });
-
   }
   @override
   Widget build(BuildContext context) {

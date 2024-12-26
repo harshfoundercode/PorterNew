@@ -1,29 +1,22 @@
-import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:porter/main.dart';
 import 'package:porter/res/constant_color.dart';
-import 'package:porter/utils/routes/routes.dart';
-import 'package:porter/view_model/user_view_model.dart';
-
+import 'package:porter/res/services.dart';
 import '../generated/assets.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
 
+  const SplashScreen({super.key});
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
-
 class _SplashScreenState extends State<SplashScreen> {
+  Services services=Services();
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () {
-      checkSession(context);
-    });
+    services.checkAuthentication(context);
   }
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -45,23 +38,6 @@ class _SplashScreenState extends State<SplashScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> checkSession(context) async {
-    try {
-      UserViewModel userViewModel = UserViewModel();
-      String? userId = await userViewModel.getUser();
-
-      if (userId != null && userId.isNotEmpty) {
-        Navigator.pushReplacementNamed(context, RoutesName.bottomNavBar);
-      } else {
-        Navigator.pushReplacementNamed(context, RoutesName.login);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error fetching user ID: $e");
-      }
-    }
   }
 }
 

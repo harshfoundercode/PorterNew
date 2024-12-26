@@ -18,8 +18,6 @@ class Routers {
             return (context) => const OtpPage();
          case RoutesName.register:
             return (context) => const RegisterPage();
-
-
          default:
             return (context) => const Scaffold(
                body: Center(

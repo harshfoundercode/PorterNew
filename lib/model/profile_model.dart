@@ -1,23 +1,26 @@
 class ProfileModel {
   Data? data;
-  int? status;
+  bool? success;
   String? message;
+  int? status;
 
-  ProfileModel({this.data, this.status, this.message});
+  ProfileModel({this.data, this.success, this.message, this.status});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    status = json['status'];
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    success = json['success'];
     message = json['message'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['status'] = status;
+    data['success'] = success;
     data['message'] = message;
+    data['status'] = status;
     return data;
   }
 }
@@ -29,10 +32,8 @@ class Data {
   String? email;
   String? type;
   int? phone;
-  dynamic status;
-  dynamic otp;
-  dynamic gstNumber;
-  dynamic gstRegistration;
+  int? status;
+  int? wallet;
   String? createdAt;
   String? updatedAt;
 
@@ -44,9 +45,7 @@ class Data {
         this.type,
         this.phone,
         this.status,
-        this.otp,
-        this.gstNumber,
-        this.gstRegistration,
+        this.wallet,
         this.createdAt,
         this.updatedAt});
 
@@ -58,15 +57,13 @@ class Data {
     type = json['type'];
     phone = json['phone'];
     status = json['status'];
-    otp = json['otp'];
-    gstNumber = json['gst_number'];
-    gstRegistration = json['gst_registration'];
+    wallet = json['wallet'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['first_name'] = firstName;
     data['last_name'] = lastName;
@@ -74,9 +71,7 @@ class Data {
     data['type'] = type;
     data['phone'] = phone;
     data['status'] = status;
-    data['otp'] = otp;
-    data['gst_number'] = gstNumber;
-    data['gst_registration'] = gstRegistration;
+    data['wallet'] = wallet;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

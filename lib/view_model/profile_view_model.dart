@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:porter/model/profile_model.dart';
 import 'package:porter/repo/profile_repo.dart';
+import 'package:porter/utils/routes/routes.dart';
 import 'package:porter/view_model/user_view_model.dart';
 class ProfileViewModel with ChangeNotifier {
   final _profileRepo = ProfileRepo();
@@ -19,14 +21,22 @@ class ProfileViewModel with ChangeNotifier {
     _profileModel = value;
     notifyListeners();
   }
-  Future<void> profileApi() async {
+  Future<void> profileApi(context) async {
     setLoading(true);
       UserViewModel userViewModel = UserViewModel();
       String? userId = await userViewModel.getUser();
        _profileRepo.profileApi(userId).then((value){
          print('value:$value');
-         if (value.status == 200) {
+         if (value.success == true) {
            setModelData(value);
+           if (value.data!.status == 2) {
+             userViewModel.remove();
+             Navigator.pushNamedAndRemoveUntil(
+                 context,
+                 RoutesName.login,
+             (route) => false,
+             );
+           }
          }
        }).onError((error, stackTrace) {
          setLoading(false);

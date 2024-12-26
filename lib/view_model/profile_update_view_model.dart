@@ -39,7 +39,7 @@ class ProfileUpdateViewModel with ChangeNotifier {
       setLoading(false);
 
       if (response.status == 200) {
-        Provider.of<ProfileViewModel>(context, listen: false).profileApi();
+        Provider.of<ProfileViewModel>(context, listen: false).profileApi(context);
         Utils.showSuccessMessage(context, "Profile updated successfully!");
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
